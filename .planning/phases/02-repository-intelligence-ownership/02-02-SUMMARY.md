@@ -72,7 +72,7 @@ completed: 2026-07-01
 2. **Task 2: Blame module — es-git + simple-git ignore-revs** - `0776f71` (feat)
 3. **Task 3: Wire ownership into computeIntelligence + export** - `15117ff` (feat)
 
-**Plan metadata:** `22f12d7` (docs: complete plan)
+**Plan metadata:** `82a17bb` (docs: complete plan)
 
 ## Files Created/Modified
 

@@ -55,6 +55,8 @@ export const EraBoundarySignal = z.object({
   evidence: z.array(Evidence).min(1),
 });
 
+export type EraBoundarySignal = z.infer<typeof EraBoundarySignal>;
+
 export const ExpertiseProfile = z.object({
   authorId: z.number().int(),
   name: z.string(),

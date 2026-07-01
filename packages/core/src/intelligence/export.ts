@@ -8,9 +8,9 @@ import {
   type IntelligenceArtifact as IntelligenceArtifactType,
 } from "../schema/zod/intelligence.js";
 import { getFileChurnRows } from "./churn.js";
-import { getFileOwnershipRows } from "./ownership/index.js";
 import { getCoChangeEdges } from "./cochange.js";
 import { getEraBoundarySignals } from "./era-signals.js";
+import { getFileOwnershipRows } from "./ownership/index.js";
 
 const INTELLIGENCE_FILENAME = "intelligence.json";
 
@@ -52,19 +52,21 @@ export function buildIntelligenceArtifact(
     ownershipByPath.set(row.path, authors);
   }
 
-  const ownershipFiles = [...ownershipByPath.entries()].map(([path, authors]) => ({
-    path,
-    authors: authors.map((author) => ({
-      authorId: author.authorId,
-      name: author.name,
-      email: author.email,
-      lineCount: author.lineCount,
-      percentage: author.percentage,
-    })),
-    evidence: authors[0]?.evidence ?? [
-      { type: "file" as const, path, commitSha: options.headSha },
-    ],
-  }));
+  const ownershipFiles = [...ownershipByPath.entries()].map(
+    ([path, authors]) => ({
+      path,
+      authors: authors.map((author) => ({
+        authorId: author.authorId,
+        name: author.name,
+        email: author.email,
+        lineCount: author.lineCount,
+        percentage: author.percentage,
+      })),
+      evidence: authors[0]?.evidence ?? [
+        { type: "file" as const, path, commitSha: options.headSha },
+      ],
+    }),
+  );
 
   return IntelligenceArtifact.parse({
     schemaVersion: INTELLIGENCE_SCHEMA_VERSION,

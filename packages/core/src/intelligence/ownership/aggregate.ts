@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import type { DrizzleDb } from "../../artifacts/db.js";
 import * as schema from "../../schema/drizzle/schema.js";
 import type { Evidence } from "../../schema/zod/evidence.js";
@@ -95,8 +95,29 @@ export function aggregateBlameLines(
   }));
 }
 
-function buildOwnershipEvidence(path: string, headSha: string): Evidence[] {
-  return [{ type: "file", path, commitSha: headSha }];
+function resolveLastTouchCommitSha(db: DrizzleDb, path: string): string | null {
+  const row = db
+    .select({ commitSha: schema.fileChanges.commitSha })
+    .from(schema.fileChanges)
+    .innerJoin(
+      schema.commits,
+      eq(schema.fileChanges.commitSha, schema.commits.sha),
+    )
+    .where(eq(schema.fileChanges.path, path))
+    .orderBy(desc(schema.commits.committedAt))
+    .limit(1)
+    .get();
+
+  return row?.commitSha ?? null;
+}
+
+function buildOwnershipEvidence(
+  db: DrizzleDb,
+  path: string,
+  headSha: string,
+): Evidence[] {
+  const commitSha = resolveLastTouchCommitSha(db, path) ?? headSha;
+  return [{ type: "file", path, commitSha }];
 }
 
 export async function computeOwnership(
@@ -149,7 +170,9 @@ export async function computeOwnership(
             lineCount: aggregate.lineCount,
             percentage:
               totalLines > 0 ? (aggregate.lineCount / totalLines) * 100 : 0,
-            evidenceJson: JSON.stringify(buildOwnershipEvidence(path, headSha)),
+            evidenceJson: JSON.stringify(
+              buildOwnershipEvidence(db, path, headSha),
+            ),
           })
           .run();
       }

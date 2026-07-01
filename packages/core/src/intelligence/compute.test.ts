@@ -49,6 +49,9 @@ describe("computeIntelligence", () => {
 
     expect(result.churnFileCount).toBe(artifact.churn.files.length);
     expect(result.manifest.repo.head).toBe(repo.headSha);
+    expect(result.manifest.intelligenceHeadSha).toBe(repo.headSha);
+    expect(result.manifest.intelligenceSchemaVersion).toBe("1");
+    expect(result.manifest.intelligenceComputedAt).toBe(artifact.computedAt);
 
     expect(artifact.coChange.edges.length).toBeGreaterThanOrEqual(1);
     for (const edge of artifact.coChange.edges) {
@@ -72,7 +75,8 @@ describe("computeIntelligence", () => {
     for (const file of srcOwnership) {
       expect(file.authors.length).toBeGreaterThan(0);
       expect(file.evidence.length).toBeGreaterThan(0);
-      expect(file.evidence[0]?.commitSha).toBe(repo.headSha);
+      expect(file.evidence[0]?.type).toBe("file");
+      expect(file.evidence[0]?.commitSha).toHaveLength(40);
     }
   });
 });

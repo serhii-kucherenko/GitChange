@@ -14,6 +14,7 @@ import { RepoBadge } from "./RepoBadge.js";
 interface TimelineItem {
   id: string;
   content: string;
+  title: string;
   start: Date;
   end: Date;
   type: "range";
@@ -42,6 +43,7 @@ function toTimelineItems(
   return eras.map((era) => ({
     id: era.id,
     content: formatEraLabel(era, threads),
+    title: era.name,
     start: new Date(era.startAt),
     end: new Date(era.endAt),
     type: "range",
@@ -222,7 +224,7 @@ export function EraTimeline() {
       </header>
       <div
         ref={containerRef}
-        className="era-timeline min-h-[7rem] w-full overflow-hidden rounded-md border border-slate-800 bg-slate-950"
+        className="era-timeline min-h-[8rem] w-full overflow-hidden rounded-md border border-slate-800 bg-slate-950"
       />
     </section>
   );

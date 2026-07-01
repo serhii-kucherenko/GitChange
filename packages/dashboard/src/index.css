@@ -27,6 +27,14 @@ code {
   color: rgb(240 249 255);
 }
 
+.era-timeline .vis-item .vis-item-content {
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 8px;
+}
+
 .era-timeline .vis-time-axis .vis-text {
   color: rgb(148 163 184);
 }

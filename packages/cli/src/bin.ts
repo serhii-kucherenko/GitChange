@@ -4,6 +4,7 @@ import { join, resolve } from "node:path";
 import { runIndexCommand } from "./commands/index.js";
 import { runServeCommand } from "./commands/serve.js";
 import { runStatusCommand } from "./commands/status.js";
+import { runValidateCommand } from "./commands/validate.js";
 import { resolveRepoPath } from "./repo-path.js";
 
 export const program = new Command();
@@ -35,6 +36,18 @@ program
   )
   .action((options: { repo?: string; gitchangeDir?: string }) => {
     runStatusCommand(options);
+  });
+
+program
+  .command("validate")
+  .description("Validate intelligence and semantic artifact integrity")
+  .option("--repo <path>", "Repository path (default: auto-detect from cwd)")
+  .option(
+    "--gitchange-dir <path>",
+    "Path to .gitchange directory (default: <repo>/.gitchange)",
+  )
+  .action((options: { repo?: string; gitchangeDir?: string }) => {
+    runValidateCommand(options);
   });
 
 program

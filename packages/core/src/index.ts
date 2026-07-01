@@ -10,6 +10,8 @@ export { computeIntelligence } from "./intelligence/compute.js";
 export {
   getRepoSnapshot,
   type RepoSnapshot,
+  type RepoSnapshotEraHighlight,
+  type RepoSnapshotErasSummary,
   type RepoSnapshotHighlightChurnFile,
   type RepoSnapshotHighlightExpertiseTopic,
   type RepoSnapshotHighlights,
@@ -64,3 +66,12 @@ export {
   checkSemanticIntegrity,
   type SemanticIntegrityReport,
 } from "./verify/semantic-integrity.js";
+export {
+  checkIntelligenceIntegrity,
+  type IntelligenceIntegrityReport,
+} from "./verify/intelligence-integrity.js";
+export {
+  BASIC_SCENARIO_SEMANTIC_SNAPSHOT,
+  collectSemanticSnapshot,
+  type SemanticSnapshot,
+} from "./verify/semantic-snapshot.js";

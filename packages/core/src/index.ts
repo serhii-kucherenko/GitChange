@@ -10,36 +10,37 @@ export { computeIntelligence } from "./intelligence/compute.js";
 export {
   getRepoSnapshot,
   type RepoSnapshot,
-  type RepoSnapshotHighlights,
   type RepoSnapshotHighlightChurnFile,
   type RepoSnapshotHighlightExpertiseTopic,
+  type RepoSnapshotHighlights,
   type RepoSnapshotStats,
 } from "./read/snapshot.js";
 export {
-  readManifest,
-  ManifestSchema,
-  type Manifest,
-  type ManifestWarningCode,
   type IndexCompleteness,
+  type Manifest,
+  ManifestSchema,
+  type ManifestWarningCode,
+  readManifest,
 } from "./schema/manifest.js";
 export {
+  type AttributionConfidence,
   EraClaim,
+  type EraClaim as EraClaimType,
   ErasArtifact,
-  InflectionPoint,
-  InflectionType,
+  type ErasArtifact as ErasArtifactType,
   INTELLIGENCE_SCHEMA_VERSION,
+  InflectionPoint,
+  type InflectionPoint as InflectionPointType,
+  InflectionType,
   IntelligenceArtifact,
+  type IntelligenceArtifact as IntelligenceArtifactType,
   NamedEra,
+  type NamedEra as NamedEraType,
   SEMANTIC_SCHEMA_VERSION,
   TemporalGraphArtifact,
-  type AttributionConfidence,
-  type EraClaim as EraClaimType,
-  type ErasArtifact as ErasArtifactType,
-  type InflectionPoint as InflectionPointType,
-  type IntelligenceArtifact as IntelligenceArtifactType,
-  type NamedEra as NamedEraType,
   type TemporalGraphArtifact as TemporalGraphArtifactType,
 } from "./schema/zod/index.js";
+export { assembleTemporalGraph } from "./semantic/assemble-graph.js";
 export {
   buildEraSynthesisContext,
   type EraSynthesisChurnFile,
@@ -52,3 +53,8 @@ export {
   readErasArtifact,
   writeErasArtifact,
 } from "./semantic/eras-io.js";
+export {
+  assembleAndWriteTemporalGraph,
+  readTemporalGraph,
+  writeTemporalGraph,
+} from "./semantic/graph-io.js";

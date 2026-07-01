@@ -2,50 +2,49 @@
 phase: 02-repository-intelligence-ownership
 plan: 01
 subsystem: api
-tags: [sqlite, drizzle, zod, churn, intelligence, vitest]
+tags: [drizzle, sqlite, zod, churn, intelligence, minimatch]
 
 requires:
   - phase: 01-index-foundation
-    provides: index.sqlite, file_changes, commits, manifest.json, indexFull API
+    provides: index.sqlite with commits/file_changes, manifest.json, openDb migrations
 provides:
   - Intelligence Drizzle tables (file_churn, co_change_edges, file_ownership, era_boundaries, era_ownership, contributor_expertise)
-  - computeIntelligence orchestrator and public API export
-  - intelligence.json artifact with churn section
-  - path-filters for lockfile/generated path exclusion
+  - IntelligenceArtifact Zod contract and intelligence.json export
+  - computeIntelligence public API with churn from indexed file_changes
 affects: [02-02, 02-03, 02-04, 02-05, phase-4-agents, phase-5-dashboard]
 
 tech-stack:
   added: []
   patterns:
-    - "Post-index intelligence pass reads index.sqlite only for churn (no live git)"
-    - "Atomic temp-rename JSON writes for intelligence.json"
+    - "Index-first intelligence: churn reads file_changes only, no live git walk"
+    - "Atomic intelligence.json write via temp-rename (manifest pattern)"
     - "attributionConfidence degraded when manifest.indexCompleteness is partial"
 
 key-files:
   created:
     - packages/core/migrations/0001_intelligence.sql
-    - packages/core/src/intelligence/churn.ts
-    - packages/core/src/intelligence/churn.test.ts
-    - packages/core/src/intelligence/compute.ts
-    - packages/core/src/intelligence/compute.test.ts
-    - packages/core/src/intelligence/export.ts
-    - packages/core/src/intelligence/path-filters.ts
     - packages/core/src/schema/zod/intelligence.ts
+    - packages/core/src/intelligence/path-filters.ts
+    - packages/core/src/intelligence/churn.ts
+    - packages/core/src/intelligence/export.ts
+    - packages/core/src/intelligence/compute.ts
+    - packages/core/src/intelligence/churn.test.ts
+    - packages/core/src/intelligence/compute.test.ts
   modified:
     - packages/core/src/schema/drizzle/schema.ts
     - packages/core/src/schema/zod/index.ts
     - packages/core/src/index.ts
 
 key-decisions:
-  - "All six intelligence tables created in single migration 0001_intelligence to avoid later plan conflicts"
-  - "Churn insertions/deletions use change-type proxy (added/deleted counts) until line stats exist in index"
-  - "Empty ownership/coChange/eraSignals/expertise sections exported as empty arrays for walking skeleton"
+  - "All intelligence SQLite tables created in single 0001_intelligence migration to avoid later conflicts"
+  - "Churn excludes content_ignored paths (privacy) in addition to INTELLIGENCE_IGNORE_GLOBS"
+  - "Walking skeleton exports empty coChange/ownership/eraSignals/expertise sections until later plans populate them"
 
 patterns-established:
-  - "Pattern: computeIntelligence is separate pass after indexFull; tests call both explicitly"
-  - "Pattern: IntelligenceArtifact Zod validation at export boundary before atomic write"
+  - "Pattern: computeIntelligence is separate pass after indexFull (P2-D-06)"
+  - "Pattern: churn evidence[] uses file ref to last-touched commit per path"
 
-requirements-completed: [CONT-01]
+requirements-completed: []
 
 duration: 8min
 completed: 2026-07-01
@@ -53,59 +52,73 @@ completed: 2026-07-01
 
 # Phase 2 Plan 01: Intelligence Walking Skeleton Summary
 
-**Post-index churn intelligence with Zod-validated intelligence.json export and computeIntelligence public API**
+**Churn metrics from indexed file_changes with Zod-validated intelligence.json export via computeIntelligence**
 
 ## Performance
 
 - **Duration:** 8 min
-- **Started:** 2026-07-01T01:38:00Z
-- **Completed:** 2026-07-01T01:40:30Z
+- **Started:** 2026-07-01T01:37:00Z
+- **Completed:** 2026-07-01T01:41:00Z
 - **Tasks:** 3
-- **Files modified:** 11
+- **Files modified:** 15
 
 ## Accomplishments
 
-- Added all six intelligence Drizzle tables via migration `0001_intelligence.sql` (additive to Phase 1 schema)
-- Implemented churn aggregation from indexed `file_changes` with path-filter exclusions (no live git walk)
-- Delivered `computeIntelligence` orchestrator writing schema-valid `intelligence.json` with churn section
-- Exported `computeIntelligence` and `IntelligenceArtifact` types from `@gitchange/core`
+- Added all Phase 2 intelligence Drizzle tables in migration `0001_intelligence.sql`
+- Implemented churn aggregation from `file_changes` joined to `commits` with path filters
+- Delivered `computeIntelligence` orchestrator writing schema-valid `.gitchange/intelligence.json`
+- E2E test: `indexFull` → `computeIntelligence` on BASIC_SCENARIO produces churn with evidence
 
 ## Task Commits
 
-Each task was committed atomically:
+1. **Task 1: Failing E2E test** - `5e05cb8` (test)
+2. **Task 2: Schemas + migration + churn** - `88e5e53` (feat)
+3. **Task 3: computeIntelligence + export + API** - `f8f466c`, `03192ad` (feat)
 
-1. **Task 1: Failing E2E — index then computeIntelligence writes churn** - `5e05cb8` (test)
-2. **Task 2: Intelligence Zod schemas + Drizzle tables + churn compute** - `88e5e53` (feat)
-3. **Task 3: computeIntelligence + intelligence.json export + public API** - `f8f466c` (feat)
-
-**Plan metadata:** pending (docs commit)
+**Plan metadata:** pending final docs commit
 
 ## Files Created/Modified
 
+- `packages/core/src/intelligence/compute.ts` - Post-index orchestrator entry point
+- `packages/core/src/intelligence/churn.ts` - SQL aggregation into file_churn table
+- `packages/core/src/intelligence/export.ts` - intelligence.json atomic writer
+- `packages/core/src/schema/zod/intelligence.ts` - IntelligenceArtifact contract
 - `packages/core/migrations/0001_intelligence.sql` - Intelligence table migration
-- `packages/core/src/schema/drizzle/schema.ts` - Six intelligence Drizzle tables
-- `packages/core/src/schema/zod/intelligence.ts` - IntelligenceArtifact Zod contract
-- `packages/core/src/intelligence/path-filters.ts` - Lockfile/generated path exclusions
-- `packages/core/src/intelligence/churn.ts` - Churn aggregation from file_changes
-- `packages/core/src/intelligence/export.ts` - intelligence.json builder and atomic writer
-- `packages/core/src/intelligence/compute.ts` - computeIntelligence orchestrator
-- `packages/core/src/intelligence/compute.test.ts` - E2E index → compute → intelligence.json
-- `packages/core/src/intelligence/churn.test.ts` - Churn unit tests + Zod sample parse
-- `packages/core/src/index.ts` - Public API exports
 
 ## Decisions Made
 
-- All intelligence tables created upfront in one migration per plan to avoid conflicts in 02-02 through 02-04
-- `attributionConfidence: degraded` when manifest `indexCompleteness` is `partial` (P2-D-07)
-- Walking skeleton exports empty arrays for ownership, coChange, eraSignals, expertise until later plans populate them
+- Excluded `content_ignored` file_changes from churn (privacy-sensitive paths like `.env`)
+- Pre-created all intelligence tables in one migration per research recommendation
+- Set `attributionConfidence: degraded` when manifest reports partial index completeness
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+### Auto-fixed Issues
+
+**1. [Rule 2 - Missing Critical] Filter content_ignored paths from churn**
+- **Found during:** Task 2 (churn unit test)
+- **Issue:** `.env` appeared in churn despite privacy exclusion during indexing
+- **Fix:** Skip file_changes where `contentIgnored` is true in churn aggregation
+- **Files modified:** `packages/core/src/intelligence/churn.ts`
+- **Verification:** churn.test.ts passes with `.env` excluded
+- **Committed in:** `88e5e53`
+
+**2. [Rule 3 - Blocking] Remove duplicate exports in index.ts**
+- **Found during:** Task 3 (typecheck)
+- **Issue:** Duplicate `computeIntelligence` exports caused TS2300 errors
+- **Fix:** Deduplicated public API exports
+- **Files modified:** `packages/core/src/index.ts`
+- **Verification:** `pnpm --filter @gitchange/core typecheck` passes
+- **Committed in:** `03192ad`
+
+---
+
+**Total deviations:** 2 auto-fixed (1 missing critical, 1 blocking)
+**Impact on plan:** Both required for correctness and build; no scope creep.
 
 ## Issues Encountered
 
-None
+None beyond auto-fixed items above.
 
 ## User Setup Required
 
@@ -113,17 +126,17 @@ None - no external service configuration required.
 
 ## Next Phase Readiness
 
-- Ready for 02-02 (blame ownership at HEAD) and 02-03 (co-change + era signals) in parallel
-- Intelligence tables and export contract established; later plans wire into computeIntelligence and export.ts
+- Ready for 02-02 (blame ownership) and 02-03 (co-change + era signals) in parallel
+- Intelligence tables and export contract in place for downstream plans
+- `intelligence.json` churn section validated end-to-end on BASIC_SCENARIO
 
 ## Self-Check: PASSED
 
 - FOUND: packages/core/src/intelligence/compute.ts
 - FOUND: packages/core/src/intelligence/churn.ts
 - FOUND: packages/core/src/intelligence/export.ts
-- FOUND: packages/core/src/schema/zod/intelligence.ts
 - FOUND: packages/core/migrations/0001_intelligence.sql
-- FOUND commits: 5e05cb8, 88e5e53, f8f466c
+- FOUND: 5e05cb8, 88e5e53, 03192ad
 
 ---
 *Phase: 02-repository-intelligence-ownership*

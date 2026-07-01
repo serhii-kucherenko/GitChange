@@ -19,7 +19,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - [x] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop (completed 2026-07-01)
 - [x] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops (completed 2026-07-01)
 - [x] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story (completed 2026-07-01)
-- [ ] **Phase 9: Dashboard UI Redesign** - Full information-architecture and visual redesign of the local dashboard; cohesive dark design system, usable layout across all views
+- [x] **Phase 9: Dashboard UI Redesign** - Full information-architecture and visual redesign of the local dashboard; cohesive dark design system, usable layout across all views (completed 2026-07-01)
 
 ## Phase Details
 
@@ -345,7 +345,7 @@ Plans:
 
 - [x] 09-02-PLAN.md — Era-timeline label strategy: .vis-item-content truncation + native title tooltip + min-h-[8rem]
 - [x] 09-03-PLAN.md — Virtualized lists flex-fill + header-outside-scroll + ROW_HEIGHT audit
-- [ ] 09-04-PLAN.md — Leaf/badge/tours/graph restyle to the design-system contract
+- [x] 09-04-PLAN.md — Leaf/badge/tours/graph restyle to the design-system contract
 **UI hint**: yes
 
 ## Progress
@@ -363,7 +363,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
 | 8. Hardening, Scale & Multi-Repo | 5/5 | Complete   | 2026-07-01 |
-| 9. Dashboard UI Redesign | 3/4 | In Progress|  |
+| 9. Dashboard UI Redesign | 4/4 | Complete   | 2026-07-01 |
 
 ---
 *Roadmap created: 2026-06-30*

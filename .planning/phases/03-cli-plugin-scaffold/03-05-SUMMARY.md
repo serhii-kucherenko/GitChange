@@ -74,7 +74,7 @@ completed: 2026-07-01
 2. **Task 2: Install scripts + README + marketplace polish** - `a02b903` (feat)
 3. **CI/README polish** - `af3ab17` (docs)
 
-**Plan metadata:** pending final docs commit
+**Plan metadata:** `da8ae24` (docs: complete plan)
 
 ## Files Created/Modified
 
@@ -125,6 +125,7 @@ None - no external service configuration required.
 - FOUND: 7a42f7a
 - FOUND: a02b903
 - FOUND: af3ab17
+- FOUND: da8ae24
 
 ---
 *Phase: 03-cli-plugin-scaffold*

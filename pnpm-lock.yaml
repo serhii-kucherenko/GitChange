@@ -29,6 +29,9 @@ importers:
       '@gitchange/core':
         specifier: workspace:*
         version: link:../core
+      '@gitchange/server':
+        specifier: workspace:^
+        version: link:../server
       commander:
         specifier: 15.0.0
         version: 15.0.0
@@ -83,6 +86,15 @@ importers:
       '@gitchange/core':
         specifier: workspace:*
         version: link:../core
+      '@hono/node-server':
+        specifier: 2.0.6
+        version: 2.0.6(hono@4.12.27)
+      hono:
+        specifier: 4.12.27
+        version: 4.12.27
+      zod:
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: 22.15.32
@@ -607,6 +619,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@hono/node-server@2.0.6':
+    resolution: {integrity: sha512-7DeRlKG57JDBNZ5Qj2jwVdgwQy4b0tLubRLl3zCf91/rCf9i7p1V5FtW/yWibm1uUHE493ts9ZXH/7g/LQWl+g==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      hono: ^4
+
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
@@ -1114,6 +1132,10 @@ packages:
   gray-matter@4.0.3:
     resolution: {integrity: sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==}
     engines: {node: '>=6.0'}
+
+  hono@4.12.27:
+    resolution: {integrity: sha512-1yrb/+w6HWQJrUCLkJ2IF5jNIPvvFkblV5RNOYl6bV+OA6p9GLcMpHFFGTosSvHvcAUibuUukRqhlYI4z32C7Q==}
+    engines: {node: '>=16.9.0'}
 
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -1776,6 +1798,10 @@ snapshots:
   '@esbuild/win32-x64@0.28.1':
     optional: true
 
+  '@hono/node-server@2.0.6(hono@4.12.27)':
+    dependencies:
+      hono: 4.12.27
+
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
   '@kwsites/file-exists@1.1.1':
@@ -2184,6 +2210,8 @@ snapshots:
       kind-of: 6.0.3
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
+
+  hono@4.12.27: {}
 
   ieee754@1.2.1: {}
 

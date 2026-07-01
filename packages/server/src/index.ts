@@ -1,2 +1,2 @@
-/** Placeholder export — Hono server lands in Plan 03-02. */
-export const SERVER_PACKAGE_NAME = "@gitchange/server";
+export { createApp, type CreateAppOptions } from "./app.js";
+export { startServer, type StartServerOptions, type StartedServer } from "./start.js";

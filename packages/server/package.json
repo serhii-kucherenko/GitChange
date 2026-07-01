@@ -18,7 +18,10 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@gitchange/core": "workspace:*"
+    "@gitchange/core": "workspace:*",
+    "@hono/node-server": "2.0.6",
+    "hono": "4.12.27",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@types/node": "22.15.32"

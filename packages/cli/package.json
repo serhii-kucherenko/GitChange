@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@gitchange/core": "workspace:*",
+    "@gitchange/server": "workspace:^",
     "commander": "15.0.0"
   },
   "devDependencies": {

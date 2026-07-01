@@ -10,10 +10,14 @@ export { computeIntelligence } from "./intelligence/compute.js";
 export {
   getRepoSnapshot,
   type RepoSnapshot,
+  type RepoSnapshotHighlights,
+  type RepoSnapshotHighlightChurnFile,
+  type RepoSnapshotHighlightExpertiseTopic,
   type RepoSnapshotStats,
 } from "./read/snapshot.js";
 export {
   readManifest,
+  ManifestSchema,
   type Manifest,
   type ManifestWarningCode,
   type IndexCompleteness,

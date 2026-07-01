@@ -72,7 +72,7 @@ async function waitForHealth(port: number, timeoutMs = 10_000): Promise<void> {
 }
 
 function getListenAddress(port: number): string {
-  return execFileSync("lsof", ["-iTCP", `:${port}`, "-sTCP:LISTEN", "-n", "-P"], {
+  return execFileSync("lsof", [`-iTCP:${port}`, "-sTCP:LISTEN", "-n", "-P"], {
     encoding: "utf8",
   });
 }

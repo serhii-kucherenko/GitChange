@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
-import { IntelligenceArtifact, ManifestSchema } from "@gitchange/core";
+import { ErasArtifact, IntelligenceArtifact, ManifestSchema } from "@gitchange/core";
 
 const PLUGIN_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SCHEMAS_DIR = join(PLUGIN_ROOT, "schemas");
@@ -42,6 +42,45 @@ const IntelligenceSummarySchema = IntelligenceArtifact.pick({
   attributionConfidence: true,
   churn: true,
   expertise: true,
+});
+
+const EraSynthesisEraSignalSchema = z.object({
+  signalId: z.number().int(),
+  signalType: z.string(),
+  score: z.number(),
+  startCommitSha: z.string().length(40),
+  endCommitSha: z.string().length(40),
+  startAt: z.number().int(),
+  endAt: z.number().int(),
+});
+
+const EraSynthesisChurnFileSchema = z.object({
+  path: z.string(),
+  changeCount: z.number().int().nonnegative(),
+  insertions: z.number().int().nonnegative(),
+  deletions: z.number().int().nonnegative(),
+  lastTouchedAt: z.number().int(),
+});
+
+const EraSynthesisDocDeltaSchema = z.object({
+  path: z.string(),
+  commitSha: z.string().length(40),
+  excerpt: z.string().max(500),
+});
+
+const ManifestWarningSchema = z.object({
+  code: z.string(),
+  message: z.string(),
+});
+
+const EraSynthesisContextSchema = z.object({
+  eraSignals: z.array(EraSynthesisEraSignalSchema),
+  topChurnFiles: z.array(EraSynthesisChurnFileSchema),
+  docDeltas: z.array(EraSynthesisDocDeltaSchema),
+  eraOwnership: IntelligenceArtifact.shape.eraOwnership,
+  expertiseTopics: z.array(IntelligenceArtifact.shape.expertise.shape.topics.element),
+  manifestWarnings: z.array(ManifestWarningSchema),
+  attributionConfidence: IntelligenceArtifact.shape.attributionConfidence,
 });
 
 type JsonRecord = Record<string, unknown>;
@@ -136,6 +175,17 @@ const intelligenceSchema = writeSchema(
 );
 
 writeSnapshotSchema(manifestSchema, intelligenceSchema);
+
+writeSchema("era-synthesis-context.schema.json", EraSynthesisContextSchema, {
+  title: "GitChangeEraSynthesisContext",
+  description:
+    "Bounded input for host-AI era synthesis from intelligence.json and doc snapshots.",
+});
+
+writeSchema("eras.schema.json", ErasArtifact, {
+  title: "GitChangeErasArtifact",
+  description: "Named eras with claims, inflections, and evidence bundles.",
+});
 
 // Sanity: generated schemas round-trip through fromJSONSchema for manifest.
 const manifestPath = join(SCHEMAS_DIR, "manifest.schema.json");

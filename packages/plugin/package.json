@@ -6,6 +6,14 @@
   "description": "GitChange IDE plugin — slash command skills, agent specs, and host-AI JSON schemas",
   "license": "MIT",
   "files": ["skills", "agents", "schemas"],
+  "schemas": [
+    "schemas/manifest.schema.json",
+    "schemas/snapshot.schema.json",
+    "schemas/intelligence-summary.schema.json",
+    "schemas/intelligence-full.schema.json",
+    "schemas/era-synthesis-context.schema.json",
+    "schemas/eras.schema.json"
+  ],
   "scripts": {
     "build": "tsx scripts/generate-schemas.ts",
     "test": "pnpm --dir ../.. exec vitest run packages/plugin/scripts/resolve-root.test.ts tests/integration/plugin-schemas.test.ts",

@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/eras.schema.json",
+  "title": "GitChangeErasArtifact",
+  "description": "Named eras with claims, inflections, and evidence bundles.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "computedAt": {
+      "type": "string"
+    },
+    "headSha": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 40
+    },
+    "sourceSignalCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "eras": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "startCommitSha": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 40
+          },
+          "endCommitSha": {
+            "type": "string",
+            "minLength": 40,
+            "maxLength": 40
+          },
+          "startAt": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "endAt": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "signalIds": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "inflections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "tech_pivot",
+                    "scope_steering",
+                    "process_shift",
+                    "team_ownership_change"
+                  ]
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evidence": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "commit"
+                          },
+                          "sha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "sha"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "file"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "doc"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          },
+                          "excerpt": {
+                            "type": "string",
+                            "maxLength": 500
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha",
+                          "excerpt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "title",
+                "description",
+                "evidence"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "claims": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evidence": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "commit"
+                          },
+                          "sha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "sha"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "file"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "doc"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          },
+                          "excerpt": {
+                            "type": "string",
+                            "maxLength": 500
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha",
+                          "excerpt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "text",
+                "evidence"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "evidence": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "commit"
+                    },
+                    "sha": {
+                      "type": "string",
+                      "minLength": 40,
+                      "maxLength": 40
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "sha"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "file"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "commitSha": {
+                      "type": "string",
+                      "minLength": 40,
+                      "maxLength": 40
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "path",
+                    "commitSha"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "doc"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "commitSha": {
+                      "type": "string",
+                      "minLength": 40,
+                      "maxLength": 40
+                    },
+                    "excerpt": {
+                      "type": "string",
+                      "maxLength": 500
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "path",
+                    "commitSha",
+                    "excerpt"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "summary",
+          "startCommitSha",
+          "endCommitSha",
+          "startAt",
+          "endAt",
+          "signalIds",
+          "inflections",
+          "claims",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "computedAt",
+    "headSha",
+    "sourceSignalCount",
+    "eras"
+  ],
+  "additionalProperties": false
+}

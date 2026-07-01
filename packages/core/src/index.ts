@@ -8,6 +8,17 @@ export type {
 } from "./intelligence/compute.js";
 export { computeIntelligence } from "./intelligence/compute.js";
 export {
+  decodeCommitCursor,
+  DEFAULT_COMMIT_PAGE_LIMIT,
+  encodeCommitCursor,
+  InvalidCommitCursorError,
+  listCommits,
+  MAX_COMMIT_PAGE_LIMIT,
+  type CommitListPage,
+  type CommitSummary,
+  type ListCommitsOptions,
+} from "./read/commits.js";
+export {
   getRepoSnapshot,
   type RepoSnapshot,
   type RepoSnapshotEraHighlight,

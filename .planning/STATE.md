@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 05-02-PLAN.md — commit search and filter
-last_updated: "2026-07-01T11:00:00.000Z"
+stopped_at: Completed 05-03-PLAN.md — vis-timeline era markers + era-filtered commits
+last_updated: "2026-07-01T11:02:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 4
   total_plans: 30
-  completed_plans: 27
+  completed_plans: 28
   percent: 50
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 5 of 8 in progress (Dashboard & Evidence Drill-Down)
-Plan: 3 of 6 complete in Phase 5 (05-01, 05-02, 05-04)
-Status: Ready for 05-03
+Plan: 4 of 6 complete in Phase 5 (05-01, 05-02, 05-03, 05-04)
+Status: Ready for 05-05
 Last activity: 2026-07-01
-Stopped at: Completed 05-02-PLAN.md — commit search and filter
+Stopped at: Completed 05-03-PLAN.md — vis-timeline era markers + era-filtered commits
 
-Progress: [█████████░] 90%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -100,6 +100,8 @@ Recent decisions affecting current work:
 - Existing .gitchange directories need re-index for hunks_json data
 - after/before API params are unix seconds; core multiplies by 1000 to match indexed committedAt ms
 - Path filter uses Drizzle exists subquery on file_changes.path with prefix LIKE
+- Era drill store holds SelectedEra object with window timestamps for after/before commit filters
+- vis-timeline mounted imperatively; vis-data added explicitly for Vite bundle
 
 ### Pending Todos
 
@@ -119,6 +121,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:00:00.000Z
-Stopped at: Completed 05-02-PLAN.md — commit search and filter
+Last session: 2026-07-01T11:02:00.000Z
+Stopped at: Completed 05-03-PLAN.md — vis-timeline era markers + era-filtered commits
 Resume file: None

@@ -42,7 +42,12 @@ export {
 } from "./interviews/store.js";
 export { CORE_SCHEMA_VERSION, indexFull } from "./index/full.js";
 export { indexIncremental } from "./index/incremental.js";
-export type { IndexOptions, IndexResult } from "./index/types.js";
+export {
+  createIndexWorkerPool,
+  INDEX_WORKER_BATCH_SIZE,
+} from "./index/worker-pool.js";
+export { INDEX_PROGRESS_INTERVAL } from "./index/commit-stream.js";
+export type { IndexOptions, IndexProgress, IndexResult } from "./index/types.js";
 export type {
   ComputeIntelligenceOptions,
   ComputeIntelligenceResult,
@@ -273,6 +278,12 @@ export {
   collectSemanticSnapshot,
   type SemanticSnapshot,
 } from "./verify/semantic-snapshot.js";
+export {
+  type IndexWorkspaceOptions,
+  type IndexWorkspaceResult,
+  type RepoIndexResult,
+  indexWorkspace,
+} from "./workspace/index-workspace.js";
 export {
   CrossRepoLink,
   CrossRepoLinkKind,

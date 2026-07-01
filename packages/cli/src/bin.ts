@@ -5,6 +5,12 @@ import { runIndexCommand } from "./commands/index.js";
 import { runServeCommand } from "./commands/serve.js";
 import { runStatusCommand } from "./commands/status.js";
 import { runValidateCommand } from "./commands/validate.js";
+import {
+  runWorkspaceAddCommand,
+  runWorkspaceIndexCommand,
+  runWorkspaceListCommand,
+  runWorkspaceRemoveCommand,
+} from "./commands/workspace.js";
 import { resolveRepoPath } from "./repo-path.js";
 
 export const program = new Command();
@@ -18,12 +24,17 @@ program
   .command("index")
   .description("Index repository history into .gitchange/")
   .option("--repo <path>", "Repository path (default: auto-detect from cwd)")
-  .action(async (options: { repo?: string }) => {
+  .option("--no-workers", "Disable parallel indexing workers")
+  .action(async (options: { repo?: string; workers?: boolean }) => {
     const repoPath = options.repo
       ? resolveRepoPath(resolve(options.repo))
       : resolveRepoPath(process.cwd());
     const gitchangeDir = join(repoPath, ".gitchange");
-    await runIndexCommand({ repoPath, gitchangeDir });
+    await runIndexCommand({
+      repoPath,
+      gitchangeDir,
+      useWorkers: options.workers !== false,
+    });
   });
 
 program
@@ -75,6 +86,59 @@ program
       runServeCommand(options);
     },
   );
+
+const workspace = program
+  .command("workspace")
+  .description("Manage multi-repo workspace registration and indexing");
+
+workspace
+  .command("add <path>")
+  .description("Register a repository in workspace.json")
+  .option("--label <name>", "Display label for the repository")
+  .option("--id <repoId>", "Stable repo id slug (default: derived from label)")
+  .action(
+    async (
+      pathArg: string,
+      options: { label?: string; id?: string },
+    ) => {
+      await runWorkspaceAddCommand({
+        cwd: process.cwd(),
+        repoPath: pathArg,
+        label: options.label,
+        repoId: options.id,
+      });
+    },
+  );
+
+workspace
+  .command("list")
+  .description("List repositories registered in workspace.json")
+  .action(() => {
+    runWorkspaceListCommand(process.cwd());
+  });
+
+workspace
+  .command("remove <repoId>")
+  .description("Remove a repository from workspace.json")
+  .action((repoId: string) => {
+    runWorkspaceRemoveCommand({ cwd: process.cwd(), repoId });
+  });
+
+workspace
+  .command("index")
+  .description("Index all repositories in the workspace sequentially")
+  .option("--full", "Run a full index rebuild for each repository")
+  .option(
+    "--rebuild-intelligence",
+    "Rebuild intelligence artifacts during indexing",
+  )
+  .action(async (options: { full?: boolean; rebuildIntelligence?: boolean }) => {
+    await runWorkspaceIndexCommand({
+      cwd: process.cwd(),
+      full: options.full,
+      rebuildIntelligence: options.rebuildIntelligence,
+    });
+  });
 
 program.parseAsync(process.argv).catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);

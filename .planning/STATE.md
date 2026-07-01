@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-PLAN.md — intelligence walking skeleton
-last_updated: "2026-07-01T08:47:13.054Z"
+stopped_at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
+last_updated: "2026-07-01T08:53:45.219Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 13
-  completed_plans: 10
+  completed_plans: 11
   percent: 13
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 2 of 8 in progress (Repository Intelligence & Ownership)
-Plan: 2 of 5 complete in Phase 2 (02-01 done; next: 02-02)
+Plan: 3 of 5 complete in Phase 2 (02-02 done; next: 02-04)
 Status: Ready to execute
 Last activity: 2026-07-01
-Stopped at: Completed 02-01-PLAN.md — intelligence walking skeleton
+Stopped at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
 
-Progress: [████████░░] 77%
+Progress: [█████████░] 85%
 
 ## Performance Metrics
 
@@ -69,6 +69,8 @@ Progress: [████████░░] 77%
 - Dogfood golden test gated behind GITCHANGE_DOGFOOD env flag
 - All intelligence Drizzle tables in single migration 0001_intelligence
 - computeIntelligence separate pass after indexFull; attributionConfidence degraded on partial index
+- es-git blame hot path; simple-git when .git-blame-ignore-revs present
+- Merge commits remapped to origCommitId before ownership aggregation
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -95,6 +97,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T08:47:13.043Z
-Stopped at: Completed 02-01-PLAN.md — intelligence walking skeleton
+Last session: 2026-07-01T08:53:45.208Z
+Stopped at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
 Resume file: None

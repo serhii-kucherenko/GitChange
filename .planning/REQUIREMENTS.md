@@ -46,7 +46,7 @@
 - [x] **CONT-01**: User can see who changed what with per-file and per-era ownership timelines
 - [ ] **CONT-02**: User can see decision attribution — who drove pivots with linked commits
 - [ ] **CONT-03**: User can view contributor expertise profiles inferred from history ("ask Alice about auth")
-- [ ] **CONT-04**: System computes ownership from line survival at HEAD with rename tracking and ignore-revs support
+- [x] **CONT-04**: System computes ownership from line survival at HEAD with rename tracking and ignore-revs support
 
 ### Decisions & Migrations (DEC)
 
@@ -184,7 +184,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | CONT-01 | Phase 2 | Complete |
 | CONT-02 | Phase 6 | Pending |
 | CONT-03 | Phase 2 | Pending |
-| CONT-04 | Phase 2 | Pending |
+| CONT-04 | Phase 2 | Complete |
 | DEC-01 | Phase 6 | Pending |
 | DEC-02 | Phase 6 | Pending |
 | DEC-03 | Phase 6 | Pending |

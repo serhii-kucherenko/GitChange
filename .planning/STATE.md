@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
-last_updated: "2026-07-01T12:13:00.000Z"
+stopped_at: Completed 07-03-PLAN.md — tour read API and dashboard client
+last_updated: "2026-07-01T05:23:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 6
   total_plans: 46
-  completed_plans: 37
-  percent: 80
+  completed_plans: 38
+  percent: 75
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 7 — Guided Tours (07-01 complete)
+**Current focus:** Phase 7 — Guided Tours (07-03 complete)
 
 ## Current Position
 
 Phase: 7 of 8 in progress (Guided Tours & Onboarding UX)
-Plan: 1 of 5 complete in Phase 7 (07-01)
-Status: Ready for 07-02 tour-builder agent
+Plan: 3 of 5 complete in Phase 7 (07-03)
+Status: Ready for 07-04 tour player
 Last activity: 2026-07-01
-Stopped at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
+Stopped at: Completed 07-03-PLAN.md — tour read API and dashboard client
 
-Progress: [████████░░] 80%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -126,6 +126,8 @@ Recent decisions affecting current work:
 - Topic tour stop cap (8) enforced at Zod layer alongside artifact kind caps
 - Context tests bind eras via applyBasicScenarioErasFixture from golden semantic fixture
 - writeToursArtifact gates atomic write with checkToursIntegrity against index + eras + decisions
+- Tour list 404 uses error message "tours not found" per plan contract
+- tourId path param rejects .. and / before artifact lookup (T-07-06)
 
 ### Pending Todos
 
@@ -145,6 +147,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:13:00.000Z
+Last session: 2026-07-01T12:19:38.494Z
 Stopped at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
 Resume file: None

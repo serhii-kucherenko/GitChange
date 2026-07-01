@@ -275,7 +275,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1; parallel)*
 
 - [ ] 07-02-PLAN.md — tour-builder agent + merge + pipeline + skill orchestration
-- [ ] 07-03-PLAN.md — GET /api/tours read path + dashboard client types
+- [x] 07-03-PLAN.md — GET /api/tours read path + dashboard client types
 
 **Wave 3** *(blocked on Waves 2–3)*
 
@@ -333,7 +333,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
-| 7. Guided Tours & Onboarding UX | 1/5 | In Progress|  |
+| 7. Guided Tours & Onboarding UX | 2/5 | In Progress|  |
 | 8. Hardening, Scale & Multi-Repo | 0/5 | Not started | - |
 
 ---

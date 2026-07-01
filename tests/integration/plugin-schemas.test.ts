@@ -123,6 +123,24 @@ describe("integration: plugin host-AI schemas", () => {
     expect(validate?.(eras)).toBe(true);
   });
 
+  it("validates interview record fixture against interview-record.schema.json", () => {
+    const record = {
+      id: "01HINTERVIEW",
+      decisionId: "decision:01HABC",
+      question: "Was SQLite adopted?",
+      answer: "Yes.",
+      verdict: "confirm",
+      recordedAt: "2026-07-01T12:00:00.000Z",
+    };
+
+    ajv.addSchema(readSchema("interview-record.schema.json"));
+    const validate = ajv.getSchema(
+      "https://gitchange.dev/schemas/interview-record.schema.json",
+    );
+    expect(validate).toBeDefined();
+    expect(validate?.(record)).toBe(true);
+  });
+
   it("validates trimmed intelligence against intelligence-summary.schema.json", async () => {
     const fixture = await indexBasicScenario();
     cleanups.push(fixture.cleanup);

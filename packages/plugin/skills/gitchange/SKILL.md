@@ -139,7 +139,7 @@ Otherwise (missing decisions, stale `headSha`, or user asks to refresh), run dec
    pnpm exec tsx packages/plugin/scripts/write-decisions.ts "<absolute-path-to-.gitchange>" /path/to/decisions-output.json
    ```
 
-6. **Present to user (DEC-02)** — list decision titles, status, and confidence. Note `reviewStatus: pending` on agent-mined rows until maintainer confirms via interview loop (DEC-03). Explain `supersededBy` / `supersedes` links when present.
+6. **Present to user (DEC-02)** — list decision titles, status, and confidence. Note `reviewStatus: pending` on agent-mined rows until maintainer confirms via interview loop (DEC-03). When any decision has `reviewStatus: pending`, offer `/gitchange-interview` to confirm or reject with durable writeback (DEC-04). Explain `supersededBy` / `supersedes` links when present.
 
 When `decisions.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
 
@@ -159,3 +159,4 @@ Answer questions using **schemas and artifacts only** (ownership, migrations, er
 - **Index errors**: show CLI stderr; suggest `gitchange status` after fixing the repo state.
 - **Semantic errors**: show `build-era-context` or `write-eras` stderr; verify `intelligence.json` exists and output matches `eras.schema.json`.
 - **Decision errors**: show `build-decision-context` or `write-decisions` stderr; verify `eras.json` exists and output matches `decisions.schema.json`.
+- **Pending decisions**: direct maintainer to `/gitchange-interview` for confirm/reject; answers persist under `.gitchange/interviews/` and merge into `decisions.json`.

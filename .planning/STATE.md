@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 05-06-PLAN.md — Phase 5 complete; confidence UI + privacy gate
-last_updated: "2026-07-01T11:26:43.856Z"
+status: ready
+stopped_at: Completed 06-01-PLAN.md — schemas, deterministic mining, EVD-03 threshold
+last_updated: "2026-07-01T11:34:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
   completed_plans: 31
-  percent: 63
+  percent: 86
 ---
 
 # Project State
@@ -25,11 +25,11 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 5 of 8 complete (Dashboard & Evidence Drill-Down)
-Plan: 6 of 6 complete in Phase 5 (05-01 through 05-06)
-Status: Phase complete — ready for verification
+Phase: 6 of 8 in progress (Decisions, Status & Open Work)
+Plan: 1 of 6 complete in Phase 6 (06-01)
+Status: Ready for 06-02
 Last activity: 2026-07-01
-Stopped at: Completed 05-06-PLAN.md — Phase 5 complete; confidence UI + privacy gate
+Stopped at: Completed 06-01-PLAN.md — schemas, deterministic mining, EVD-03 threshold
 
 Progress: [█████████░] 86%
 
@@ -109,6 +109,10 @@ Recent decisions affecting current work:
 - Attribution badge downgrades to Degraded when manifest.warnings is non-empty
 - PRIV-04 tests assert 127.0.0.1 default bind and 0.0.0.0 stderr warning
 
+- Interview evidence paths restricted to interviews/ prefix under .gitchange
+- EVD-03 floor at confidence 0.35 with literal gap message in threshold.ts
+- Deterministic candidate mining reads SQLite only; merge/chore/lockfile noise filtered
+
 ### Pending Todos
 
 None yet.
@@ -127,6 +131,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:26:43.846Z
-Stopped at: Completed 05-06-PLAN.md — Phase 5 complete; confidence UI + privacy gate
+Last session: 2026-07-01T11:34:00.000Z
+Stopped at: Completed 06-01-PLAN.md — schemas, deterministic mining, EVD-03 threshold
 Resume file: None

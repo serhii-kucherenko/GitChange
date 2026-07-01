@@ -21,12 +21,22 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
       <dl className="grid gap-3 sm:grid-cols-2">
         <div>
           <dt className="text-xs uppercase tracking-wide text-slate-500">
-            Schema version
+            Core schema version
           </dt>
           <dd className="font-mono text-sm text-slate-200">
             {manifest.schemaVersion}
           </dd>
         </div>
+        {manifest.semanticSchemaVersion ? (
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">
+              Semantic schema version
+            </dt>
+            <dd className="font-mono text-sm text-slate-200">
+              {manifest.semanticSchemaVersion}
+            </dd>
+          </div>
+        ) : null}
         <div>
           <dt className="text-xs uppercase tracking-wide text-slate-500">
             Indexed at
@@ -52,12 +62,32 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
           </dd>
         </div>
         {manifest.intelligenceComputedAt ? (
-          <div className="sm:col-span-2">
+          <div>
             <dt className="text-xs uppercase tracking-wide text-slate-500">
               Intelligence computed
             </dt>
             <dd className="text-sm text-slate-200">
               {formatIndexedAt(manifest.intelligenceComputedAt)}
+            </dd>
+          </div>
+        ) : null}
+        {manifest.semanticComputedAt ? (
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">
+              Semantic computed
+            </dt>
+            <dd className="text-sm text-slate-200">
+              {formatIndexedAt(manifest.semanticComputedAt)}
+            </dd>
+          </div>
+        ) : null}
+        {manifest.intelligenceSchemaVersion ? (
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">
+              Intelligence schema
+            </dt>
+            <dd className="font-mono text-sm text-slate-200">
+              {manifest.intelligenceSchemaVersion}
             </dd>
           </div>
         ) : null}

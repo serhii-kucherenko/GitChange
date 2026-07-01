@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchEras } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
+import { evidenceCountToLevel } from "../utils/confidence.js";
+import { ConfidenceBadge } from "./ConfidenceBadge.js";
 
 function formatInflectionType(type: string): string {
   return type.replaceAll("_", " ");
@@ -60,9 +62,14 @@ export function EraDetailPanel() {
                 key={`${inflection.type}-${inflection.title}`}
                 className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2"
               >
-                <p className="text-sm font-medium text-slate-200">
-                  {inflection.title}
-                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-sm font-medium text-slate-200">
+                    {inflection.title}
+                  </p>
+                  <ConfidenceBadge
+                    level={evidenceCountToLevel(inflection.evidence.length)}
+                  />
+                </div>
                 <p className="text-xs capitalize text-slate-500">
                   {formatInflectionType(inflection.type)}
                 </p>
@@ -86,7 +93,12 @@ export function EraDetailPanel() {
                 key={claim.text}
                 className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2"
               >
-                <p className="text-sm text-slate-200">{claim.text}</p>
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <p className="text-sm text-slate-200">{claim.text}</p>
+                  <ConfidenceBadge
+                    level={evidenceCountToLevel(claim.evidence.length)}
+                  />
+                </div>
                 <p className="mt-1 text-xs text-slate-500">
                   {claim.evidence.length} evidence item
                   {claim.evidence.length === 1 ? "" : "s"}

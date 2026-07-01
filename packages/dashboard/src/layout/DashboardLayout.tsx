@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import { AttributionBadge } from "../components/ConfidenceBadge.js";
 import type { SnapshotLoadState } from "../snapshot.js";
+import { resolveDisplayedAttribution } from "../utils/confidence.js";
 
 interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
@@ -20,17 +22,29 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   const headSha =
     loadState.status === "ready" ? loadState.data.manifest.repo.head : null;
+  const attributionBadge =
+    loadState.status === "ready" ? (
+      <AttributionBadge
+        confidence={resolveDisplayedAttribution(
+          loadState.data.intelligence?.attributionConfidence,
+          loadState.data.manifest.warnings.length > 0,
+        )}
+      />
+    ) : null;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header className="border-b border-slate-800 bg-slate-900/80 px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-baseline justify-between gap-4">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <h1 className="text-2xl font-semibold tracking-tight">GitChange</h1>
-          {headSha ? (
-            <p className="font-mono text-sm text-slate-400">
-              HEAD {headSha.slice(0, 7)}
-            </p>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-3">
+            {attributionBadge}
+            {headSha ? (
+              <p className="font-mono text-sm text-slate-400">
+                HEAD {headSha.slice(0, 7)}
+              </p>
+            ) : null}
+          </div>
         </div>
       </header>
 

@@ -23,6 +23,15 @@ export interface Manifest {
   intelligenceComputedAt?: string;
   intelligenceHeadSha?: string;
   intelligenceSchemaVersion?: string;
+  semanticComputedAt?: string;
+  semanticHeadSha?: string;
+  semanticSchemaVersion?: string;
+}
+
+export type AttributionConfidence = "complete" | "degraded";
+
+export interface IntelligenceSnapshot {
+  attributionConfidence?: AttributionConfidence;
 }
 
 export interface SnapshotResponse {
@@ -32,7 +41,7 @@ export interface SnapshotResponse {
     fileChangeCount: number;
     authorCount: number;
   };
-  intelligence: Record<string, unknown> | null;
+  intelligence: IntelligenceSnapshot | null;
   highlights: {
     topChurnFiles: { path: string; changeCount: number }[];
     topExpertiseTopics: { topic: string; label: string }[];

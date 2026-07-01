@@ -1,7 +1,18 @@
 {
   "name": "gitchange",
   "metadata": {
-    "description": "Local-first git history analysis — index commits, surface ownership and expertise, open a localhost dashboard"
+    "description": "Local-first git history analysis — index commits, surface ownership and expertise, open a localhost dashboard",
+    "keywords": [
+      "git-history",
+      "onboarding",
+      "codebase-evolution",
+      "ownership",
+      "dashboard",
+      "cursor-plugin",
+      "claude-code"
+    ],
+    "repository": "https://github.com/Egonex-AI/GitChange",
+    "homepage": "https://github.com/Egonex-AI/GitChange"
   },
   "owner": {
     "name": "GitChange"
@@ -12,7 +23,8 @@
       "source": "./packages/plugin",
       "description": "GitChange slash commands and host-AI schemas for evidence-backed repo analysis",
       "version": "0.1.0",
-      "license": "MIT"
+      "license": "MIT",
+      "keywords": ["git", "history", "onboarding", "dashboard"]
     }
   ]
 }

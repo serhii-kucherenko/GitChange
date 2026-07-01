@@ -48,7 +48,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-03-PLAN.md — es-git ingestion: revwalk, commit parse, tree diff + rename detection
+- [x] 01-03-PLAN.md — es-git ingestion: revwalk, commit parse, tree diff + rename detection
 - [x] 01-04-PLAN.md — Privacy gate: .gitchangeignore matcher + secret redaction
 
 **Wave 4** *(blocked on Wave 3 completion)*

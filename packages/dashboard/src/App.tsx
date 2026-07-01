@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { type CommitListFilters } from "./api/client.js";
+import type { CommitListFilters } from "./api/client.js";
+import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
 import { EraDetailPanel } from "./components/EraDetailPanel.js";
 import { EraTimeline } from "./components/EraTimeline.js";
+import { FileHistoryScrubber } from "./components/FileHistoryScrubber.js";
 import { IndexStatusCard } from "./components/IndexStatusCard.js";
 import { DashboardLayout } from "./layout/DashboardLayout.js";
 import { fetchSnapshot, type SnapshotLoadState } from "./snapshot.js";
@@ -15,6 +17,7 @@ export function App() {
   });
   const [commitFilters, setCommitFilters] = useState<CommitListFilters>({});
   const selectedEra = useDrillStore((state) => state.selectedEra);
+  const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
 
   const mergedFilters = useMemo<CommitListFilters>(() => {
     if (!selectedEra) {
@@ -28,6 +31,14 @@ export function App() {
       before: eraWindow.before,
     };
   }, [commitFilters, selectedEra]);
+
+  const pathSuggestions = useMemo(
+    () =>
+      loadState.status === "ready"
+        ? loadState.data.highlights.topChurnFiles.map((file) => file.path)
+        : [],
+    [loadState],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -54,6 +65,11 @@ export function App() {
           </>
         ) : null
       }
+      fileHistory={
+        loadState.status === "ready" ? (
+          <FileHistoryScrubber pathSuggestions={pathSuggestions} />
+        ) : null
+      }
       timeline={loadState.status === "ready" ? <EraTimeline /> : null}
       commitFilterBar={
         loadState.status === "ready" ? (
@@ -65,7 +81,13 @@ export function App() {
       }
       main={
         loadState.status === "ready" ? (
-          <CommitList filters={mergedFilters} />
+          <div className="space-y-4">
+            {selectedCommitSha ? (
+              <CommitDetailPanel />
+            ) : (
+              <CommitList filters={mergedFilters} />
+            )}
+          </div>
         ) : loadState.status === "loading" ? (
           <p className="text-slate-400">Loading commit history…</p>
         ) : null

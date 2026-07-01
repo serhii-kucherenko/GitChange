@@ -40,7 +40,27 @@ export interface DashboardEra {
   commitCountInWindow: number;
 }
 
+export interface FileHistoryEvent {
+  commitSha: string;
+  committedAt: number;
+  changeType: string;
+  summary: string;
+  path: string;
+  oldPath: string | null;
+}
+
+export interface FileHistoryPage {
+  events: FileHistoryEvent[];
+  nextCursor: string | null;
+  order: "newest_first";
+}
+
 export interface FetchCommitsParams extends CommitListFilters {
+  limit?: number;
+  cursor?: string;
+}
+
+export interface FetchFileHistoryParams {
   limit?: number;
   cursor?: string;
 }
@@ -125,6 +145,35 @@ export async function fetchCommitsPage(
   }
 
   return (await response.json()) as CommitsPage;
+}
+
+export async function fetchFileHistoryPage(
+  path: string,
+  params: FetchFileHistoryParams = {},
+): Promise<FileHistoryPage> {
+  const search = new URLSearchParams();
+  if (params.limit !== undefined) {
+    search.set("limit", String(params.limit));
+  }
+  if (params.cursor) {
+    search.set("cursor", params.cursor);
+  }
+
+  const query = search.toString();
+  const encodedPath = encodeURIComponent(path);
+  const response = await fetch(
+    `/api/files/${encodedPath}/history${query ? `?${query}` : ""}`,
+  );
+
+  if (response.status === 400) {
+    throw new Error("invalid_file_path");
+  }
+
+  if (!response.ok) {
+    throw new Error(`File history request failed (${response.status})`);
+  }
+
+  return (await response.json()) as FileHistoryPage;
 }
 
 export async function fetchEras(): Promise<DashboardEra[]> {

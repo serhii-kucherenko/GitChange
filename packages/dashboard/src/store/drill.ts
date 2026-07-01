@@ -13,6 +13,7 @@ interface DrillState {
   selectedEra: SelectedEra | null;
   setSelectedCommitSha: (sha: string | null) => void;
   setSelectedFilePath: (path: string | null) => void;
+  selectCommitAndFile: (sha: string, path: string) => void;
   setSelectedEraId: (era: SelectedEra | null) => void;
   clearEra: () => void;
   clearDownstreamFromEra: () => void;
@@ -29,6 +30,11 @@ export const useDrillStore = create<DrillState>((set) => ({
       selectedFilePath: null,
     }),
   setSelectedFilePath: (path) => set({ selectedFilePath: path }),
+  selectCommitAndFile: (sha, path) =>
+    set({
+      selectedCommitSha: sha,
+      selectedFilePath: path,
+    }),
   setSelectedEraId: (era) =>
     set({
       selectedEra: era,
@@ -44,9 +50,10 @@ export const useDrillStore = create<DrillState>((set) => ({
   clearDownstreamFromCommit: () => set({ selectedFilePath: null }),
 }));
 
-export function eraToCommitFilters(
-  era: SelectedEra,
-): { after: number; before: number } {
+export function eraToCommitFilters(era: SelectedEra): {
+  after: number;
+  before: number;
+} {
   return {
     after: Math.floor(era.startAt / 1000),
     before: Math.floor(era.endAt / 1000),

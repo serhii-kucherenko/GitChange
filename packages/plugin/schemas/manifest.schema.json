@@ -84,6 +84,18 @@
     },
     "semanticSchemaVersion": {
       "type": "string"
+    },
+    "decisionsComputedAt": {
+      "type": "string"
+    },
+    "openWorkComputedAt": {
+      "type": "string"
+    },
+    "decisionsSchemaVersion": {
+      "type": "string"
+    },
+    "openWorkSchemaVersion": {
+      "type": "string"
     }
   },
   "required": [

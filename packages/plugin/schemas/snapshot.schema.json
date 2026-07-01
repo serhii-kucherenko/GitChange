@@ -197,6 +197,18 @@
         },
         "semanticSchemaVersion": {
           "type": "string"
+        },
+        "decisionsComputedAt": {
+          "type": "string"
+        },
+        "openWorkComputedAt": {
+          "type": "string"
+        },
+        "decisionsSchemaVersion": {
+          "type": "string"
+        },
+        "openWorkSchemaVersion": {
+          "type": "string"
         }
       },
       "required": [
@@ -332,6 +344,69 @@
                             "type",
                             "path",
                             "commitSha",
+                            "excerpt"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "hunk"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "commitSha": {
+                              "type": "string",
+                              "minLength": 40,
+                              "maxLength": 40
+                            },
+                            "startLine": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "endLine": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "commitSha",
+                            "startLine",
+                            "endLine"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "interview"
+                            },
+                            "path": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "recordedAt": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "excerpt": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "recordedAt",
                             "excerpt"
                           ],
                           "additionalProperties": false
@@ -533,6 +608,69 @@
                             "excerpt"
                           ],
                           "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "hunk"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "commitSha": {
+                              "type": "string",
+                              "minLength": 40,
+                              "maxLength": 40
+                            },
+                            "startLine": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "endLine": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "commitSha",
+                            "startLine",
+                            "endLine"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "interview"
+                            },
+                            "path": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "recordedAt": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "excerpt": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "recordedAt",
+                            "excerpt"
+                          ],
+                          "additionalProperties": false
                         }
                       ]
                     }
@@ -658,6 +796,69 @@
                             "type",
                             "path",
                             "commitSha",
+                            "excerpt"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "hunk"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "commitSha": {
+                              "type": "string",
+                              "minLength": 40,
+                              "maxLength": 40
+                            },
+                            "startLine": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "endLine": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "commitSha",
+                            "startLine",
+                            "endLine"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "interview"
+                            },
+                            "path": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "recordedAt": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "excerpt": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "recordedAt",
                             "excerpt"
                           ],
                           "additionalProperties": false
@@ -873,6 +1074,69 @@
                                   "type",
                                   "path",
                                   "commitSha",
+                                  "excerpt"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "const": "hunk"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "commitSha": {
+                                    "type": "string",
+                                    "minLength": 40,
+                                    "maxLength": 40
+                                  },
+                                  "startLine": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "endLine": {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 9007199254740991
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "path",
+                                  "commitSha",
+                                  "startLine",
+                                  "endLine"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "const": "interview"
+                                  },
+                                  "path": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "recordedAt": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "excerpt": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "path",
+                                  "recordedAt",
                                   "excerpt"
                                 ],
                                 "additionalProperties": false

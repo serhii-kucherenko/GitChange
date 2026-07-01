@@ -2,7 +2,13 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
-import { ErasArtifact, IntelligenceArtifact, ManifestSchema } from "@gitchange/core";
+import {
+  DecisionsArtifact,
+  ErasArtifact,
+  Evidence,
+  IntelligenceArtifact,
+  ManifestSchema,
+} from "@gitchange/core";
 
 const PLUGIN_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SCHEMAS_DIR = join(PLUGIN_ROOT, "schemas");
@@ -217,6 +223,55 @@ writeSchema("eras-summary.schema.json", SnapshotErasSummarySchema, {
   title: "GitChangeErasSummary",
   description:
     "Bounded era highlights for snapshot API and host-AI presentation.",
+});
+
+const DecisionCandidateSchema = z.object({
+  candidateId: z.string().min(1),
+  title: z.string().min(1),
+  seedEvidence: z.array(Evidence).min(1),
+  relatedPaths: z.array(z.string()),
+  sourceSignals: z.array(z.string()).min(1),
+});
+
+const DecisionMiningEraSummarySchema = z.object({
+  name: z.string(),
+  summary: z.string(),
+  inflectionTypes: z.array(
+    z.enum([
+      "tech_pivot",
+      "scope_steering",
+      "process_shift",
+      "team_ownership_change",
+    ]),
+  ),
+});
+
+const DecisionMiningContextSchema = z.object({
+  candidates: z.array(DecisionCandidateSchema).max(30),
+  erasSummary: z
+    .object({
+      eraCount: z.number().int().nonnegative(),
+      inflectionCount: z.number().int().nonnegative(),
+      eras: z.array(DecisionMiningEraSummarySchema),
+    })
+    .nullable(),
+  topChurnFiles: z.array(EraSynthesisChurnFileSchema),
+  docDeltas: z.array(EraSynthesisDocDeltaSchema),
+  expertiseTopics: z.array(IntelligenceArtifact.shape.expertise.shape.topics.element),
+  manifestWarnings: z.array(ManifestWarningSchema),
+  attributionConfidence: IntelligenceArtifact.shape.attributionConfidence,
+});
+
+writeSchema("decision-mining-context.schema.json", DecisionMiningContextSchema, {
+  title: "GitChangeDecisionMiningContext",
+  description:
+    "Bounded input for host-AI decision mining from intelligence.json and indexed SQLite.",
+});
+
+writeSchema("decisions.schema.json", DecisionsArtifact, {
+  title: "GitChangeDecisionsArtifact",
+  description:
+    "Past decisions and migrations with status, evidence, supersession, and attribution.",
 });
 
 // Sanity: generated schemas round-trip through fromJSONSchema for manifest.

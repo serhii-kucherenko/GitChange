@@ -12,7 +12,9 @@
     "schemas/intelligence-summary.schema.json",
     "schemas/intelligence-full.schema.json",
     "schemas/era-synthesis-context.schema.json",
-    "schemas/eras.schema.json"
+    "schemas/eras.schema.json",
+    "schemas/decision-mining-context.schema.json",
+    "schemas/decisions.schema.json"
   ],
   "scripts": {
     "build": "tsx scripts/generate-schemas.ts",

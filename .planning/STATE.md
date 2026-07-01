@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 1 context gathered
-last_updated: "2026-07-01T07:46:53.402Z"
+last_updated: "2026-07-01T07:51:19.864Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -26,11 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 1 of 8 (Index Foundation)
-Plan: 3 of 8 (Schema + evidence contract)
-Status: Ready to execute
+Plan: 4 of 8 (Privacy gate — complete; next: 01-05)
+Status: Ready to execute 01-05
 Last activity: 2026-07-01
+Stopped at: Completed 01-04-PLAN.md
 
-Progress: [███░░░░░░░] 25%
+Progress: [████░░░░░░] 38%
 
 ## Performance Metrics
 
@@ -57,6 +58,9 @@ Progress: [███░░░░░░░] 25%
 
 ### Decisions
 
+- Secret rules compiled per `redact()` call to avoid global regex `lastIndex` bugs
+- `applyPrivacy` short-circuits ignored paths without redaction pass
+
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
@@ -82,6 +86,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T07:46:53.392Z
+Last session: 2026-07-01T07:51:19.855Z
 Stopped at: Phase 1 context gathered
 Resume file: None

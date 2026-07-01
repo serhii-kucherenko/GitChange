@@ -86,9 +86,9 @@
 
 ### Privacy (PRIV)
 
-- [ ] **PRIV-01**: System runs local-only with no telemetry
-- [ ] **PRIV-02**: System redacts secrets from generated artifacts at ingest
-- [ ] **PRIV-03**: User can configure `.gitchangeignore` for sensitive paths, authors, or commits
+- [x] **PRIV-01**: System runs local-only with no telemetry
+- [x] **PRIV-02**: System redacts secrets from generated artifacts at ingest
+- [x] **PRIV-03**: User can configure `.gitchangeignore` for sensitive paths, authors, or commits
 - [ ] **PRIV-04**: Local server binds to localhost by default
 
 ### Scale & Performance (SCALE)
@@ -206,9 +206,9 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | INST-02 | Phase 3 | Pending |
 | INST-03 | Phase 3 | Pending |
 | INST-04 | Phase 3 | Pending |
-| PRIV-01 | Phase 1 | Pending |
-| PRIV-02 | Phase 1 | Pending |
-| PRIV-03 | Phase 1 | Pending |
+| PRIV-01 | Phase 1 | Complete |
+| PRIV-02 | Phase 1 | Complete |
+| PRIV-03 | Phase 1 | Complete |
 | PRIV-04 | Phase 5 | Pending |
 | SCALE-01 | Phase 8 | Pending |
 | SCALE-02 | Phase 5 | Pending |

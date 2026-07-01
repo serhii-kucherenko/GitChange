@@ -265,7 +265,25 @@ Plans:
   4. Every tour stop shows linked evidence with drill-down to commits and files
   5. Tour player integrates with the Phase 5 dashboard drill-down surfaces for evidence navigation
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 07-01-PLAN.md — Tours schemas + deterministic outline + context bundler + I/O
+
+**Wave 2** *(blocked on Wave 1; parallel)*
+
+- [ ] 07-02-PLAN.md — tour-builder agent + merge + pipeline + skill orchestration
+- [ ] 07-03-PLAN.md — GET /api/tours read path + dashboard client types
+
+**Wave 3** *(blocked on Waves 2–3)*
+
+- [ ] 07-04-PLAN.md — Tour player + role/topic picker + drill-down + open-work badges
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 07-05-PLAN.md — Golden tours integrity + dashboard tour E2E + validate CLI gate
 **UI hint**: yes
 
 ### Phase 8: Hardening, Scale & Multi-Repo
@@ -297,7 +315,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
-| 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
+| 7. Guided Tours & Onboarding UX | 0/5 | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |
 
 ---

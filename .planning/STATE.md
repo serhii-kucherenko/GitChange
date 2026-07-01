@@ -10,8 +10,8 @@ progress:
   total_phases: 8
   completed_phases: 6
   total_plans: 46
-  completed_plans: 38
-  percent: 75
+  completed_plans: 39
+  percent: 83
 ---
 
 # Project State
@@ -128,6 +128,7 @@ Recent decisions affecting current work:
 - writeToursArtifact gates atomic write with checkToursIntegrity against index + eras + decisions
 - Tour list 404 uses error message "tours not found" per plan contract
 - tourId path param rejects .. and / before artifact lookup (T-07-06)
+- tours.list / tours.detail(tourId) react-query key helpers exported from dashboard client
 
 ### Pending Todos
 
@@ -147,6 +148,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:19:38.494Z
-Stopped at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
+Last session: 2026-07-01T05:23:00.000Z
+Stopped at: Completed 07-03-PLAN.md — tour read API and dashboard client
 Resume file: None

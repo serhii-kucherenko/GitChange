@@ -129,7 +129,7 @@ Plans:
 **Wave 3** *(blocked on Wave 2; 03-04 parallel with 03-02 after 03-01)*
 
 - [x] 03-03-PLAN.md — Minimal React dashboard SPA (index status + repo snapshot)
-- [ ] 03-04-PLAN.md — Plugin slash commands (`/gitchange`, `/gitchange-dashboard`) + host-AI schemas
+- [x] 03-04-PLAN.md — Plugin slash commands (`/gitchange`, `/gitchange-dashboard`) + host-AI schemas
 
 **Wave 4** *(blocked on Wave 3 partial — 03-04)*
 
@@ -231,7 +231,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
-| 3. CLI & Plugin Scaffold | 3/6 | In Progress|  |
+| 3. CLI & Plugin Scaffold | 4/6 | In Progress|  |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |

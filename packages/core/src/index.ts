@@ -126,6 +126,12 @@ export {
   type TourSummary,
 } from "./read/tours.js";
 export {
+  getTourByIdUnified,
+  listToursUnified,
+  mergeToursForWorkspace,
+  type MergedToursResult,
+} from "./read/unified/tours.js";
+export {
   decodeFileHistoryCursor,
   encodeFileHistoryCursor,
   type FileHistoryEvent,

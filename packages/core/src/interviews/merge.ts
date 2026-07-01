@@ -53,9 +53,12 @@ function mergeDecision(
     interview.answer,
   );
 
-  const evidenceHasInterview = decision.evidence.some(
-    (ref) => ref.type === "interview" && ref.path === interviewEvidence.path,
-  );
+  const evidenceHasInterview = decision.evidence.some((ref) => {
+    if (ref.type !== "interview") {
+      return false;
+    }
+    return ref.path === interviewEvidencePath(interview.id);
+  });
   const evidence = evidenceHasInterview
     ? decision.evidence
     : [...decision.evidence, interviewEvidence];

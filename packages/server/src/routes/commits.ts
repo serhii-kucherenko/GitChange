@@ -1,8 +1,11 @@
 import {
   InvalidCommitCursorError,
   InvalidCommitFilterError,
-  listCommits,
+  InvalidUnifiedCommitCursorError,
+  listCommitsUnified,
   MAX_COMMIT_PAGE_LIMIT,
+  resolveRepoGitchangeDir,
+  resolveWorkspaceContext,
 } from "@gitchange/core";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -13,6 +16,7 @@ const CommitSummarySchema = z.object({
   committedAt: z.number().int(),
   authorName: z.string(),
   authorEmail: z.string(),
+  repoId: z.string().optional(),
 });
 
 const CommitsResponseSchema = z.object({
@@ -26,6 +30,7 @@ const CommitFiltersSchema = z.object({
   q: z.string().max(200).optional(),
   after: z.number().int().optional(),
   before: z.number().int().optional(),
+  repoId: z.string().min(1).optional(),
 });
 
 export interface CommitsRouteOptions {
@@ -83,7 +88,24 @@ function parseFilters(context: {
     q: context.req.query("q"),
     after,
     before,
+    repoId: context.req.query("repoId"),
   });
+}
+
+function resolveRepoIdFromQuery(
+  ctx: ReturnType<typeof resolveWorkspaceContext>,
+  requestedRepoId: string | undefined,
+): string | undefined {
+  if (!requestedRepoId) {
+    return undefined;
+  }
+
+  const known = ctx.repos.some((repo) => repo.repoId === requestedRepoId);
+  if (!known) {
+    throw new InvalidCommitFilterError("invalid_repo_id", "repoId");
+  }
+
+  return requestedRepoId;
 }
 
 export function createCommitsRoutes(options: CommitsRouteOptions): Hono {
@@ -94,16 +116,22 @@ export function createCommitsRoutes(options: CommitsRouteOptions): Hono {
     const cursor = context.req.query("cursor");
 
     try {
+      const workspaceCtx = resolveWorkspaceContext(options.gitchangeDir);
       const filters = parseFilters(context);
-      const page = listCommits(options.gitchangeDir, {
+      const repoId = resolveRepoIdFromQuery(workspaceCtx, filters.repoId);
+      const page = listCommitsUnified(workspaceCtx, {
         limit,
         cursor,
         ...filters,
+        repoId,
       });
       const body = CommitsResponseSchema.parse(page);
       return context.json(body);
     } catch (error) {
-      if (error instanceof InvalidCommitCursorError) {
+      if (
+        error instanceof InvalidCommitCursorError ||
+        error instanceof InvalidUnifiedCommitCursorError
+      ) {
         return context.json({ error: "invalid_cursor" }, 400);
       }
       if (error instanceof InvalidCommitFilterError) {
@@ -120,4 +148,25 @@ export function createCommitsRoutes(options: CommitsRouteOptions): Hono {
   });
 
   return app;
+}
+
+export function resolveCommitDetailGitchangeDir(
+  gitchangeDir: string,
+  repoId: string | undefined,
+): string {
+  const ctx = resolveWorkspaceContext(gitchangeDir);
+  if (!ctx.isMultiRepo) {
+    return ctx.repos[0]?.gitchangeDir ?? gitchangeDir;
+  }
+
+  if (!repoId) {
+    return ctx.repos[0]?.gitchangeDir ?? gitchangeDir;
+  }
+
+  const resolved = resolveRepoGitchangeDir(ctx, repoId);
+  if (!resolved) {
+    throw new InvalidCommitFilterError("invalid_repo_id", "repoId");
+  }
+
+  return resolved;
 }

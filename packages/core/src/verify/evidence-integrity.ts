@@ -100,6 +100,8 @@ export function checkEvidenceIntegrity(db: DrizzleDb): IntegrityReport {
             danglingFileRefs.push({ path: ref.path, commitSha: ref.commitSha });
           }
           break;
+        case "interview":
+          break;
         default:
           assertNever(ref);
       }

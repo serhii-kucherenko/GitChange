@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import type { CommitListFilters } from "./api/client.js";
-import { fetchTour, tours } from "./api/client.js";
+import { fetchTour, fetchWorkspace, tours } from "./api/client.js";
 import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
@@ -12,6 +12,7 @@ import { FileHistoryScrubber } from "./components/FileHistoryScrubber.js";
 import { IndexStatusCard } from "./components/IndexStatusCard.js";
 import { MigrationThreadPanel } from "./components/MigrationThreadPanel.js";
 import { OpenThreadsPanel } from "./components/OpenThreadsPanel.js";
+import { RepoFilterBar } from "./components/RepoFilterBar.js";
 import { TourChapterNav } from "./components/TourChapterNav.js";
 import { TourPicker } from "./components/TourPicker.js";
 import { TourPlayer } from "./components/TourPlayer.js";
@@ -22,6 +23,7 @@ import {
 import { fetchSnapshot, type SnapshotLoadState } from "./snapshot.js";
 import { eraToCommitFilters, useDrillStore } from "./store/drill.js";
 import { useTourStore } from "./store/tour.js";
+import { useWorkspaceStore } from "./store/workspace.js";
 
 export function App() {
   const [loadState, setLoadState] = useState<SnapshotLoadState>({
@@ -36,6 +38,8 @@ export function App() {
   const activeTourId = useTourStore((state) => state.activeTourId);
   const hydrateFromStorage = useTourStore((state) => state.hydrateFromStorage);
   const persistToStorage = useTourStore((state) => state.persistToStorage);
+  const setWorkspaceSnapshot = useWorkspaceStore((state) => state.setSnapshot);
+  const selectedRepoId = useWorkspaceStore((state) => state.selectedRepoId);
 
   const headSha =
     loadState.status === "ready" ? loadState.data.manifest.repo.head : null;
@@ -53,17 +57,22 @@ export function App() {
   });
 
   const mergedFilters = useMemo<CommitListFilters>(() => {
-    if (!selectedEra) {
-      return commitFilters;
+    const base = selectedEra
+      ? {
+          ...commitFilters,
+          ...eraToCommitFilters(selectedEra),
+        }
+      : commitFilters;
+
+    if (!selectedRepoId) {
+      return base;
     }
 
-    const eraWindow = eraToCommitFilters(selectedEra);
     return {
-      ...commitFilters,
-      after: eraWindow.after,
-      before: eraWindow.before,
+      ...base,
+      repoId: selectedRepoId,
     };
-  }, [commitFilters, selectedEra]);
+  }, [commitFilters, selectedEra, selectedRepoId]);
 
   const pathSuggestions = useMemo(
     () =>
@@ -82,10 +91,27 @@ export function App() {
       }
     });
 
+    void fetchWorkspace()
+      .then((workspace) => {
+        if (!cancelled) {
+          setWorkspaceSnapshot(workspace);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setWorkspaceSnapshot({
+            isMultiRepo: false,
+            primaryRepoId: null,
+            repos: [],
+            links: [],
+          });
+        }
+      });
+
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [setWorkspaceSnapshot]);
 
   useEffect(() => {
     if (!headSha) {
@@ -168,10 +194,13 @@ export function App() {
       timeline={loadState.status === "ready" ? <EraTimeline /> : null}
       commitFilterBar={
         loadState.status === "ready" ? (
-          <CommitFilterBar
-            filters={commitFilters}
-            onChange={setCommitFilters}
-          />
+          <div className="space-y-3">
+            <RepoFilterBar />
+            <CommitFilterBar
+              filters={commitFilters}
+              onChange={setCommitFilters}
+            />
+          </div>
         ) : null
       }
       intelligencePanel={intelligencePanel}

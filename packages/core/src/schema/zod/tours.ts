@@ -51,6 +51,7 @@ export const TourStop = z.object({
   narrative: z.string().max(400),
   evidence: z.array(Evidence).min(1),
   drillTarget: DrillTarget,
+  repoId: z.string().min(1).optional(),
 });
 
 export type TourStop = z.infer<typeof TourStop>;

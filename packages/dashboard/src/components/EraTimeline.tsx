@@ -5,9 +5,11 @@ import { Timeline } from "vis-timeline/standalone";
 import type { DashboardEra } from "../api/client.js";
 import { fetchEras, fetchOpenWorkMatchableThreads } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
+import { useWorkspaceStore } from "../store/workspace.js";
 import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
 import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
 import { openWorkBadgeHtml } from "../utils/open-work-badge-html.js";
+import { RepoBadge } from "./RepoBadge.js";
 
 interface TimelineItem {
   id: string;
@@ -74,6 +76,12 @@ export function EraTimeline() {
 
   const eras = query.data ?? [];
   const matchableThreads = openWorkQuery.data ?? [];
+  const isMultiRepo = useWorkspaceStore(
+    (state) => state.snapshot?.isMultiRepo ?? false,
+  );
+  const primaryRepoId = useWorkspaceStore(
+    (state) => state.snapshot?.primaryRepoId ?? null,
+  );
   erasRef.current = eras;
 
   useEffect(() => {
@@ -199,9 +207,17 @@ export function EraTimeline() {
   return (
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
       <header className="mb-3">
-        <h2 className="text-sm font-medium text-slate-200">Project timeline</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-sm font-medium text-slate-200">Project timeline</h2>
+          {isMultiRepo && primaryRepoId ? (
+            <RepoBadge repoId={primaryRepoId} compact />
+          ) : null}
+        </div>
         <p className="text-xs text-slate-500">
           Click an era band to filter commits to that chapter.
+          {isMultiRepo
+            ? " Era bands show the primary repository until federated era merge lands."
+            : ""}
         </p>
       </header>
       <div

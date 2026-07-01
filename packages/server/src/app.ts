@@ -7,6 +7,7 @@ import { createFileHistoryRoutes } from "./routes/file-history.js";
 import { createOpenWorkRoutes } from "./routes/open-work.js";
 import { createSnapshotRoutes } from "./routes/snapshot.js";
 import { createToursRoutes } from "./routes/tours.js";
+import { createWorkspaceRoutes } from "./routes/workspace.js";
 import { wireStatic } from "./static.js";
 
 export interface CreateAppOptions {
@@ -26,6 +27,7 @@ export function createApp(options: CreateAppOptions): Hono {
   app.route("/api", createDecisionsRoutes(options));
   app.route("/api", createOpenWorkRoutes(options));
   app.route("/api", createToursRoutes(options));
+  app.route("/api", createWorkspaceRoutes(options));
 
   if (options.dashboardDistPath) {
     wireStatic(app, options.dashboardDistPath);

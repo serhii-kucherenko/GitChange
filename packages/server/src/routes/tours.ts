@@ -1,4 +1,8 @@
-import { getTourById, listTours } from "@gitchange/core";
+import {
+  getTourByIdUnified,
+  listToursUnified,
+  resolveWorkspaceContext,
+} from "@gitchange/core";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -26,17 +30,20 @@ const EvidenceSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("commit"),
     sha: z.string().length(40),
+    repoId: z.string().optional(),
   }),
   z.object({
     type: z.literal("file"),
     path: z.string(),
     commitSha: z.string().length(40),
+    repoId: z.string().optional(),
   }),
   z.object({
     type: z.literal("doc"),
     path: z.string(),
     commitSha: z.string().length(40),
     excerpt: z.string(),
+    repoId: z.string().optional(),
   }),
   z.object({
     type: z.literal("hunk"),
@@ -44,12 +51,14 @@ const EvidenceSchema = z.discriminatedUnion("type", [
     commitSha: z.string().length(40),
     startLine: z.number().int().positive(),
     endLine: z.number().int().positive(),
+    repoId: z.string().optional(),
   }),
   z.object({
     type: z.literal("interview"),
     path: z.string(),
     recordedAt: z.string(),
     excerpt: z.string(),
+    repoId: z.string().optional(),
   }),
 ]);
 
@@ -79,6 +88,7 @@ const TourStopSchema = z.object({
   narrative: z.string().max(400),
   evidence: z.array(EvidenceSchema).min(1),
   drillTarget: DrillTargetSchema,
+  repoId: z.string().optional(),
 });
 
 const TourChapterSchema = z.object({
@@ -123,7 +133,8 @@ export function createToursRoutes(options: ToursRouteOptions): Hono {
   const app = new Hono();
 
   app.get("/tours", (context) => {
-    const result = listTours(options.gitchangeDir);
+    const ctx = resolveWorkspaceContext(options.gitchangeDir);
+    const result = listToursUnified(ctx);
     if (!result) {
       return context.json({ error: "tours not found" }, 404);
     }
@@ -138,7 +149,8 @@ export function createToursRoutes(options: ToursRouteOptions): Hono {
       return context.json({ error: "tour_not_found" }, 404);
     }
 
-    const tour = getTourById(options.gitchangeDir, tourId);
+    const ctx = resolveWorkspaceContext(options.gitchangeDir);
+    const tour = getTourByIdUnified(ctx, tourId);
     if (!tour) {
       return context.json({ error: "tour_not_found" }, 404);
     }

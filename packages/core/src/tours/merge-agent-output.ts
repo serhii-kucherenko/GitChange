@@ -84,9 +84,12 @@ function mergeDefaultTour(
   agentTour: Extract<TourType, { kind: "default" }>,
 ): Extract<TourType, { kind: "default" }> {
   return Tour.parse({
-    ...agentTour,
+    kind: "default",
+    id: agentTour.id,
+    title: agentTour.title,
+    description: agentTour.description,
     chapters: mergeDefaultTourChapters(outlineChapters, agentTour.chapters),
-  });
+  }) as Extract<TourType, { kind: "default" }>;
 }
 
 function validateEvidenceRefs(

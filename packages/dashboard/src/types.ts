@@ -221,6 +221,7 @@ export interface TourStop {
   narrative: string;
   evidence: TourEvidence[];
   drillTarget: TourDrillTarget;
+  repoId?: string;
 }
 
 export interface TourChapter {

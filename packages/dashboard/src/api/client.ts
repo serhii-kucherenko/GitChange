@@ -14,6 +14,7 @@ export interface CommitSummary {
   committedAt: number;
   authorName: string;
   authorEmail: string;
+  repoId?: string;
 }
 
 export interface CommitsPage {
@@ -27,6 +28,7 @@ export interface CommitListFilters {
   q?: string;
   after?: number;
   before?: number;
+  repoId?: string;
 }
 
 export interface DashboardEra {
@@ -37,6 +39,7 @@ export interface DashboardEra {
   endCommitSha: string;
   startAt: number;
   endAt: number;
+  repoId?: string;
   inflections: Array<{
     type: string;
     title: string;
@@ -145,6 +148,9 @@ export async function fetchCommitsPage(
   }
   if (params.before !== undefined) {
     search.set("before", String(params.before));
+  }
+  if (params.repoId?.trim()) {
+    search.set("repoId", params.repoId.trim());
   }
 
   const query = search.toString();
@@ -336,4 +342,28 @@ export async function fetchTour(tourId: string): Promise<TourDetail> {
   }
 
   return (await response.json()) as TourDetail;
+}
+
+export interface WorkspaceResponse {
+  isMultiRepo: boolean;
+  primaryRepoId: string | null;
+  repos: Array<{ repoId: string; label: string }>;
+  links: Array<{
+    id: string;
+    sourceRepoId: string;
+    targetRepoId: string;
+    kind: "shared_migration" | "manual";
+    label: string;
+    evidenceNote?: string;
+  }>;
+}
+
+export async function fetchWorkspace(): Promise<WorkspaceResponse> {
+  const response = await fetch("/api/workspace");
+
+  if (!response.ok) {
+    throw new Error(`Workspace request failed (${response.status})`);
+  }
+
+  return (await response.json()) as WorkspaceResponse;
 }

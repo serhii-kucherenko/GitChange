@@ -9,9 +9,11 @@ import {
   type CommitSummary,
 } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
+import { useWorkspaceStore } from "../store/workspace.js";
 import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
 import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
 import { OpenWorkBadge } from "./OpenWorkBadge.js";
+import { RepoBadge } from "./RepoBadge.js";
 
 const PAGE_SIZE = 50;
 const ROW_HEIGHT = 44;
@@ -29,11 +31,13 @@ function CommitRow({
   isSelected,
   onSelect,
   openWorkThreads,
+  showRepoBadge,
 }: {
   commit: CommitSummary;
   isSelected: boolean;
-  onSelect: (sha: string) => void;
+  onSelect: (sha: string, repoId?: string) => void;
   openWorkThreads: MatchableOpenWorkThread[];
+  showRepoBadge: boolean;
 }) {
   const matched = matchOpenWorkToSurface(openWorkThreads, {
     commitSha: commit.sha,
@@ -43,7 +47,7 @@ function CommitRow({
   return (
     <button
       type="button"
-      onClick={() => onSelect(commit.sha)}
+      onClick={() => onSelect(commit.sha, commit.repoId)}
       className={`flex w-full items-center gap-3 border-b border-slate-800 px-4 text-left text-sm transition-colors hover:bg-slate-800/60 ${
         isSelected ? "bg-slate-800/80" : ""
       }`}
@@ -55,6 +59,9 @@ function CommitRow({
       <span className="min-w-0 flex-1 truncate text-slate-100">
         {commit.summary}
       </span>
+      {showRepoBadge && commit.repoId ? (
+        <RepoBadge repoId={commit.repoId} compact />
+      ) : null}
       {threadBadge ? (
         <OpenWorkBadge status={threadBadge.status} compact />
       ) : null}
@@ -77,6 +84,9 @@ export function CommitList({ filters }: CommitListProps) {
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
   const setSelectedCommitSha = useDrillStore(
     (state) => state.setSelectedCommitSha,
+  );
+  const isMultiRepo = useWorkspaceStore(
+    (state) => state.snapshot?.isMultiRepo ?? false,
   );
 
   const filtersActive = hasActiveFilters(filters);
@@ -220,6 +230,7 @@ export function CommitList({ filters }: CommitListProps) {
                     isSelected={selectedCommitSha === commit.sha}
                     onSelect={setSelectedCommitSha}
                     openWorkThreads={openWorkThreads}
+                    showRepoBadge={isMultiRepo}
                   />
                 )}
               </div>

@@ -29,21 +29,26 @@ const DecisionListResponseSchema = z.object({
   nextCursor: z.string().nullable(),
 });
 
+const optionalRepoId = z.string().min(1).optional();
+
 const EvidenceSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("commit"),
     sha: z.string(),
+    repoId: optionalRepoId,
   }),
   z.object({
     type: z.literal("file"),
     path: z.string(),
     commitSha: z.string(),
+    repoId: optionalRepoId,
   }),
   z.object({
     type: z.literal("doc"),
     path: z.string(),
     commitSha: z.string(),
     excerpt: z.string(),
+    repoId: optionalRepoId,
   }),
   z.object({
     type: z.literal("hunk"),
@@ -51,13 +56,15 @@ const EvidenceSchema = z.discriminatedUnion("type", [
     commitSha: z.string(),
     startLine: z.number().int(),
     endLine: z.number().int(),
-    excerpt: z.string(),
+    excerpt: z.string().optional(),
+    repoId: optionalRepoId,
   }),
   z.object({
     type: z.literal("interview"),
     path: z.string(),
     recordedAt: z.string(),
     excerpt: z.string(),
+    repoId: optionalRepoId,
   }),
 ]);
 
@@ -127,7 +134,7 @@ function toDetailJson(
       evidence: [],
     };
   }
-  return detail.decision;
+  return DecisionRecordSchema.parse(detail.decision);
 }
 
 export function createDecisionsRoutes(

@@ -9,13 +9,14 @@ export interface SelectedEra {
 
 interface DrillState {
   selectedCommitSha: string | null;
+  selectedRepoId: string | null;
   selectedFilePath: string | null;
   selectedEra: SelectedEra | null;
   selectedDecisionId: string | null;
   selectedThreadId: string | null;
-  setSelectedCommitSha: (sha: string | null) => void;
+  setSelectedCommitSha: (sha: string | null, repoId?: string | null) => void;
   setSelectedFilePath: (path: string | null) => void;
-  selectCommitAndFile: (sha: string, path: string) => void;
+  selectCommitAndFile: (sha: string, path: string, repoId?: string | null) => void;
   setSelectedEraId: (era: SelectedEra | null) => void;
   setSelectedDecisionId: (id: string | null) => void;
   setSelectedThreadId: (id: string | null) => void;
@@ -26,25 +27,29 @@ interface DrillState {
 
 export const useDrillStore = create<DrillState>((set) => ({
   selectedCommitSha: null,
+  selectedRepoId: null,
   selectedFilePath: null,
   selectedEra: null,
   selectedDecisionId: null,
   selectedThreadId: null,
-  setSelectedCommitSha: (sha) =>
+  setSelectedCommitSha: (sha, repoId = null) =>
     set({
       selectedCommitSha: sha,
+      selectedRepoId: sha ? repoId : null,
       selectedFilePath: null,
     }),
   setSelectedFilePath: (path) => set({ selectedFilePath: path }),
-  selectCommitAndFile: (sha, path) =>
+  selectCommitAndFile: (sha, path, repoId = null) =>
     set({
       selectedCommitSha: sha,
+      selectedRepoId: repoId,
       selectedFilePath: path,
     }),
   setSelectedEraId: (era) =>
     set({
       selectedEra: era,
       selectedCommitSha: null,
+      selectedRepoId: null,
       selectedFilePath: null,
     }),
   setSelectedDecisionId: (id) =>
@@ -61,6 +66,7 @@ export const useDrillStore = create<DrillState>((set) => ({
   clearDownstreamFromEra: () =>
     set({
       selectedCommitSha: null,
+      selectedRepoId: null,
       selectedFilePath: null,
     }),
   clearDownstreamFromCommit: () => set({ selectedFilePath: null }),

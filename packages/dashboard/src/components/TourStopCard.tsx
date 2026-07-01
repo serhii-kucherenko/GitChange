@@ -8,6 +8,7 @@ import type {
 } from "../types.js";
 import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
 import { OpenWorkBadge } from "./OpenWorkBadge.js";
+import { RepoBadge } from "./RepoBadge.js";
 
 const DOC_EXCERPT_MAX = 120;
 
@@ -100,7 +101,10 @@ export function TourStopCard({
       : undefined,
   });
 
-  const drillFromTarget = (target: TourDrillTarget) => {
+  const drillFromTarget = (
+    target: TourDrillTarget,
+    repoId?: string,
+  ) => {
     if (target.decisionId) {
       setSelectedDecisionId(target.decisionId);
       onDrillToDecisions();
@@ -108,7 +112,7 @@ export function TourStopCard({
     }
 
     if (target.filePath && target.commitSha) {
-      selectCommitAndFile(target.commitSha, target.filePath);
+      selectCommitAndFile(target.commitSha, target.filePath, repoId);
       return;
     }
 
@@ -127,7 +131,7 @@ export function TourStopCard({
     }
 
     if (target.commitSha) {
-      setSelectedCommitSha(target.commitSha);
+      setSelectedCommitSha(target.commitSha, repoId);
     }
   };
 
@@ -145,6 +149,7 @@ export function TourStopCard({
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <h2 className="text-lg font-medium text-slate-100">Tour stop</h2>
+          {stop.repoId ? <RepoBadge repoId={stop.repoId} compact /> : null}
           {linkedThreads.map((thread) => (
             <OpenWorkBadge key={thread.id} status={thread.status} compact />
           ))}
@@ -171,7 +176,7 @@ export function TourStopCard({
                   {clickable ? (
                     <button
                       type="button"
-                      onClick={() => drillFromTarget(target)}
+                      onClick={() => drillFromTarget(target, stop.repoId)}
                       className="rounded-full border border-slate-700 bg-slate-950/60 px-3 py-1 font-mono text-xs text-sky-300 hover:border-sky-800 hover:text-sky-200"
                     >
                       {evidenceLabel(item)}
@@ -192,7 +197,7 @@ export function TourStopCard({
         <footer className="mt-6">
           <button
             type="button"
-            onClick={() => drillFromTarget(stop.drillTarget)}
+            onClick={() => drillFromTarget(stop.drillTarget, stop.repoId)}
             className="rounded-md bg-sky-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
           >
             See evidence

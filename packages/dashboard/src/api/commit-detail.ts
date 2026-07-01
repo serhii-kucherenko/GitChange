@@ -24,8 +24,18 @@ export interface CommitDetail {
   files: CommitDetailFile[];
 }
 
-export async function fetchCommitDetail(sha: string): Promise<CommitDetail> {
-  const response = await fetch(`/api/commits/${sha}`);
+export async function fetchCommitDetail(
+  sha: string,
+  repoId?: string | null,
+): Promise<CommitDetail> {
+  const search = new URLSearchParams();
+  if (repoId) {
+    search.set("repoId", repoId);
+  }
+  const query = search.toString();
+  const response = await fetch(
+    `/api/commits/${sha}${query ? `?${query}` : ""}`,
+  );
 
   if (response.status === 404) {
     throw new Error("commit_not_found");

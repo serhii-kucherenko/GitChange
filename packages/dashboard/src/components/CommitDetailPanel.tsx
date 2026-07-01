@@ -17,18 +17,19 @@ function formatCommittedAt(timestamp: number): string {
 
 export function CommitDetailPanel() {
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
+  const selectedRepoId = useDrillStore((state) => state.selectedRepoId);
   const selectedFilePath = useDrillStore((state) => state.selectedFilePath);
   const setSelectedFilePath = useDrillStore(
     (state) => state.setSelectedFilePath,
   );
 
   const query = useQuery({
-    queryKey: ["commit-detail", selectedCommitSha],
+    queryKey: ["commit-detail", selectedCommitSha, selectedRepoId],
     queryFn: () => {
       if (!selectedCommitSha) {
         throw new Error("No commit selected");
       }
-      return fetchCommitDetail(selectedCommitSha);
+      return fetchCommitDetail(selectedCommitSha, selectedRepoId);
     },
     enabled: Boolean(selectedCommitSha),
   });

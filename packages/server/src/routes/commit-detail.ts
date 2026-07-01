@@ -1,10 +1,12 @@
 import {
   CommitNotFoundError,
   getCommitDetail,
+  InvalidCommitFilterError,
   InvalidCommitShaError,
 } from "@gitchange/core";
 import { Hono } from "hono";
 import { z } from "zod";
+import { resolveCommitDetailGitchangeDir } from "./commits.js";
 
 const HunkSchema = z.object({
   startLine: z.number().int(),
@@ -20,6 +22,7 @@ const CommitDetailResponseSchema = z.object({
     committedAt: z.number().int(),
     authorName: z.string(),
     authorEmail: z.string(),
+    repoId: z.string().optional(),
   }),
   files: z.array(
     z.object({
@@ -43,14 +46,31 @@ export function createCommitDetailRoutes(
 
   app.get("/commits/:sha", (context) => {
     const sha = context.req.param("sha");
+    const repoId = context.req.query("repoId");
 
     try {
-      const detail = getCommitDetail(options.gitchangeDir, sha);
-      const body = CommitDetailResponseSchema.parse(detail);
+      const targetDir = resolveCommitDetailGitchangeDir(
+        options.gitchangeDir,
+        repoId,
+      );
+      const detail = getCommitDetail(targetDir, sha);
+      const body = CommitDetailResponseSchema.parse({
+        ...detail,
+        commit: {
+          ...detail.commit,
+          repoId: repoId ?? undefined,
+        },
+      });
       return context.json(body);
     } catch (error) {
       if (error instanceof InvalidCommitShaError) {
         return context.json({ error: "invalid_commit_sha" }, 400);
+      }
+      if (error instanceof InvalidCommitFilterError) {
+        return context.json(
+          { error: error.message, field: error.field ?? null },
+          400,
+        );
       }
       if (error instanceof CommitNotFoundError) {
         return context.json({ error: "commit_not_found" }, 404);

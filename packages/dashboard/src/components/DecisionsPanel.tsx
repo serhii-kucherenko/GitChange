@@ -126,7 +126,11 @@ function DecisionRow({
   );
 }
 
-function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
+export function DecisionDetailDrawer({
+  decisionId,
+}: {
+  decisionId: string;
+}) {
   const setSelectedCommitSha = useDrillStore(
     (state) => state.setSelectedCommitSha,
   );
@@ -163,13 +167,13 @@ function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
 
   if (isDecisionGap(detail)) {
     return (
-      <div className="border-t border-slate-800 px-4 py-4">
+      <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
         <button
           type="button"
           onClick={() => setSelectedDecisionId(null)}
-          className="mb-3 text-xs text-slate-500 hover:text-slate-300"
+          className="mb-3 text-xs text-slate-400 hover:text-slate-200"
         >
-          ← Back to list
+          Clear selection
         </button>
         <p
           className="rounded-lg border border-amber-800/60 bg-amber-950/40 px-4 py-3 text-sm font-medium text-amber-200"
@@ -182,13 +186,13 @@ function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
   }
 
   return (
-    <div className="border-t border-slate-800 px-4 py-4">
+    <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
       <button
         type="button"
         onClick={() => setSelectedDecisionId(null)}
-        className="mb-3 text-xs text-slate-500 hover:text-slate-300"
+        className="mb-3 text-xs text-slate-400 hover:text-slate-200"
       >
-        ← Back to list
+        Clear selection
       </button>
       <header className="mb-3 space-y-2">
         <div className="flex flex-wrap items-center gap-2">
@@ -348,19 +352,6 @@ export function DecisionsPanel() {
         <p className="mt-2 text-sm text-slate-400">
           No recorded decisions found for this repo.
         </p>
-      </section>
-    );
-  }
-
-  if (selectedDecisionId) {
-    return (
-      <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
-        <header className="border-b border-slate-800 px-4 py-3">
-          <h2 className="text-sm font-medium text-slate-200">
-            Decision detail
-          </h2>
-        </header>
-        <DecisionDetailDrawer decisionId={selectedDecisionId} />
       </section>
     );
   }

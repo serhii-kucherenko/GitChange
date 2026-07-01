@@ -12,7 +12,10 @@ import {
 import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
-import { DecisionsPanel } from "./components/DecisionsPanel.js";
+import {
+  DecisionDetailDrawer,
+  DecisionsPanel,
+} from "./components/DecisionsPanel.js";
 import { EraDetailPanel } from "./components/EraDetailPanel.js";
 import { EraTimeline } from "./components/EraTimeline.js";
 import { FileHistoryScrubber } from "./components/FileHistoryScrubber.js";
@@ -43,6 +46,9 @@ export function App() {
   const selectedEra = useDrillStore((state) => state.selectedEra);
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
   const selectedThreadId = useDrillStore((state) => state.selectedThreadId);
+  const selectedDecisionId = useDrillStore(
+    (state) => state.selectedDecisionId,
+  );
   const activeTourId = useTourStore((state) => state.activeTourId);
   const hydrateFromStorage = useTourStore((state) => state.hydrateFromStorage);
   const persistToStorage = useTourStore((state) => state.persistToStorage);
@@ -225,6 +231,8 @@ export function App() {
           onDrillToTimeline={() => setIntelligenceTab("timeline")}
         />
       ) : null
+    ) : selectedDecisionId && intelligenceTab === "decisions" ? (
+      <DecisionDetailDrawer decisionId={selectedDecisionId} />
     ) : (
       <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
         Select a decision to view its evidence and drill into commits.

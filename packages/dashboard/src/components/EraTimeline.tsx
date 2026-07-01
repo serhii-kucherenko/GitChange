@@ -110,7 +110,7 @@ export function EraTimeline() {
       selectable: true,
       multiselect: false,
       showCurrentTime: false,
-      stack: false,
+      stack: true,
       zoomMin: 86_400_000,
       margin: { item: 8 },
     });

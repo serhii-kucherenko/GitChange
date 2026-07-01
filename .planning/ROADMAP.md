@@ -335,7 +335,17 @@ Plans:
   4. A cohesive dark design system (typography scale, spacing, color/contrast, states) is applied consistently across all views and meets basic contrast/accessibility
   5. All existing component logic and API/store wiring is preserved — redesign is presentational, not a behavior change
 
-**Plans**: TBD (run /gsd:plan-phase 9)
+**Plans**: 4 plans
+Plans:
+**Wave 1**
+
+- [ ] 09-01-PLAN.md — App-frame + IA rewrite: full-width header, tablist out of sidebar, per-view layouts, centered states
+
+**Wave 2** *(blocked on Wave 1; parallel — disjoint files)*
+
+- [ ] 09-02-PLAN.md — Era-timeline label strategy: .vis-item-content truncation + native title tooltip + min-h-[8rem]
+- [ ] 09-03-PLAN.md — Virtualized lists flex-fill + header-outside-scroll + ROW_HEIGHT audit
+- [ ] 09-04-PLAN.md — Leaf/badge/tours/graph restyle to the design-system contract
 **UI hint**: yes
 
 ## Progress
@@ -353,7 +363,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
 | 8. Hardening, Scale & Multi-Repo | 5/5 | Complete   | 2026-07-01 |
-| 9. Dashboard UI Redesign | 0/0 | Planning   | — |
+| 9. Dashboard UI Redesign | 0/4 | Planning   | — |
 
 ---
 *Roadmap created: 2026-06-30*

@@ -2,14 +2,14 @@
   "schemaVersion": "1",
   "computedAt": "2026-07-01T12:00:00.000Z",
   "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "sourceSignalCount": 1,
+  "sourceSignalCount": 2,
   "eras": [
     {
-      "id": "era:01HABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "id": "era:01HBOOTSTRAP",
       "name": "Bootstrap era",
       "summary": "Initial project setup and core scaffolding.",
       "startCommitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "endCommitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "endCommitSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       "startAt": 1700000000000,
       "endAt": 1700000100000,
       "signalIds": [1],
@@ -21,7 +21,7 @@
           "evidence": [
             {
               "type": "file",
-              "path": "packages/core/src/index.ts",
+              "path": "src/main.ts",
               "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             }
           ]
@@ -40,10 +40,55 @@
       ],
       "evidence": [
         {
-          "type": "doc",
-          "path": "README.md",
-          "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "excerpt": "# GitChange fixture"
+          "type": "commit",
+          "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "type": "file",
+          "path": "src/main.ts",
+          "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "id": "era:01HGROWTH",
+      "name": "Growth era",
+      "summary": "Feature expansion and documentation updates.",
+      "startCommitSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "endCommitSha": "cccccccccccccccccccccccccccccccccccccccc",
+      "startAt": 1700000100000,
+      "endAt": 1700000200000,
+      "signalIds": [2],
+      "inflections": [
+        {
+          "type": "scope_steering",
+          "title": "README evolution",
+          "description": "Documentation scope expanded with onboarding guidance.",
+          "evidence": [
+            {
+              "type": "doc",
+              "path": "README.md",
+              "commitSha": "cccccccccccccccccccccccccccccccccccccccc",
+              "excerpt": "# Fixture Repo"
+            }
+          ]
+        }
+      ],
+      "claims": [
+        {
+          "text": "Later commits refined the public docs and entry points.",
+          "evidence": [
+            {
+              "type": "commit",
+              "sha": "cccccccccccccccccccccccccccccccccccccccc"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "type": "commit",
+          "sha": "cccccccccccccccccccccccccccccccccccccccc"
         }
       ]
     }

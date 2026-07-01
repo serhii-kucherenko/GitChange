@@ -1,9 +1,11 @@
 import { join } from "node:path";
 import { buildRepo, type BuiltRepo } from "../fixtures/builder.js";
 import type { CommitSpec } from "../fixtures/builder.js";
+import { applyBasicScenarioErasFixture } from "./semantic-fixture.js";
 import { BASIC_SCENARIO } from "../fixtures/scenarios.js";
 import { computeIntelligence } from "../../packages/core/src/intelligence/compute.js";
 import { indexFull } from "../../packages/core/src/index/full.js";
+import { runSemanticPipeline } from "../../packages/core/src/semantic/pipeline.js";
 
 export interface IndexedFixture {
   repo: BuiltRepo;
@@ -35,4 +37,11 @@ export async function indexScenario(
 ): Promise<IndexedFixture> {
   const repo = buildRepo(scenario);
   return indexAndCompute(repo);
+}
+
+export async function indexBasicScenarioWithSemantic(): Promise<IndexedFixture> {
+  const fixture = await indexBasicScenario();
+  applyBasicScenarioErasFixture(fixture.gitchangeDir);
+  runSemanticPipeline(fixture.gitchangeDir);
+  return fixture;
 }

@@ -36,3 +36,29 @@ export {
   type OwnershipAuthor as OwnershipAuthorType,
   type OwnershipFileEntry as OwnershipFileEntryType,
 } from "./intelligence.js";
+export {
+  EraClaim,
+  ErasArtifact,
+  InflectionPoint,
+  InflectionType,
+  NamedEra,
+  SEMANTIC_SCHEMA_VERSION,
+  assertInflectionType,
+  type EraClaim as EraClaimType,
+  type ErasArtifact as ErasArtifactType,
+  type InflectionPoint as InflectionPointType,
+  type InflectionType as InflectionTypeValue,
+  type NamedEra as NamedEraType,
+} from "./eras.js";
+export {
+  TemporalGraphArtifact,
+  TemporalGraphEdge,
+  TemporalGraphEdgeType,
+  TemporalGraphNode,
+  TemporalGraphNodeType,
+  type TemporalGraphArtifact as TemporalGraphArtifactType,
+  type TemporalGraphEdge as TemporalGraphEdgeType,
+  type TemporalGraphEdgeType as TemporalGraphEdgeTypeValue,
+  type TemporalGraphNode as TemporalGraphNodeType,
+  type TemporalGraphNodeType as TemporalGraphNodeTypeValue,
+} from "./temporal-graph.js";

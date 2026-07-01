@@ -25,6 +25,7 @@
     "gray-matter": "4.0.3",
     "minimatch": "10.2.5",
     "simple-git": "3.36.0",
+    "ulid": "2.3.0",
     "zod": "4.4.3"
   },
   "devDependencies": {

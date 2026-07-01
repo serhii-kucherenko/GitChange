@@ -7,6 +7,12 @@ export const Evidence = z.discriminatedUnion("type", [
     path: z.string(),
     commitSha: z.string().length(40),
   }),
+  z.object({
+    type: z.literal("doc"),
+    path: z.string(),
+    commitSha: z.string().length(40),
+    excerpt: z.string().max(500),
+  }),
   // RESERVED for Phase 5 (must NOT be required now):
   // z.object({ type: z.literal("hunk"), path, commitSha, startLine, endLine })
 ]);

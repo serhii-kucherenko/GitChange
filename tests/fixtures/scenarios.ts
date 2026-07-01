@@ -102,6 +102,74 @@ export const OWNSHIP_SCENARIO: CommitSpec[] = [
 ];
 
 /** Adds a formatting-only commit for ignore-revs coverage (P2-D-02). */
+/** Era ownership: Alice-heavy early window, Bob gains share later (CONT-01). */
+export const ERA_OWNERSHIP_SCENARIO: CommitSpec[] = [
+  {
+    message: "feat(core): scaffold shared module",
+    ...OWNERSHIP_ALICE,
+    files: { "src/lib/shared.ts": "export const v = 1;\n" },
+  },
+  {
+    message: "feat(core): extend shared module",
+    ...OWNERSHIP_ALICE,
+    files: { "src/lib/shared.ts": "export const v = 2;\n" },
+  },
+  {
+    message: "feat(core): polish shared module",
+    ...OWNERSHIP_ALICE,
+    files: { "src/lib/shared.ts": "export const v = 3;\n" },
+  },
+  {
+    message: "feat(core): finalize alice era",
+    ...OWNERSHIP_ALICE,
+    files: { "src/lib/shared.ts": "export const v = 4;\n" },
+  },
+  {
+    message: "feat(auth): add token helper",
+    ...OWNERSHIP_BOB,
+    files: { "src/auth/token.ts": "export const token = true;\n" },
+  },
+  {
+    message: "feat(core): bob refactors shared",
+    ...OWNERSHIP_BOB,
+    files: { "src/lib/shared.ts": "export const v = 'bob-1';\n" },
+  },
+  {
+    message: "feat(core): bob extends shared",
+    ...OWNERSHIP_BOB,
+    files: { "src/lib/shared.ts": "export const v = 'bob-2';\n" },
+  },
+  {
+    message: "feat(core): bob finalizes shared",
+    ...OWNERSHIP_BOB,
+    files: { "src/lib/shared.ts": "export const v = 'bob-3';\n" },
+  },
+];
+
+/** Path-prefix expertise: Alice dominates src/auth (CONT-03). */
+export const EXPERTISE_SCENARIO: CommitSpec[] = [
+  {
+    message: "feat(auth): add login",
+    ...OWNERSHIP_ALICE,
+    files: { "src/auth/login.ts": "export const login = true;\n" },
+  },
+  {
+    message: "feat(auth): add logout",
+    ...OWNERSHIP_ALICE,
+    files: { "src/auth/logout.ts": "export const logout = true;\n" },
+  },
+  {
+    message: "feat(auth): add session store",
+    ...OWNERSHIP_ALICE,
+    files: { "src/auth/session.ts": "export const session = true;\n" },
+  },
+  {
+    message: "feat(api): add users endpoint",
+    ...OWNERSHIP_BOB,
+    files: { "src/api/users.ts": "export const users = true;\n" },
+  },
+];
+
 export const OWNSHIP_SCENARIO_WITH_FORMAT: CommitSpec[] = [
   {
     message: "feat: add app module",

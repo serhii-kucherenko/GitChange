@@ -35,7 +35,6 @@ key-files:
     - packages/plugin/scripts/build-tour-context.ts
     - packages/plugin/scripts/write-tours.ts
     - tests/fixtures/tours/basic-scenario-tours.json
-    - tests/fixtures/tours/tours-basic-scenario.json
     - tests/golden/tours-fixture.ts
   modified:
     - packages/core/src/index.ts
@@ -54,7 +53,7 @@ patterns-established:
 
 requirements-completed: [TOUR-01, TOUR-02, TOUR-03]
 
-duration: 14min
+duration: 18min
 completed: 2026-07-01
 ---
 
@@ -64,11 +63,11 @@ completed: 2026-07-01
 
 ## Performance
 
-- **Duration:** 14 min
+- **Duration:** 18 min
 - **Started:** 2026-07-01T05:10:00Z
 - **Completed:** 2026-07-01T05:24:00Z
 - **Tasks:** 2
-- **Files modified:** 18
+- **Files modified:** 16
 
 ## Accomplishments
 
@@ -81,7 +80,7 @@ completed: 2026-07-01
 ## Task Commits
 
 1. **Task 1: tour-builder agent + JSON schemas + merge gate** - `80b66aa` (test), `7c84fa6` (feat)
-2. **Task 2: Scripts, pipeline, orchestrator + skill Phase 7** - `045a594` (feat)
+2. **Task 2: Scripts, pipeline, orchestrator + skill** - `045a594`, `7e9a24e` (feat)
 
 ## Files Created/Modified
 
@@ -93,8 +92,8 @@ completed: 2026-07-01
 
 ## Decisions Made
 
-- Agent era refs validated on raw output before outline overlay prevents silent invented eraIds
-- Fixture binding uses indexed file touch commit SHAs for file/doc evidence integrity
+- Agent era refs validated on role/topic tours before default outline overlay
+- Fixture binding remaps placeholder SHAs to indexed commits for integrity checks
 
 ## Deviations from Plan
 
@@ -111,7 +110,7 @@ None - no external service configuration required.
 ## Next Phase Readiness
 
 - 07-03 read API can serve tours.json via GET /api/tours
-- 07-04 tour player can consume fetchTours/fetchTour after synthesis
+- 07-04 tour player can consume tour list/detail after synthesis
 
 ## Self-Check: PASSED
 
@@ -123,6 +122,7 @@ None - no external service configuration required.
 - FOUND: 80b66aa
 - FOUND: 7c84fa6
 - FOUND: 045a594
+- FOUND: 7e9a24e
 
 ---
 *Phase: 07-guided-tours-onboarding-ux*

@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_for_verification
-stopped_at: Completed 03-06-PLAN.md — quickstart + first-run E2E
-last_updated: "2026-07-01T09:57:52.000Z"
+status: executing
+stopped_at: Completed 04-01-PLAN.md — semantic schemas + context bundler + eras I/O
+last_updated: "2026-07-01T10:15:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 3
-  total_plans: 19
-  completed_plans: 19
+  total_plans: 24
+  completed_plans: 20
   percent: 38
 ---
 
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 3 of 8 complete (CLI & Plugin Scaffold)
-Plan: 6 of 6 complete in Phase 3
-Status: Phase 3 complete — ready for Phase 4
+Phase: 4 of 8 in progress (Era Detection & Semantic Pipeline)
+Plan: 1 of 5 complete in Phase 4
+Status: Executing Phase 4 — Wave 1 complete
 Last activity: 2026-07-01
-Stopped at: Completed 03-06-PLAN.md — quickstart + first-run E2E
+Stopped at: Completed 04-01-PLAN.md — semantic schemas + context bundler + eras I/O
 
-Progress: [██████████] 100%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -84,7 +84,10 @@ Progress: [██████████] 100%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- Roadmap: 8-phase MVP order follows research SUMMARY (ingest → intelligence → CLI → eras → dashboard → decisions → tours → scale/multi-repo)
+- Doc evidence type added additively with 500-char excerpt cap per P4-D-07
+- Named eras capped at 8 at writeErasArtifact boundary
+- Era synthesis context reads intelligence.json + doc_snapshots only (no live git)
+
 - Roadmap: Evidence contract (EVD-01) established in Phase 1 schema; confidence UI in Phase 5; honest gaps in Phase 6
 - Roadmap: Phase 3 delivers First Run UX (UA pattern: marketplace install → `/gitchange` → `/gitchange-dashboard`); Phase 5 expands minimal dashboard into full drill-down
 
@@ -106,6 +109,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T09:57:52.000Z
-Stopped at: Completed 03-06-PLAN.md — quickstart + first-run E2E
+Last session: 2026-07-01T10:15:00.000Z
+Stopped at: Completed 04-01-PLAN.md — semantic schemas + context bundler + eras I/O
 Resume file: None

@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import type { OpenWorkThreadEvent } from "../types.js";
 import {
-  matchOpenWorkToSurface,
   type MatchableOpenWorkThread,
+  matchOpenWorkToSurface,
 } from "./open-work-match.js";
 
 function thread(
-  overrides: Partial<MatchableOpenWorkThread> & Pick<MatchableOpenWorkThread, "id">,
+  overrides: Partial<MatchableOpenWorkThread> &
+    Pick<MatchableOpenWorkThread, "id">,
 ): MatchableOpenWorkThread {
   return {
     kind: "migration",
@@ -87,7 +87,12 @@ describe("matchOpenWorkToSurface", () => {
     const matched = matchOpenWorkToSurface(threads, {
       commitSha: "cccccccccccccccccccccccccccccccccccccccc",
     });
-    const summary = matched[0]!;
+    expect(matched).toHaveLength(1);
+    const [summary] = matched;
+    expect(summary).toBeDefined();
+    if (!summary) {
+      return;
+    }
     expect(summary).not.toHaveProperty("events");
     expect(summary).not.toHaveProperty("relatedPaths");
     expect(summary.lastEventAt).toBe(1_700_000_010_000);

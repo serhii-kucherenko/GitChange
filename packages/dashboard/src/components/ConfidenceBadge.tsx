@@ -1,8 +1,7 @@
 import {
-  attributionLabel,
   type AttributionConfidence,
+  attributionLabel,
   type EvidenceConfidenceLevel,
-  evidenceLevelLabel,
 } from "../utils/confidence.js";
 
 const EVIDENCE_LEVEL_STYLES: Record<EvidenceConfidenceLevel, string> = {
@@ -21,12 +20,9 @@ interface ConfidenceBadgeProps {
 }
 
 export function ConfidenceBadge({ level }: ConfidenceBadgeProps) {
-  const label = evidenceLevelLabel(level);
-
   return (
     <span
       className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${EVIDENCE_LEVEL_STYLES[level]}`}
-      aria-label={label}
       title={`Heuristic from evidence count (${level})`}
     >
       {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -44,7 +40,6 @@ export function AttributionBadge({ confidence }: AttributionBadgeProps) {
   return (
     <span
       className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${ATTRIBUTION_STYLES[confidence]}`}
-      aria-label={label}
       title={label}
     >
       {confidence === "complete" ? "Complete" : "Degraded"}

@@ -2,11 +2,11 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useMemo, useRef } from "react";
 import {
+  type CommitListFilters,
+  type CommitSummary,
   fetchCommitsPage,
   fetchOpenWorkMatchableThreads,
   hasActiveFilters,
-  type CommitListFilters,
-  type CommitSummary,
 } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
 import { useWorkspaceStore } from "../store/workspace.js";

@@ -99,7 +99,11 @@ export function layoutGraphNodes(
   }
 
   commitNodes.forEach((node, index) => {
-    layouts.push({ id: node.id, x: (index % 4) * 140, y: 240 + Math.floor(index / 4) * 80 });
+    layouts.push({
+      id: node.id,
+      x: (index % 4) * 140,
+      y: 240 + Math.floor(index / 4) * 80,
+    });
   });
 
   return layouts;

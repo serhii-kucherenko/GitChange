@@ -77,7 +77,7 @@ export function DashboardLayout({
 
       {loadState.status === "ready" ? (
         <div className="border-b border-slate-800 bg-slate-900/80">
-          <nav
+          <div
             role="tablist"
             aria-label="Primary views"
             className="mx-auto flex max-w-[96rem] gap-1 px-6"
@@ -102,7 +102,7 @@ export function DashboardLayout({
                 </button>
               );
             })}
-          </nav>
+          </div>
         </div>
       ) : null}
 

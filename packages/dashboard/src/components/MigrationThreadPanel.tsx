@@ -158,10 +158,7 @@ export function MigrationThreadPanel() {
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
               >
-                <EventRow
-                  event={event}
-                  onSelectCommit={setSelectedCommitSha}
-                />
+                <EventRow event={event} onSelectCommit={setSelectedCommitSha} />
               </div>
             );
           })}

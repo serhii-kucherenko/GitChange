@@ -58,14 +58,19 @@ describe("useTourStore", () => {
   });
 
   it("uses headSha-scoped storage keys", () => {
-    const key = tourProgressStorageKey("cccccccccccccccccccccccccccccccccccccccc");
+    const key = tourProgressStorageKey(
+      "cccccccccccccccccccccccccccccccccccccccc",
+    );
     expect(key).toBe(
       "gitchange-tour-progress:cccccccccccccccccccccccccccccccccccccccc",
     );
   });
 
   it("advanceStop moves within and across chapters", () => {
-    const chapters = [{ stops: [{ id: "a" }, { id: "b" }] }, { stops: [{ id: "c" }] }];
+    const chapters = [
+      { stops: [{ id: "a" }, { id: "b" }] },
+      { stops: [{ id: "c" }] },
+    ];
 
     useTourStore.getState().setActiveTour("tour:01DEFAULT");
     expect(useTourStore.getState().stopIndex).toBe(0);
@@ -80,7 +85,10 @@ describe("useTourStore", () => {
   });
 
   it("retreatStop moves backward across chapter boundaries", () => {
-    const chapters = [{ stops: [{ id: "a" }, { id: "b" }] }, { stops: [{ id: "c" }] }];
+    const chapters = [
+      { stops: [{ id: "a" }, { id: "b" }] },
+      { stops: [{ id: "c" }] },
+    ];
 
     useTourStore.getState().setActiveTour("tour:01DEFAULT");
     useTourStore.getState().goToStop(1, 0);

@@ -105,7 +105,7 @@ export function OpenThreadsPanel() {
   }
 
   return (
-    <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
+    <section className="flex min-h-[24rem] flex-1 flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
       <header className="border-b border-slate-800 px-4 py-3">
         <h2 className="text-lg font-semibold tracking-tight text-slate-100">
           Open work
@@ -114,7 +114,7 @@ export function OpenThreadsPanel() {
           {threads.length} thread{threads.length === 1 ? "" : "s"}
         </p>
       </header>
-      <div className="max-h-[28rem] overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {threads.map((thread) => (
           <ThreadRow
             key={thread.id}

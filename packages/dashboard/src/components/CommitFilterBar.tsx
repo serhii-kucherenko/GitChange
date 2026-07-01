@@ -1,9 +1,15 @@
-import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import {
+  type CommitListFilters,
   countActiveFilters,
   dateInputToAfterUnix,
   dateInputToBeforeUnix,
-  type CommitListFilters,
 } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
 

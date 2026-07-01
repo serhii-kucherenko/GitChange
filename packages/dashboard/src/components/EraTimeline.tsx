@@ -6,9 +6,9 @@ import type { DashboardEra } from "../api/client.js";
 import { fetchEras, fetchOpenWorkMatchableThreads } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
 import { useWorkspaceStore } from "../store/workspace.js";
+import { openWorkBadgeHtml } from "../utils/open-work-badge-html.js";
 import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
 import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
-import { openWorkBadgeHtml } from "../utils/open-work-badge-html.js";
 import { RepoBadge } from "./RepoBadge.js";
 
 interface TimelineItem {
@@ -32,7 +32,12 @@ function formatEraLabel(
     return era.name;
   }
 
-  const badge = openWorkBadgeHtml(matched[0]!.status);
+  const firstMatch = matched[0];
+  if (!firstMatch) {
+    return era.name;
+  }
+
+  const badge = openWorkBadgeHtml(firstMatch.status);
   return `${era.name} ${badge}`;
 }
 
@@ -50,7 +55,10 @@ function toTimelineItems(
   }));
 }
 
-function findEraById(eras: DashboardEra[], id: string): DashboardEra | undefined {
+function findEraById(
+  eras: DashboardEra[],
+  id: string,
+): DashboardEra | undefined {
   return eras.find((era) => era.id === id);
 }
 
@@ -92,7 +100,9 @@ export function EraTimeline() {
       return;
     }
 
-    const items = new DataSet<TimelineItem>(toTimelineItems(eras, matchableThreads));
+    const items = new DataSet<TimelineItem>(
+      toTimelineItems(eras, matchableThreads),
+    );
     itemsRef.current = items;
 
     const timeline = new Timeline(container, items, {
@@ -133,7 +143,7 @@ export function EraTimeline() {
       timelineRef.current = null;
       itemsRef.current = null;
     };
-  }, [clearEra, eras.length, matchableThreads, setSelectedEraId]);
+  }, [clearEra, eras, matchableThreads, setSelectedEraId]);
 
   useEffect(() => {
     const items = itemsRef.current;
@@ -210,7 +220,9 @@ export function EraTimeline() {
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
       <header className="mb-3">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-sm font-medium text-slate-200">Project timeline</h2>
+          <h2 className="text-sm font-medium text-slate-200">
+            Project timeline
+          </h2>
           {isMultiRepo && primaryRepoId ? (
             <RepoBadge repoId={primaryRepoId} compact />
           ) : null}

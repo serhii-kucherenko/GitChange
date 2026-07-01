@@ -45,7 +45,7 @@ function TourGroup({
 
   return (
     <section className="space-y-2">
-      <h3 className="text-xs font-medium uppercase tracking-wide text-slate-500">
+      <h3 className="text-xs font-medium uppercase tracking-wide text-slate-400">
         {title}
       </h3>
       <ul className="space-y-1">
@@ -58,22 +58,24 @@ function TourGroup({
               <button
                 type="button"
                 onClick={() => onSelect(tour.id)}
-                className={`flex w-full flex-col gap-0.5 rounded-md border px-3 py-2 text-left text-sm transition-colors ${
+                className={`flex w-full flex-col gap-0.5 rounded-md border px-3 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isActive
-                    ? "border-sky-700/60 bg-sky-950/40 text-sky-100"
-                    : "border-slate-800 bg-slate-950/40 text-slate-200 hover:border-slate-700 hover:bg-slate-900"
+                    ? "border-sky-500 bg-slate-800 text-slate-100 ring-1 ring-sky-500"
+                    : "border-slate-800 bg-slate-950/40 text-slate-200 hover:border-slate-700 hover:bg-slate-900 hover:text-slate-100"
                 }`}
                 aria-current={isActive ? "true" : undefined}
               >
                 <span className="flex flex-wrap items-center gap-2 font-medium">
                   {tour.title}
                   {isDefault ? (
-                    <span className="rounded-full border border-emerald-700/60 bg-emerald-950/50 px-1.5 py-0 text-[10px] font-semibold uppercase text-emerald-200">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-700 bg-emerald-950/40 px-1.5 py-0 text-[10px] font-semibold uppercase text-emerald-200">
                       Default
                     </span>
                   ) : null}
                 </span>
-                <span className="text-xs text-slate-500">{tourSubtitle(tour)}</span>
+                <span className="text-xs text-slate-400">
+                  {tourSubtitle(tour)}
+                </span>
               </button>
             </li>
           );
@@ -113,7 +115,9 @@ export function TourPicker() {
         className="rounded-lg border border-slate-700 bg-slate-900 p-4"
         role="alert"
       >
-        <h2 className="text-sm font-medium text-slate-200">Tours</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Tours
+        </h2>
         <p className="mt-2 text-sm text-slate-400">{message}</p>
       </section>
     );
@@ -123,7 +127,9 @@ export function TourPicker() {
   if (!page || page.tours.length === 0) {
     return (
       <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-        <h2 className="text-sm font-medium text-slate-200">Tours</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Tours
+        </h2>
         <p className="mt-2 text-sm text-slate-400">
           No tours found. Run /gitchange tour synthesis in your AI chat to
           generate guided tours.
@@ -134,7 +140,9 @@ export function TourPicker() {
 
   return (
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-      <h2 className="mb-3 text-sm font-medium text-slate-200">Pick a tour</h2>
+      <h2 className="mb-3 text-lg font-semibold tracking-tight text-slate-100">
+        Pick a tour
+      </h2>
       <div className="space-y-4">
         {KIND_SECTIONS.map((section) => (
           <TourGroup

@@ -51,19 +51,19 @@ function matchesSurface(
   }
 
   if (surface.path) {
+    const surfacePath = surface.path;
     const pathMatch =
-      pathsOverlap(thread.relatedPaths, [surface.path]) ||
-      thread.events.some((event) => pathsOverlap(event.paths, [surface.path!]));
+      pathsOverlap(thread.relatedPaths, [surfacePath]) ||
+      thread.events.some((event) => pathsOverlap(event.paths, [surfacePath]));
     if (pathMatch) {
       return true;
     }
   }
 
   if (surface.eraWindow) {
+    const { startAt, endAt } = surface.eraWindow;
     const inWindow = thread.events.some(
-      (event) =>
-        event.committedAt >= surface.eraWindow!.startAt &&
-        event.committedAt <= surface.eraWindow!.endAt,
+      (event) => event.committedAt >= startAt && event.committedAt <= endAt,
     );
     if (inWindow) {
       return true;

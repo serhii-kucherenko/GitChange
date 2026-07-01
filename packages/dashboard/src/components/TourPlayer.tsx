@@ -20,8 +20,15 @@ export function TourPlayer({
   const markStopComplete = useTourStore((state) => state.markStopComplete);
 
   const query = useQuery({
-    queryKey: activeTourId ? tours.detail(activeTourId) : ["tours", "detail", "none"],
-    queryFn: () => fetchTour(activeTourId!),
+    queryKey: activeTourId
+      ? tours.detail(activeTourId)
+      : ["tours", "detail", "none"],
+    queryFn: () => {
+      if (!activeTourId) {
+        throw new Error("No active tour");
+      }
+      return fetchTour(activeTourId);
+    },
     enabled: Boolean(activeTourId),
     staleTime: 60_000,
   });
@@ -73,13 +80,15 @@ export function TourPlayer({
     stopIndex === chapter.stops.length - 1;
 
   return (
-    <div className="space-y-4">
-      <header className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-3">
-        <h1 className="text-base font-medium text-slate-100">{tour.title}</h1>
-        <p className="mt-1 text-sm text-slate-400">{tour.description}</p>
-        <p className="mt-2 text-xs text-slate-500">
-          Chapter {chapterIndex + 1} of {chapters.length} · Stop {stopIndex + 1} of{" "}
-          {chapter.stops.length}
+    <div className="max-w-3xl space-y-4">
+      <header className="rounded-lg border border-slate-700 bg-slate-900 p-4">
+        <h1 className="text-lg font-semibold tracking-tight text-slate-100">
+          {tour.title}
+        </h1>
+        <p className="mt-1 text-sm text-slate-300">{tour.description}</p>
+        <p className="mt-2 text-xs text-slate-400">
+          Chapter {chapterIndex + 1} of {chapters.length} · Stop {stopIndex + 1}{" "}
+          of {chapter.stops.length}
         </p>
       </header>
 
@@ -98,7 +107,7 @@ export function TourPlayer({
           type="button"
           onClick={() => retreatStop(chapterBounds)}
           disabled={isFirstStop}
-          className="rounded-md border border-slate-700 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 disabled:cursor-not-allowed disabled:opacity-40"
+          className="min-h-[2rem] rounded-md border border-slate-700 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Previous stop
         </button>
@@ -109,7 +118,7 @@ export function TourPlayer({
             advanceStop(chapterBounds);
           }}
           disabled={isLastStop}
-          className="rounded-md border border-slate-700 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 disabled:cursor-not-allowed disabled:opacity-40"
+          className="min-h-[2rem] rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Next stop
         </button>

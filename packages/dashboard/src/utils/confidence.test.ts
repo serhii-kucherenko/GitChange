@@ -49,7 +49,9 @@ describe("decisionConfidenceToLevel", () => {
 
   it("maps pending high-confidence decisions to high (inferred_high)", () => {
     expect(decisionConfidenceToLevel(0.75, "pending", 2)).toBe("high");
-    expect(classifyDecisionConfidence(0.75, "pending", 2)).toBe("inferred_high");
+    expect(classifyDecisionConfidence(0.75, "pending", 2)).toBe(
+      "inferred_high",
+    );
   });
 
   it("maps medium confidence to medium", () => {

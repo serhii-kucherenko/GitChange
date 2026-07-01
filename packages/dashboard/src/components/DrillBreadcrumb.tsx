@@ -19,8 +19,7 @@ export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
     return null;
   }
 
-  const eraName =
-    eraLabel ?? (selectedEra ? selectedEra.name : null);
+  const eraName = eraLabel ?? (selectedEra ? selectedEra.name : null);
 
   return (
     <nav

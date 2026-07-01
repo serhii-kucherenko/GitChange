@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchEras, fetchOpenWorkMatchableThreads } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
-import type {
-  TourDrillTarget,
-  TourEvidence,
-  TourStop,
-} from "../types.js";
+import type { TourDrillTarget, TourEvidence, TourStop } from "../types.js";
 import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
 import { OpenWorkBadge } from "./OpenWorkBadge.js";
 import { RepoBadge } from "./RepoBadge.js";
@@ -70,8 +66,12 @@ export function TourStopCard({
   onDrillToDecisions,
 }: TourStopCardProps) {
   const setSelectedEraId = useDrillStore((state) => state.setSelectedEraId);
-  const setSelectedCommitSha = useDrillStore((state) => state.setSelectedCommitSha);
-  const selectCommitAndFile = useDrillStore((state) => state.selectCommitAndFile);
+  const setSelectedCommitSha = useDrillStore(
+    (state) => state.setSelectedCommitSha,
+  );
+  const selectCommitAndFile = useDrillStore(
+    (state) => state.selectCommitAndFile,
+  );
   const setSelectedDecisionId = useDrillStore(
     (state) => state.setSelectedDecisionId,
   );
@@ -101,10 +101,7 @@ export function TourStopCard({
       : undefined,
   });
 
-  const drillFromTarget = (
-    target: TourDrillTarget,
-    repoId?: string,
-  ) => {
+  const drillFromTarget = (target: TourDrillTarget, repoId?: string) => {
     if (target.decisionId) {
       setSelectedDecisionId(target.decisionId);
       onDrillToDecisions();
@@ -142,13 +139,15 @@ export function TourStopCard({
     Boolean(stop.drillTarget.commitSha);
 
   return (
-    <article className="rounded-lg border border-slate-700 bg-slate-900 p-6">
-      <header className="mb-4 border-b border-slate-800 pb-4">
-        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+    <article className="rounded-lg border border-slate-700 bg-slate-900 p-4">
+      <header className="mb-3 border-b border-slate-800 pb-3">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
           {chapterTitle}
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <h2 className="text-lg font-medium text-slate-100">Tour stop</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+            Tour stop
+          </h2>
           {stop.repoId ? <RepoBadge repoId={stop.repoId} compact /> : null}
           {linkedThreads.map((thread) => (
             <OpenWorkBadge key={thread.id} status={thread.status} compact />
@@ -160,11 +159,11 @@ export function TourStopCard({
 
       {stop.evidence.length > 0 ? (
         <section className="mt-6">
-          <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+          <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400">
             Evidence
           </h3>
           <ul className="flex flex-wrap gap-2">
-            {stop.evidence.map((item, index) => {
+            {stop.evidence.map((item) => {
               const target = evidenceDrillTarget(item);
               const clickable =
                 Boolean(target.commitSha) ||
@@ -172,7 +171,7 @@ export function TourStopCard({
                 Boolean(target.eraId);
 
               return (
-                <li key={`${item.type}-${index}`}>
+                <li key={`${item.type}-${evidenceLabel(item)}`}>
                   {clickable ? (
                     <button
                       type="button"
@@ -182,7 +181,7 @@ export function TourStopCard({
                       {evidenceLabel(item)}
                     </button>
                   ) : (
-                    <span className="rounded-full border border-slate-800 bg-slate-950/40 px-3 py-1 font-mono text-xs text-slate-500">
+                    <span className="rounded-full border border-slate-800 bg-slate-950/40 px-3 py-1 font-mono text-xs text-slate-400">
                       {evidenceLabel(item)}
                     </span>
                   )}
@@ -198,7 +197,7 @@ export function TourStopCard({
           <button
             type="button"
             onClick={() => drillFromTarget(stop.drillTarget, stop.repoId)}
-            className="rounded-md bg-sky-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+            className="min-h-[2rem] rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             See evidence
           </button>

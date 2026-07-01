@@ -3,7 +3,9 @@ import { useWorkspaceStore } from "../store/workspace.js";
 export function RepoFilterBar() {
   const snapshot = useWorkspaceStore((state) => state.snapshot);
   const selectedRepoId = useWorkspaceStore((state) => state.selectedRepoId);
-  const setSelectedRepoId = useWorkspaceStore((state) => state.setSelectedRepoId);
+  const setSelectedRepoId = useWorkspaceStore(
+    (state) => state.setSelectedRepoId,
+  );
 
   if (!snapshot?.isMultiRepo || snapshot.repos.length < 2) {
     return null;

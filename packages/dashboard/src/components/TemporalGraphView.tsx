@@ -201,8 +201,8 @@ function TemporalGraphCanvas({
   );
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,16rem)]">
-      <div className="h-[28rem] overflow-hidden rounded-lg border border-slate-700 bg-slate-950">
+    <div className="flex min-h-[32rem] flex-1 flex-col gap-3">
+      <div className="min-h-[32rem] flex-1 overflow-hidden rounded-lg border border-slate-700 bg-slate-950">
         <ReactFlow
           nodes={flowNodes}
           edges={flowEdges}
@@ -218,29 +218,28 @@ function TemporalGraphCanvas({
         </ReactFlow>
       </div>
 
-      <aside className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-        <h3 className="text-sm font-medium text-slate-200">Node detail</h3>
+      <div className="rounded-lg border border-slate-700 bg-slate-900 p-3">
         {selectedNode ? (
-          <div className="mt-3 space-y-2 text-sm text-slate-300">
-            <p>
-              <span className="text-slate-500">Type:</span> {selectedNode.type}
-            </p>
-            <p className="font-mono text-xs break-all">{selectedNode.id}</p>
+          <div className="flex flex-wrap items-start gap-x-4 gap-y-1 text-xs text-slate-400">
+            <span>
+              <span className="text-slate-400">Type:</span> {selectedNode.type}
+            </span>
+            <span className="font-mono break-all">{selectedNode.id}</span>
             {selectedNode.repoId && isMultiRepo ? (
               <RepoBadge repoId={selectedNode.repoId} />
             ) : null}
             {selectedNode.type === "era" ? (
-              <p className="text-xs text-slate-500">
+              <span>
                 Click to expand commits in this era and drill the timeline.
-              </p>
+              </span>
             ) : null}
           </div>
         ) : (
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="text-xs text-slate-400">
             Select an era or inflection node to inspect drill targets.
           </p>
         )}
-      </aside>
+      </div>
     </div>
   );
 }
@@ -248,12 +247,12 @@ function TemporalGraphCanvas({
 export function TemporalGraphView(props: TemporalGraphViewProps) {
   return (
     <ReactFlowProvider>
-      <section className="space-y-3">
+      <section className="flex flex-col gap-3">
         <header>
-          <h2 className="text-sm font-medium text-slate-200">
+          <h2 className="text-lg font-semibold tracking-tight text-slate-100">
             Temporal knowledge graph
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="mt-1 text-xs text-slate-400">
             Eras and inflection points load first. Click an era to reveal its
             commits, then drill into the timeline.
           </p>

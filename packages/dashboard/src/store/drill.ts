@@ -16,7 +16,11 @@ interface DrillState {
   selectedThreadId: string | null;
   setSelectedCommitSha: (sha: string | null, repoId?: string | null) => void;
   setSelectedFilePath: (path: string | null) => void;
-  selectCommitAndFile: (sha: string, path: string, repoId?: string | null) => void;
+  selectCommitAndFile: (
+    sha: string,
+    path: string,
+    repoId?: string | null,
+  ) => void;
   setSelectedEraId: (era: SelectedEra | null) => void;
   setSelectedDecisionId: (id: string | null) => void;
   setSelectedThreadId: (id: string | null) => void;

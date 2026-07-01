@@ -29,7 +29,6 @@ export function OpenWorkBadge({ status, compact = false }: OpenWorkBadgeProps) {
       className={`inline-flex items-center gap-1 rounded-full border font-medium ${STATUS_STYLES[status]} ${
         compact ? "px-1.5 py-0 text-[10px]" : "px-2 py-0.5 text-xs"
       }`}
-      aria-label={label}
       title={label}
     >
       {compact ? status.replace("_", " ") : label}

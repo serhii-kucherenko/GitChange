@@ -53,5 +53,5 @@ export function repoColorClass(repoId: string): string {
   for (let index = 0; index < repoId.length; index += 1) {
     hash = (hash + repoId.charCodeAt(index) * (index + 1)) % REPO_COLORS.length;
   }
-  return REPO_COLORS[hash] ?? REPO_COLORS[0]!;
+  return REPO_COLORS[hash] ?? REPO_COLORS[0] ?? "";
 }

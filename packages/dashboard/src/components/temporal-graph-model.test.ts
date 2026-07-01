@@ -13,7 +13,11 @@ function sampleGraph(): GraphResponse {
   return {
     nodes: [
       { id: "era:01", type: "era", data: { eraId: "era:01", label: "era:01" } },
-      { id: SHA, type: "commit", data: { commitSha: SHA, label: SHA.slice(0, 7) } },
+      {
+        id: SHA,
+        type: "commit",
+        data: { commitSha: SHA, label: SHA.slice(0, 7) },
+      },
       {
         id: "inflection:01",
         type: "inflection",

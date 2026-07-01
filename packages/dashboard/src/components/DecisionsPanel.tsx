@@ -1,23 +1,17 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useMemo, useRef } from "react";
-import {
-  fetchDecisionDetail,
-  fetchDecisionsPage,
-} from "../api/client.js";
+import { fetchDecisionDetail, fetchDecisionsPage } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
 import {
-  EVD03_GAP_MESSAGE,
-  isDecisionGap,
   type DecisionEvidence,
   type DecisionReviewStatus,
   type DecisionStatus,
   type DecisionSummary,
+  EVD03_GAP_MESSAGE,
+  isDecisionGap,
 } from "../types.js";
-import {
-  decisionConfidenceToLevel,
-  evidenceCountToLevel,
-} from "../utils/confidence.js";
+import { decisionConfidenceToLevel } from "../utils/confidence.js";
 import { ConfidenceBadge } from "./ConfidenceBadge.js";
 
 const PAGE_SIZE = 50;
@@ -52,6 +46,25 @@ function evidenceCommitSha(evidence: DecisionEvidence): string | null {
       return evidence.commitSha;
     case "interview":
       return null;
+    default: {
+      const exhaustive: never = evidence;
+      return exhaustive;
+    }
+  }
+}
+
+function evidenceStableKey(evidence: DecisionEvidence): string {
+  switch (evidence.type) {
+    case "commit":
+      return `commit-${evidence.sha}`;
+    case "file":
+      return `file-${evidence.commitSha}-${evidence.path}`;
+    case "doc":
+      return `doc-${evidence.commitSha}-${evidence.path}-${evidence.excerpt.slice(0, 32)}`;
+    case "hunk":
+      return `hunk-${evidence.commitSha}-${evidence.path}-${evidence.startLine}-${evidence.endLine}`;
+    case "interview":
+      return `interview-${evidence.path}-${evidence.excerpt.slice(0, 32)}`;
     default: {
       const exhaustive: never = evidence;
       return exhaustive;
@@ -179,7 +192,9 @@ function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
       </button>
       <header className="mb-3 space-y-2">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-base font-medium text-slate-100">{detail.title}</h3>
+          <h3 className="text-base font-medium text-slate-100">
+            {detail.title}
+          </h3>
           <ConfidenceBadge
             level={decisionConfidenceToLevel(
               detail.confidence,
@@ -238,11 +253,11 @@ function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
         Evidence
       </h4>
       <ul className="space-y-2">
-        {detail.evidence.map((item, index) => {
+        {detail.evidence.map((item) => {
           const commitSha = evidenceCommitSha(item);
           return (
             <li
-              key={`${item.type}-${index}`}
+              key={evidenceStableKey(item)}
               className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2 text-sm"
             >
               <div className="flex flex-wrap items-center gap-2">
@@ -341,7 +356,9 @@ export function DecisionsPanel() {
     return (
       <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
         <header className="border-b border-slate-800 px-4 py-3">
-          <h2 className="text-sm font-medium text-slate-200">Decision detail</h2>
+          <h2 className="text-sm font-medium text-slate-200">
+            Decision detail
+          </h2>
         </header>
         <DecisionDetailDrawer decisionId={selectedDecisionId} />
       </section>

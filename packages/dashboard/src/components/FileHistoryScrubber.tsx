@@ -21,8 +21,10 @@ export function FileHistoryScrubber({
 
   return (
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-      <h2 className="text-lg font-medium text-slate-100">File history</h2>
-      <p className="mt-1 text-xs text-slate-500">
+      <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+        File history
+      </h2>
+      <p className="mt-1 text-xs text-slate-400">
         Browse indexed touch events for a file path, newest first.
       </p>
 
@@ -38,11 +40,11 @@ export function FileHistoryScrubber({
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
             placeholder="src/main.ts"
-            className="min-w-0 flex-1 rounded border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-slate-100 placeholder:text-slate-600"
+            className="min-h-[2rem] min-w-0 flex-1 rounded-md border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-slate-100 transition-colors placeholder:text-slate-500 hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           />
           <button
             type="submit"
-            className="shrink-0 rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-900 transition-colors hover:bg-white"
+            className="min-h-[2rem] shrink-0 rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             Load
           </button>
@@ -58,7 +60,7 @@ export function FileHistoryScrubber({
 
       {activePath ? (
         <div className="mt-4">
-          <p className="mb-2 truncate font-mono text-xs text-slate-500">
+          <p className="mb-2 truncate font-mono text-xs text-slate-400">
             {activePath}
           </p>
           <FileHistoryList path={activePath} />

@@ -13,13 +13,13 @@ export function RepoSnapshot({
 }: RepoSnapshotProps) {
   return (
     <section className="space-y-6">
-      <div className="rounded-lg border border-slate-700 bg-slate-900 p-5">
-        <h2 className="mb-4 text-lg font-medium text-slate-100">
+      <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
+        <h2 className="mb-3 text-lg font-semibold tracking-tight text-slate-100">
           Repository snapshot
         </h2>
         <dl className="grid gap-4 sm:grid-cols-3">
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               Commits
             </dt>
             <dd className="text-2xl font-semibold text-slate-100">
@@ -27,7 +27,7 @@ export function RepoSnapshot({
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               File changes
             </dt>
             <dd className="text-2xl font-semibold text-slate-100">
@@ -35,7 +35,7 @@ export function RepoSnapshot({
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               Authors
             </dt>
             <dd className="text-2xl font-semibold text-slate-100">
@@ -46,12 +46,12 @@ export function RepoSnapshot({
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-lg border border-slate-700 bg-slate-900 p-5">
+        <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
           <h3 className="mb-3 text-sm font-medium uppercase tracking-wide text-slate-400">
             Top churn files
           </h3>
           {highlights.topChurnFiles.length === 0 ? (
-            <p className="text-sm text-slate-500">No churn data yet.</p>
+            <p className="text-sm text-slate-400">No churn data yet.</p>
           ) : (
             <ul className="space-y-2">
               {highlights.topChurnFiles.map((file) => (
@@ -71,12 +71,12 @@ export function RepoSnapshot({
           )}
         </div>
 
-        <div className="rounded-lg border border-slate-700 bg-slate-900 p-5">
+        <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
           <h3 className="mb-3 text-sm font-medium uppercase tracking-wide text-slate-400">
             Expertise topics
           </h3>
           {highlights.topExpertiseTopics.length === 0 ? (
-            <p className="text-sm text-slate-500">No expertise topics yet.</p>
+            <p className="text-sm text-slate-400">No expertise topics yet.</p>
           ) : (
             <ul className="space-y-2">
               {highlights.topExpertiseTopics.map((topic) => (
@@ -94,11 +94,11 @@ export function RepoSnapshot({
       </div>
 
       {intelligence ? (
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-400">
           Intelligence artifact loaded for dashboard highlights.
         </p>
       ) : (
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-400">
           Intelligence not computed yet — run index with intelligence enabled.
         </p>
       )}

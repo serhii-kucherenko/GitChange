@@ -35,12 +35,13 @@ function ThreadRow({
     <button
       type="button"
       onClick={() => onSelect(thread.id)}
-      className={`flex w-full flex-col gap-1 border-b border-slate-800 px-4 py-3 text-left text-sm transition-colors hover:bg-slate-800/60 ${
-        isSelected ? "bg-slate-800/80" : ""
+      className={`flex w-full flex-col gap-1 border-b border-slate-800 px-4 py-3 text-left text-sm transition-colors hover:bg-slate-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-400 ${
+        isSelected ? "bg-slate-800 ring-1 ring-inset ring-sky-500" : ""
       }`}
+      aria-current={isSelected ? "true" : undefined}
     >
       <div className="flex flex-wrap items-center gap-2">
-        <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+        <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
           {KIND_LABELS[thread.kind]}
         </span>
         <span className="min-w-0 flex-1 truncate font-medium text-slate-100">
@@ -48,7 +49,7 @@ function ThreadRow({
         </span>
         <OpenWorkBadge status={thread.status} compact />
       </div>
-      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
         <span>{Math.round(thread.confidence * 100)}% confidence</span>
         <span>Last: {formatLastEvent(thread.lastEventAt)}</span>
       </div>
@@ -92,9 +93,12 @@ export function OpenThreadsPanel() {
   if (threads.length === 0) {
     return (
       <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-        <h2 className="text-sm font-medium text-slate-200">Open work</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Open work
+        </h2>
         <p className="mt-2 text-sm text-slate-400">
-          No open threads found. Run the decisions pipeline after indexing.
+          No open threads detected — no in-flight migrations or stale work found
+          in the index.
         </p>
       </section>
     );
@@ -103,8 +107,10 @@ export function OpenThreadsPanel() {
   return (
     <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
       <header className="border-b border-slate-800 px-4 py-3">
-        <h2 className="text-sm font-medium text-slate-200">Open work</h2>
-        <p className="mt-1 text-xs text-slate-500">
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Open work
+        </h2>
+        <p className="mt-1 text-xs text-slate-400">
           {threads.length} thread{threads.length === 1 ? "" : "s"}
         </p>
       </header>

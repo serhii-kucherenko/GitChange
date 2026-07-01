@@ -56,10 +56,10 @@ export function CommitDetailPanel() {
         ) : null}
         {query.data ? (
           <div>
-            <h2 className="text-lg font-medium text-slate-100">
+            <h2 className="text-lg font-semibold tracking-tight text-slate-100">
               {query.data.commit.summary}
             </h2>
-            <p className="mt-1 font-mono text-xs text-slate-500">
+            <p className="mt-1 font-mono text-xs text-slate-400">
               {query.data.commit.sha.slice(0, 7)} ·{" "}
               {query.data.commit.authorName} ·{" "}
               {formatCommittedAt(query.data.commit.committedAt)}
@@ -79,14 +79,17 @@ export function CommitDetailPanel() {
                     <button
                       type="button"
                       onClick={() => setSelectedFilePath(file.path)}
-                      className={`flex w-full flex-col gap-1 px-4 py-3 text-left text-sm transition-colors hover:bg-slate-800/60 ${
-                        isSelected ? "bg-slate-800/80" : ""
+                      className={`flex w-full flex-col gap-1 px-4 py-3 text-left text-sm transition-colors hover:bg-slate-800/60 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-400 ${
+                        isSelected
+                          ? "bg-slate-800 ring-1 ring-inset ring-sky-500"
+                          : ""
                       }`}
+                      aria-current={isSelected ? "true" : undefined}
                     >
                       <span className="truncate font-mono text-slate-100">
                         {file.path}
                       </span>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-slate-400">
                         {file.changeType}
                         {file.hunks.length > 0
                           ? ` · ${file.hunks.length} hunk${file.hunks.length === 1 ? "" : "s"}`
@@ -104,7 +107,7 @@ export function CommitDetailPanel() {
           {selectedFile ? (
             <FileHunkView file={selectedFile} />
           ) : (
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-400">
               Select a file to view diff hunks.
             </p>
           )}

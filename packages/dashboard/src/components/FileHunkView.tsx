@@ -36,7 +36,7 @@ export function FileHunkView({ file }: FileHunkViewProps) {
           key={`${hunk.startLine}-${hunk.endLine}-${hunk.patch.slice(0, 24)}`}
           className="overflow-hidden rounded-lg border border-slate-700 bg-slate-950"
         >
-          <header className="border-b border-slate-800 px-3 py-2 text-xs text-slate-500">
+          <header className="border-b border-slate-800 px-3 py-2 text-xs text-slate-400">
             Lines {hunk.startLine}–{hunk.endLine}
           </header>
           <pre className="overflow-x-auto p-3 font-mono text-xs leading-relaxed text-slate-200">

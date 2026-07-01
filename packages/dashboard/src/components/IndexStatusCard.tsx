@@ -15,12 +15,14 @@ function formatIndexedAt(indexedAt: string): string {
 
 export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
   return (
-    <section className="rounded-lg border border-slate-700 bg-slate-900 p-5">
-      <h2 className="mb-4 text-lg font-medium text-slate-100">Index status</h2>
+    <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
+      <h2 className="mb-3 text-lg font-semibold tracking-tight text-slate-100">
+        Index status
+      </h2>
 
       <dl className="grid gap-3 sm:grid-cols-2">
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">
+          <dt className="text-xs uppercase tracking-wide text-slate-400">
             Core schema version
           </dt>
           <dd className="font-mono text-sm text-slate-200">
@@ -29,7 +31,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
         </div>
         {manifest.semanticSchemaVersion ? (
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               Semantic schema version
             </dt>
             <dd className="font-mono text-sm text-slate-200">
@@ -38,7 +40,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
           </div>
         ) : null}
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">
+          <dt className="text-xs uppercase tracking-wide text-slate-400">
             Indexed at
           </dt>
           <dd className="text-sm text-slate-200">
@@ -46,7 +48,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
           </dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">
+          <dt className="text-xs uppercase tracking-wide text-slate-400">
             Last indexed commit
           </dt>
           <dd className="font-mono text-sm text-slate-200">
@@ -54,7 +56,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
           </dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">
+          <dt className="text-xs uppercase tracking-wide text-slate-400">
             Index completeness
           </dt>
           <dd className="text-sm text-slate-200">
@@ -63,7 +65,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
         </div>
         {manifest.intelligenceComputedAt ? (
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               Intelligence computed
             </dt>
             <dd className="text-sm text-slate-200">
@@ -73,7 +75,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
         ) : null}
         {manifest.semanticComputedAt ? (
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               Semantic computed
             </dt>
             <dd className="text-sm text-slate-200">
@@ -83,7 +85,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
         ) : null}
         {manifest.intelligenceSchemaVersion ? (
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">
+            <dt className="text-xs uppercase tracking-wide text-slate-400">
               Intelligence schema
             </dt>
             <dd className="font-mono text-sm text-slate-200">
@@ -98,7 +100,7 @@ export function IndexStatusCard({ manifest }: IndexStatusCardProps) {
           {manifest.warnings.map((warning) => (
             <span
               key={`${warning.code}-${warning.message}`}
-              className="rounded-full border border-amber-700/60 bg-amber-950/50 px-3 py-1 text-xs text-amber-200"
+              className="inline-flex items-center gap-1 rounded-full border border-amber-700 bg-amber-950/40 px-2 py-0.5 text-xs text-amber-200"
               title={warning.message}
             >
               {formatWarningCode(warning.code)}

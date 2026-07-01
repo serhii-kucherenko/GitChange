@@ -15,11 +15,11 @@ interface CommitFilterBarProps {
 }
 
 function filterInputClassName(): string {
-  return "w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500";
+  return "block min-h-[2rem] w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 transition-colors placeholder:text-slate-500 hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
 }
 
 function labelClassName(): string {
-  return "mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500";
+  return "mb-1 block text-xs font-medium uppercase tracking-wide text-slate-400";
 }
 
 export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
@@ -105,9 +105,11 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <h2 className="text-sm font-medium text-slate-200">Filter commits</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+            Filter commits
+          </h2>
           {activeCount > 0 ? (
-            <span className="rounded-full bg-slate-700 px-2 py-0.5 text-xs text-slate-200">
+            <span className="inline-flex items-center gap-1 rounded-full border border-slate-600 bg-slate-800/60 px-2 py-0.5 text-xs text-slate-300">
               {activeCount} active
             </span>
           ) : null}
@@ -116,7 +118,7 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
           <button
             type="button"
             onClick={clearAll}
-            className="text-xs text-slate-400 underline-offset-2 hover:text-slate-200 hover:underline"
+            className="rounded text-xs text-slate-400 underline-offset-2 transition-colors hover:text-slate-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             Clear all
           </button>
@@ -125,13 +127,13 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
 
       {selectedEra ? (
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-sky-800 bg-sky-950/50 px-3 py-1 text-xs text-sky-200">
+          <span className="inline-flex items-center gap-1 rounded-full border border-sky-700 bg-sky-950/40 px-2 py-0.5 text-xs text-sky-200">
             Era: {selectedEra.name}
           </span>
           <button
             type="button"
             onClick={clearEraOnly}
-            className="text-xs text-slate-400 underline-offset-2 hover:text-slate-200 hover:underline"
+            className="rounded text-xs text-slate-400 underline-offset-2 transition-colors hover:text-slate-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             Clear era
           </button>

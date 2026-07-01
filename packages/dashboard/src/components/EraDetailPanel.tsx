@@ -42,7 +42,9 @@ export function EraDetailPanel() {
   if (!era) {
     return (
       <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-        <h2 className="text-sm font-medium text-slate-200">{selectedEra.name}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          {selectedEra.name}
+        </h2>
         <p className="mt-2 text-sm text-slate-400">Era details unavailable.</p>
       </section>
     );
@@ -57,13 +59,15 @@ export function EraDetailPanel() {
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
       <header className="mb-3 border-b border-slate-800 pb-3">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-lg font-medium text-slate-100">{era.name}</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+            {era.name}
+          </h2>
           {linkedThreads.map((thread) => (
             <OpenWorkBadge key={thread.id} status={thread.status} />
           ))}
         </div>
         <p className="mt-1 text-sm text-slate-400">{era.summary}</p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-xs text-slate-400">
           {era.commitCountInWindow} commit
           {era.commitCountInWindow === 1 ? "" : "s"} in this era
         </p>
@@ -71,7 +75,7 @@ export function EraDetailPanel() {
 
       {era.inflections.length > 0 ? (
         <div className="mb-4">
-          <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+          <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400">
             Inflections
           </h3>
           <ul className="space-y-2">
@@ -88,7 +92,7 @@ export function EraDetailPanel() {
                     level={evidenceCountToLevel(inflection.evidence.length)}
                   />
                 </div>
-                <p className="text-xs capitalize text-slate-500">
+                <p className="text-xs capitalize text-slate-400">
                   {formatInflectionType(inflection.type)}
                 </p>
                 <p className="mt-1 text-sm text-slate-400">
@@ -102,7 +106,7 @@ export function EraDetailPanel() {
 
       {era.claims.length > 0 ? (
         <div>
-          <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+          <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400">
             Claims
           </h3>
           <ul className="space-y-2">
@@ -117,7 +121,7 @@ export function EraDetailPanel() {
                     level={evidenceCountToLevel(claim.evidence.length)}
                   />
                 </div>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-slate-400">
                   {claim.evidence.length} evidence item
                   {claim.evidence.length === 1 ? "" : "s"}
                 </p>

@@ -32,7 +32,7 @@ export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
           <button
             type="button"
             onClick={clearDownstreamFromEra}
-            className="rounded px-1 text-slate-300 transition-colors hover:bg-slate-800 hover:text-slate-100"
+            className="rounded px-1 text-sky-300 underline-offset-2 transition-colors hover:bg-slate-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             {eraName}
           </button>
@@ -47,7 +47,7 @@ export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
           <button
             type="button"
             onClick={clearDownstreamFromCommit}
-            className="rounded px-1 font-mono text-slate-300 transition-colors hover:bg-slate-800 hover:text-slate-100"
+            className="rounded px-1 font-mono text-sky-300 underline-offset-2 transition-colors hover:bg-slate-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             {selectedCommitSha.slice(0, 7)}
           </button>

@@ -2,9 +2,9 @@ import { mkdirSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { DrizzleDb } from "../artifacts/db.js";
 import {
+  type AttributionConfidence,
   INTELLIGENCE_SCHEMA_VERSION,
   IntelligenceArtifact,
-  type AttributionConfidence,
   type IntelligenceArtifact as IntelligenceArtifactType,
 } from "../schema/zod/intelligence.js";
 import { getFileChurnRows } from "./churn.js";

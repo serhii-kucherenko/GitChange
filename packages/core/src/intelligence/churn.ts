@@ -13,7 +13,10 @@ interface ChurnAggregate {
   lastCommitSha: string;
 }
 
-function countLineDelta(changeType: string): { insertions: number; deletions: number } {
+function countLineDelta(changeType: string): {
+  insertions: number;
+  deletions: number;
+} {
   switch (changeType) {
     case "added":
       return { insertions: 1, deletions: 0 };
@@ -45,7 +48,10 @@ export function computeChurn(db: DrizzleDb): number {
       contentIgnored: schema.fileChanges.contentIgnored,
     })
     .from(schema.fileChanges)
-    .innerJoin(schema.commits, eq(schema.fileChanges.commitSha, schema.commits.sha))
+    .innerJoin(
+      schema.commits,
+      eq(schema.fileChanges.commitSha, schema.commits.sha),
+    )
     .all();
 
   const aggregates = new Map<string, ChurnAggregate>();

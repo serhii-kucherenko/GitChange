@@ -75,7 +75,9 @@ describe("computeChurn", () => {
             insertions: 1,
             deletions: 0,
             lastTouchedAt: Date.now(),
-            evidence: [{ type: "file", path: "src/main.ts", commitSha: "b".repeat(40) }],
+            evidence: [
+              { type: "file", path: "src/main.ts", commitSha: "b".repeat(40) },
+            ],
           }),
         ],
       },

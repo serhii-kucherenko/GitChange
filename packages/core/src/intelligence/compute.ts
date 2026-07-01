@@ -1,8 +1,8 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { openDb } from "../artifacts/db.js";
-import { readManifest } from "../schema/manifest.js";
 import type { Manifest } from "../schema/manifest.js";
+import { readManifest } from "../schema/manifest.js";
 import type { AttributionConfidence } from "../schema/zod/intelligence.js";
 import { computeChurn, getChurnFileCount } from "./churn.js";
 import { exportIntelligence } from "./export.js";
@@ -21,7 +21,9 @@ function resolveGitchangedir(repoPath: string, gitchangeDir?: string): string {
   return gitchangeDir ?? join(repoPath, ".gitchange");
 }
 
-function resolveAttributionConfidence(manifest: Manifest): AttributionConfidence {
+function resolveAttributionConfidence(
+  manifest: Manifest,
+): AttributionConfidence {
   return manifest.indexCompleteness === "partial" ? "degraded" : "complete";
 }
 
@@ -45,7 +47,10 @@ function assertIndexReady(gitchangeDir: string): void {
 export async function computeIntelligence(
   options: ComputeIntelligenceOptions,
 ): Promise<ComputeIntelligenceResult> {
-  const gitchangeDir = resolveGitchangedir(options.repoPath, options.gitchangeDir);
+  const gitchangeDir = resolveGitchangedir(
+    options.repoPath,
+    options.gitchangeDir,
+  );
   assertIndexReady(gitchangeDir);
 
   const manifest = readManifest(gitchangeDir);

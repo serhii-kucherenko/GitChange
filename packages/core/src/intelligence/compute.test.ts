@@ -23,7 +23,10 @@ describe("computeIntelligence", () => {
     const gitchangeDir = join(repo.dir, ".gitchange");
     await indexFull({ repoPath: repo.dir, gitchangeDir });
 
-    const result = await computeIntelligence({ repoPath: repo.dir, gitchangeDir });
+    const result = await computeIntelligence({
+      repoPath: repo.dir,
+      gitchangeDir,
+    });
 
     const intelligencePath = join(gitchangeDir, "intelligence.json");
     expect(existsSync(intelligencePath)).toBe(true);

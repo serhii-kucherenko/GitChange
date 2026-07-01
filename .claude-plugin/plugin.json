@@ -1,0 +1,21 @@
+{
+  "name": "gitchange",
+  "displayName": "GitChange",
+  "description": "Analyze git history with evidence-backed answers — who changed what, how the project evolved, and what's in flight",
+  "version": "0.1.0",
+  "author": {
+    "name": "GitChange"
+  },
+  "homepage": "https://github.com/Egonex-AI/GitChange",
+  "repository": "https://github.com/Egonex-AI/GitChange",
+  "license": "MIT",
+  "keywords": [
+    "git-history",
+    "onboarding",
+    "codebase-evolution",
+    "ownership",
+    "dashboard"
+  ],
+  "skills": "./packages/plugin/skills/",
+  "agents": "./packages/plugin/agents/"
+}

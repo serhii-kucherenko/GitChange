@@ -1,0 +1,18 @@
+{
+  "name": "gitchange",
+  "metadata": {
+    "description": "Local-first git history analysis — index commits, surface ownership and expertise, open a localhost dashboard"
+  },
+  "owner": {
+    "name": "GitChange"
+  },
+  "plugins": [
+    {
+      "name": "gitchange",
+      "source": "./packages/plugin",
+      "description": "GitChange slash commands and host-AI schemas for evidence-backed repo analysis",
+      "version": "0.1.0",
+      "license": "MIT"
+    }
+  ]
+}

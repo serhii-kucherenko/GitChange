@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 04-05-PLAN.md — golden semantic gate + validate CLI + snapshot erasSummary; Phase 4 complete
-last_updated: "2026-07-01T10:49:00.000Z"
+stopped_at: Completed 05-01-PLAN.md — paginated commits API + virtualized dashboard list
+last_updated: "2026-07-01T10:45:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 4
-  total_plans: 24
-  completed_plans: 24
-  percent: 50
+  total_plans: 30
+  completed_plans: 25
+  percent: 83
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 4 of 8 complete (Era Detection & Semantic Pipeline)
-Plan: 5 of 5 complete in Phase 4
-Status: Phase 4 complete — ready for Phase 5
+Phase: 5 of 8 in progress (Dashboard & Evidence Drill-Down)
+Plan: 1 of 6 complete in Phase 5
+Status: Ready for 05-02
 Last activity: 2026-07-01
-Stopped at: Completed 04-05-PLAN.md — golden semantic gate + validate CLI + snapshot erasSummary; Phase 4 complete
+Stopped at: Completed 05-01-PLAN.md — paginated commits API + virtualized dashboard list
 
-Progress: [██████████] 100%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -93,6 +93,8 @@ Recent decisions affecting current work:
 
 - Roadmap: Evidence contract (EVD-01) established in Phase 1 schema; confidence UI in Phase 5; honest gaps in Phase 6
 - Roadmap: Phase 3 delivers First Run UX (UA pattern: marketplace install → `/gitchange` → `/gitchange-dashboard`); Phase 5 expands minimal dashboard into full drill-down
+- Cursor pagination uses committedAt desc + sha tiebreaker with base64url cursor tuple
+- Dashboard API types duplicated locally — no @gitchange/core in client bundle
 
 ### Pending Todos
 
@@ -112,6 +114,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T10:49:00.000Z
-Stopped at: Completed 04-05-PLAN.md — golden semantic gate + validate CLI + snapshot erasSummary; Phase 4 complete
+Last session: 2026-07-01T10:45:00.000Z
+Stopped at: Completed 05-01-PLAN.md — paginated commits API + virtualized dashboard list
 Resume file: None

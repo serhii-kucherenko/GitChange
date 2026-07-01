@@ -192,7 +192,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 05-01-PLAN.md — Walking skeleton: paginated /api/commits + virtualized commit list (SCALE-02)
+- [x] 05-01-PLAN.md — Walking skeleton: paginated /api/commits + virtualized commit list (SCALE-02)
 
 **Wave 2** *(blocked on Wave 1; parallel)*
 
@@ -273,7 +273,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
-| 5. Dashboard & Evidence Drill-Down | 0/6 | Not started | - |
+| 5. Dashboard & Evidence Drill-Down | 1/6 | In Progress|  |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |

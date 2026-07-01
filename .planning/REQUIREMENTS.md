@@ -64,10 +64,10 @@
 
 ### Dashboard & Visualization (DASH)
 
-- [ ] **DASH-01**: User can open a local web dashboard served on localhost from indexed artifacts
+- [x] **DASH-01**: User can open a local web dashboard served on localhost from indexed artifacts
 - [ ] **DASH-02**: Dashboard includes timeline, temporal knowledge graph, and tour player views
 - [ ] **DASH-03**: Dashboard shows index freshness and schema version
-- [ ] **DASH-04**: Dashboard virtualizes large commit lists for responsive navigation
+- [x] **DASH-04**: Dashboard virtualizes large commit lists for responsive navigation
 
 ### Plugin & CLI (PLUG)
 
@@ -94,7 +94,7 @@
 ### Scale & Performance (SCALE)
 
 - [ ] **SCALE-01**: System indexes repositories with 100k+ commits using incremental two-phase architecture
-- [ ] **SCALE-02**: Dashboard and agent queries read pre-built index — no live full-repo git walks in UI hot path
+- [x] **SCALE-02**: Dashboard and agent queries read pre-built index — no live full-repo git walks in UI hot path
 - [x] **SCALE-03**: Core ingestion and parsing covered by TDD with golden fixtures
 
 ### Multi-Repo (MULTI)
@@ -193,10 +193,10 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | STAT-02 | Phase 6 | Pending |
 | STAT-03 | Phase 6 | Pending |
 | STAT-04 | Phase 6 | Pending |
-| DASH-01 | Phase 5 | Pending |
+| DASH-01 | Phase 5 | Complete |
 | DASH-02 | Phase 8 | Pending |
 | DASH-03 | Phase 5 | Pending |
-| DASH-04 | Phase 5 | Pending |
+| DASH-04 | Phase 5 | Complete |
 | PLUG-01 | Phase 3 | Complete |
 | PLUG-02 | Phase 3 | Complete |
 | PLUG-03 | Phase 3 | Complete |
@@ -211,7 +211,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | PRIV-03 | Phase 1 | Complete |
 | PRIV-04 | Phase 5 | Pending |
 | SCALE-01 | Phase 8 | Pending |
-| SCALE-02 | Phase 5 | Pending |
+| SCALE-02 | Phase 5 | Complete |
 | SCALE-03 | Phase 1 | Complete |
 | MULTI-01 | Phase 8 | Pending |
 | MULTI-02 | Phase 8 | Pending |

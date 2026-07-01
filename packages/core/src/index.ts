@@ -101,6 +101,40 @@ export {
 export { runSemanticPipeline } from "./semantic/pipeline.js";
 export type { RunSemanticPipelineResult } from "./semantic/pipeline.js";
 export {
+  DECISIONS_SCHEMA_VERSION,
+  DecisionRecord,
+  type DecisionRecord as DecisionRecordType,
+  DecisionsArtifact,
+  type DecisionsArtifact as DecisionsArtifactType,
+  OPEN_WORK_SCHEMA_VERSION,
+  OpenWorkArtifact,
+  type OpenWorkArtifact as OpenWorkArtifactType,
+  OpenWorkThread,
+  type OpenWorkThread as OpenWorkThreadType,
+} from "./schema/zod/index.js";
+export {
+  buildDecisionMiningContext,
+  type DecisionMiningContext,
+  type DecisionMiningDocDelta,
+  type DecisionMiningErasSummary,
+} from "./decisions/context.js";
+export {
+  extractDecisionCandidates,
+  type DecisionCandidate,
+} from "./decisions/candidates.js";
+export {
+  EVD03_GAP_MESSAGE,
+  isBelowEvidenceThreshold,
+} from "./decisions/threshold.js";
+export {
+  readDecisionsArtifact,
+  writeDecisionsArtifact,
+} from "./decisions/decisions-io.js";
+export {
+  readOpenWorkArtifact,
+  writeOpenWorkArtifact,
+} from "./decisions/open-work-io.js";
+export {
   checkSemanticIntegrity,
   type SemanticIntegrityReport,
 } from "./verify/semantic-integrity.js";

@@ -55,19 +55,50 @@ export function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <header className="border-b border-slate-800 bg-slate-900/80 px-6 py-4">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
+      <header className="sticky top-0 z-20 h-14 border-b border-slate-800 bg-slate-900/80 px-6 backdrop-blur">
+        <div className="mx-auto flex h-full max-w-[96rem] items-center justify-between gap-4">
           <h1 className="text-2xl font-semibold tracking-tight">GitChange</h1>
           <div className="flex flex-wrap items-center gap-3">
             {attributionBadge}
             {headSha ? (
-              <p className="font-mono text-sm text-slate-400">
+              <p className="font-mono text-xs text-slate-400">
                 HEAD {headSha.slice(0, 7)}
               </p>
             ) : null}
           </div>
         </div>
       </header>
+
+      {loadState.status === "ready" ? (
+        <div className="border-b border-slate-800 bg-slate-900/80">
+          <nav
+            role="tablist"
+            aria-label="Primary views"
+            className="mx-auto flex max-w-[96rem] gap-1 px-6"
+          >
+            {(Object.keys(TAB_LABELS) as IntelligenceTab[]).map((tab) => {
+              const isActive = intelligenceTab === tab;
+              return (
+                <button
+                  key={tab}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => onIntelligenceTabChange(tab)}
+                  className={`min-h-[32px] whitespace-nowrap border-b-2 px-4 py-2 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                    isActive
+                      ? "border-sky-400 font-semibold text-slate-100"
+                      : "border-transparent text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  {TAB_LABELS[tab]}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+      ) : null}
 
       <div className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
         <aside className="space-y-6">
@@ -94,27 +125,6 @@ export function DashboardLayout({
 
           {loadState.status === "ready" ? (
             <>
-              <nav
-                aria-label="Intelligence views"
-                className="flex rounded-lg border border-slate-700 bg-slate-900 p-1"
-              >
-                {(Object.keys(TAB_LABELS) as IntelligenceTab[]).map((tab) => (
-                  <button
-                    key={tab}
-                    type="button"
-                    onClick={() => onIntelligenceTabChange(tab)}
-                    className={`flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${
-                      intelligenceTab === tab
-                        ? "bg-slate-700 text-slate-100"
-                        : "text-slate-400 hover:text-slate-200"
-                    }`}
-                    aria-current={intelligenceTab === tab ? "page" : undefined}
-                  >
-                    {TAB_LABELS[tab]}
-                  </button>
-                ))}
-              </nav>
-
               {intelligenceTab === "timeline" ? (
                 <>
                   {sidebar}

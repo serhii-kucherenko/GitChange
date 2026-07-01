@@ -44,14 +44,14 @@
 ### Contributors & Ownership (CONT)
 
 - [x] **CONT-01**: User can see who changed what with per-file and per-era ownership timelines
-- [ ] **CONT-02**: User can see decision attribution — who drove pivots with linked commits
+- [x] **CONT-02**: User can see decision attribution — who drove pivots with linked commits
 - [x] **CONT-03**: User can view contributor expertise profiles inferred from history ("ask Alice about auth")
 - [x] **CONT-04**: System computes ownership from line survival at HEAD with rename tracking and ignore-revs support
 
 ### Decisions & Migrations (DEC)
 
 - [x] **DEC-01**: System auto-mines decisions and migrations from commits, messages, trailers, and doc deltas
-- [ ] **DEC-02**: User can browse decisions with status, evidence, and supersession relationships
+- [x] **DEC-02**: User can browse decisions with status, evidence, and supersession relationships
 - [ ] **DEC-03**: Maintainer can confirm or reject auto-mined decisions via in-chat interview loop
 - [ ] **DEC-04**: Interview answers flow back into project docs or `.gitchange/` index as durable lore
 
@@ -182,11 +182,11 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | TOUR-03 | Phase 7 | Pending |
 | TOUR-04 | Phase 7 | Pending |
 | CONT-01 | Phase 2 | Complete |
-| CONT-02 | Phase 6 | Pending |
+| CONT-02 | Phase 6 | Complete |
 | CONT-03 | Phase 2 | Complete |
 | CONT-04 | Phase 2 | Complete |
 | DEC-01 | Phase 6 | Complete |
-| DEC-02 | Phase 6 | Pending |
+| DEC-02 | Phase 6 | Complete |
 | DEC-03 | Phase 6 | Pending |
 | DEC-04 | Phase 6 | Pending |
 | STAT-01 | Phase 6 | Complete |

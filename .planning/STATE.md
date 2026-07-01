@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-07-PLAN.md
-last_updated: "2026-07-01T08:31:00.000Z"
+status: ready-for-phase-2
+stopped_at: Completed 01-08-PLAN.md — Phase 1 complete
+last_updated: "2026-07-01T01:31:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 8
-  completed_plans: 7
-  percent: 0
+  completed_plans: 8
+  percent: 13
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 1 — Index Foundation
+**Current focus:** Phase 2 — Repository Intelligence & Ownership
 
 ## Current Position
 
-Phase: 1 of 8 (Index Foundation)
-Plan: 7 of 8 complete (Doc snapshots done; next: 01-08)
-Status: Ready to execute 01-08
+Phase: 1 of 8 complete (Index Foundation)
+Plan: 8 of 8 complete
+Status: Phase 1 complete — ready for Phase 2
 Last activity: 2026-07-01
-Stopped at: Completed 01-07-PLAN.md
+Stopped at: Completed 01-08-PLAN.md — Phase 1 complete
 
-Progress: [█████████░] 88%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -64,6 +64,9 @@ Progress: [█████████░] 88%
 - Force-push detection walks HEAD ancestry; revparse existence alone is insufficient
 - Ignored doc paths store content null but contentHash from raw blob bytes
 - Gray-matter body trimmed before storage and hashing
+- Golden tests use verify helpers in packages/core to avoid drizzle-orm imports from tests/golden
+- BASIC_SCENARIO fixture secrets aligned to SECRET_RULES pattern lengths
+- Dogfood golden test gated behind GITCHANGE_DOGFOOD env flag
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -90,6 +93,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T08:31:00.000Z
-Stopped at: Completed 01-07-PLAN.md
+Last session: 2026-07-01T01:31:00.000Z
+Stopped at: Completed 01-08-PLAN.md — Phase 1 complete
 Resume file: None

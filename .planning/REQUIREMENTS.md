@@ -95,7 +95,7 @@
 
 - [ ] **SCALE-01**: System indexes repositories with 100k+ commits using incremental two-phase architecture
 - [ ] **SCALE-02**: Dashboard and agent queries read pre-built index — no live full-repo git walks in UI hot path
-- [ ] **SCALE-03**: Core ingestion and parsing covered by TDD with golden fixtures
+- [x] **SCALE-03**: Core ingestion and parsing covered by TDD with golden fixtures
 
 ### Multi-Repo (MULTI)
 
@@ -212,7 +212,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | PRIV-04 | Phase 5 | Pending |
 | SCALE-01 | Phase 8 | Pending |
 | SCALE-02 | Phase 5 | Pending |
-| SCALE-03 | Phase 1 | Pending |
+| SCALE-03 | Phase 1 | Complete |
 | MULTI-01 | Phase 8 | Pending |
 | MULTI-02 | Phase 8 | Pending |
 

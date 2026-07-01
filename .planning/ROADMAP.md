@@ -11,7 +11,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - Integer phases (1–8): Planned milestone work
 - Decimal phases (e.g., 2.1): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Index Foundation** - Deterministic git/doc ingestion, `.gitchange/` schema, privacy, and golden fixtures
+- [x] **Phase 1: Index Foundation** - Deterministic git/doc ingestion, `.gitchange/` schema, privacy, and golden fixtures (completed 2026-07-01)
 - [ ] **Phase 2: Repository Intelligence & Ownership** - Churn, co-change, and line-survival ownership profiles
 - [ ] **Phase 3: CLI & Plugin Scaffold** - Install/first-run UX (UA pattern), CLI, `/gitchange`, minimal `/gitchange-dashboard`
 - [ ] **Phase 4: Era Detection & Semantic Pipeline** - Named eras, inflection points, and temporal graph artifacts
@@ -65,7 +65,7 @@ Plans:
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
-- [ ] 01-08-PLAN.md — Golden fixtures: evidence-integrity, secret-leakage grep, ingestion snapshot, dogfood
+- [x] 01-08-PLAN.md — Golden fixtures: evidence-integrity, secret-leakage grep, ingestion snapshot, dogfood
 
 ### Phase 2: Repository Intelligence & Ownership
 
@@ -189,7 +189,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Index Foundation | 7/8 | In Progress|  |
+| 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
 | 2. Repository Intelligence & Ownership | 0/TBD | Not started | - |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |

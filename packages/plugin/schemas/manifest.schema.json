@@ -75,6 +75,15 @@
     },
     "intelligenceSchemaVersion": {
       "type": "string"
+    },
+    "semanticComputedAt": {
+      "type": "string"
+    },
+    "semanticHeadSha": {
+      "type": "string"
+    },
+    "semanticSchemaVersion": {
+      "type": "string"
     }
   },
   "required": [

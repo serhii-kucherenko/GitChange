@@ -9,7 +9,8 @@
     "manifest",
     "stats",
     "intelligence",
-    "highlights"
+    "highlights",
+    "erasSummary"
   ],
   "properties": {
     "manifest": {
@@ -100,6 +101,16 @@
         "topExpertiseTopics"
       ],
       "additionalProperties": false
+    },
+    "erasSummary": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "https://gitchange.dev/schemas/eras-summary.schema.json"
+        }
+      ]
     }
   },
   "$defs": {
@@ -176,6 +187,15 @@
           "type": "string"
         },
         "intelligenceSchemaVersion": {
+          "type": "string"
+        },
+        "semanticComputedAt": {
+          "type": "string"
+        },
+        "semanticHeadSha": {
+          "type": "string"
+        },
+        "semanticSchemaVersion": {
           "type": "string"
         }
       },

@@ -27,11 +27,31 @@ const SnapshotHighlightsSchema = z.object({
   ),
 });
 
+const SnapshotErasSummarySchema = z.object({
+  eraCount: z.number().int().nonnegative(),
+  inflectionCount: z.number().int().nonnegative(),
+  eras: z.array(
+    z.object({
+      name: z.string(),
+      summary: z.string(),
+      inflectionTypes: z.array(
+        z.enum([
+          "tech_pivot",
+          "scope_steering",
+          "process_shift",
+          "team_ownership_change",
+        ]),
+      ),
+    }),
+  ),
+});
+
 const SnapshotResponseSchema = z.object({
   manifest: ManifestSchema,
   stats: SnapshotStatsSchema,
   intelligence: IntelligenceArtifact.nullable(),
   highlights: SnapshotHighlightsSchema,
+  erasSummary: SnapshotErasSummarySchema.nullable(),
 });
 
 export interface SnapshotRouteOptions {
@@ -52,6 +72,7 @@ export function createSnapshotRoutes(options: SnapshotRouteOptions): Hono {
       stats: snapshot.stats,
       intelligence: snapshot.intelligence,
       highlights: snapshot.highlights,
+      erasSummary: snapshot.erasSummary,
     });
 
     return context.json(body);

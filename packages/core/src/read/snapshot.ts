@@ -5,10 +5,15 @@ import { openDb } from "../artifacts/db.js";
 import type { Manifest } from "../schema/manifest.js";
 import { readManifest } from "../schema/manifest.js";
 import * as schema from "../schema/drizzle/schema.js";
+import type { InflectionType } from "../schema/zod/eras.js";
 import {
   IntelligenceArtifact,
   type IntelligenceArtifact as IntelligenceArtifactType,
 } from "../schema/zod/intelligence.js";
+import { readErasArtifact } from "../semantic/eras-io.js";
+
+const ERAS_SUMMARY_MAX = 8;
+const ERAS_SUMMARY_TEXT_MAX = 200;
 
 export interface RepoSnapshotStats {
   commitCount: number;
@@ -31,11 +36,24 @@ export interface RepoSnapshotHighlights {
   topExpertiseTopics: RepoSnapshotHighlightExpertiseTopic[];
 }
 
+export interface RepoSnapshotEraHighlight {
+  name: string;
+  summary: string;
+  inflectionTypes: InflectionType[];
+}
+
+export interface RepoSnapshotErasSummary {
+  eraCount: number;
+  inflectionCount: number;
+  eras: RepoSnapshotEraHighlight[];
+}
+
 export interface RepoSnapshot {
   manifest: Manifest | null;
   stats: RepoSnapshotStats;
   intelligence: IntelligenceArtifactType | null;
   highlights: RepoSnapshotHighlights;
+  erasSummary: RepoSnapshotErasSummary | null;
 }
 
 const EMPTY_STATS: RepoSnapshotStats = {
@@ -100,6 +118,37 @@ function buildHighlights(
   return { topChurnFiles, topExpertiseTopics };
 }
 
+function truncateSummary(summary: string): string {
+  if (summary.length <= ERAS_SUMMARY_TEXT_MAX) {
+    return summary;
+  }
+  return `${summary.slice(0, ERAS_SUMMARY_TEXT_MAX - 1)}…`;
+}
+
+function buildErasSummary(gitchangeDir: string): RepoSnapshotErasSummary | null {
+  const erasArtifact = readErasArtifact(gitchangeDir);
+  if (!erasArtifact) {
+    return null;
+  }
+
+  const inflectionCount = erasArtifact.eras.reduce(
+    (total, era) => total + era.inflections.length,
+    0,
+  );
+
+  const eras = erasArtifact.eras.slice(0, ERAS_SUMMARY_MAX).map((era) => ({
+    name: era.name,
+    summary: truncateSummary(era.summary),
+    inflectionTypes: era.inflections.map((inflection) => inflection.type),
+  }));
+
+  return {
+    eraCount: erasArtifact.eras.length,
+    inflectionCount,
+    eras,
+  };
+}
+
 export function getRepoSnapshot(gitchangeDir: string): RepoSnapshot {
   const manifest = readManifest(gitchangeDir);
   const intelligence = readIntelligence(gitchangeDir);
@@ -109,5 +158,6 @@ export function getRepoSnapshot(gitchangeDir: string): RepoSnapshot {
     stats: collectStats(gitchangeDir),
     intelligence,
     highlights: buildHighlights(intelligence),
+    erasSummary: buildErasSummary(gitchangeDir),
   };
 }

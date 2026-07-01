@@ -33,6 +33,7 @@ function createValidator(): Ajv {
   ajv.addSchema(readSchema("snapshot.schema.json"));
   ajv.addSchema(readSchema("era-synthesis-context.schema.json"));
   ajv.addSchema(readSchema("eras.schema.json"));
+  ajv.addSchema(readSchema("eras-summary.schema.json"));
   return ajv;
 }
 
@@ -99,6 +100,7 @@ describe("integration: plugin host-AI schemas", () => {
       stats: snapshot.stats,
       intelligence: snapshot.intelligence,
       highlights: snapshot.highlights,
+      erasSummary: snapshot.erasSummary,
     };
 
     const validate = ajv.getSchema(

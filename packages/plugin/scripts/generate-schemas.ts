@@ -28,11 +28,31 @@ const SnapshotHighlightsSchema = z.object({
   ),
 });
 
+const SnapshotErasSummarySchema = z.object({
+  eraCount: z.number().int().nonnegative(),
+  inflectionCount: z.number().int().nonnegative(),
+  eras: z.array(
+    z.object({
+      name: z.string(),
+      summary: z.string(),
+      inflectionTypes: z.array(
+        z.enum([
+          "tech_pivot",
+          "scope_steering",
+          "process_shift",
+          "team_ownership_change",
+        ]),
+      ),
+    }),
+  ),
+});
+
 const SnapshotResponseSchema = z.object({
   manifest: ManifestSchema,
   stats: SnapshotStatsSchema,
   intelligence: IntelligenceArtifact.nullable(),
   highlights: SnapshotHighlightsSchema,
+  erasSummary: SnapshotErasSummarySchema.nullable(),
 });
 
 const IntelligenceSummarySchema = IntelligenceArtifact.pick({
@@ -132,7 +152,7 @@ function writeSnapshotSchema(
       "GET /api/snapshot response shape for host-AI tool registration.",
     type: "object",
     additionalProperties: false,
-    required: ["manifest", "stats", "intelligence", "highlights"],
+    required: ["manifest", "stats", "intelligence", "highlights", "erasSummary"],
     properties: {
       manifest: { $ref: "#/$defs/manifest" },
       stats: (snapshotGenerated.properties as JsonRecord).stats,
@@ -140,6 +160,12 @@ function writeSnapshotSchema(
         oneOf: [{ type: "null" }, { $ref: "#/$defs/intelligence" }],
       },
       highlights: (snapshotGenerated.properties as JsonRecord).highlights,
+      erasSummary: {
+        oneOf: [
+          { type: "null" },
+          { $ref: "https://gitchange.dev/schemas/eras-summary.schema.json" },
+        ],
+      },
     },
     $defs: {
       manifest: stripSchemaEnvelope(manifestSchema),
@@ -185,6 +211,12 @@ writeSchema("era-synthesis-context.schema.json", EraSynthesisContextSchema, {
 writeSchema("eras.schema.json", ErasArtifact, {
   title: "GitChangeErasArtifact",
   description: "Named eras with claims, inflections, and evidence bundles.",
+});
+
+writeSchema("eras-summary.schema.json", SnapshotErasSummarySchema, {
+  title: "GitChangeErasSummary",
+  description:
+    "Bounded era highlights for snapshot API and host-AI presentation.",
 });
 
 // Sanity: generated schemas round-trip through fromJSONSchema for manifest.

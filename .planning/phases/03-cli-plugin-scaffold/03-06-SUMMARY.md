@@ -63,7 +63,7 @@ completed: 2026-07-01
 1. **Task 1: QUICKSTART.md (≤5 steps)** - `b0957d8` (feat)
 2. **Task 2: First-run E2E test + phase validation matrix** - `f56b15a` (feat)
 
-**Plan metadata:** pending final docs commit
+**Plan metadata:** `79df522` (docs)
 
 ## Files Created/Modified
 

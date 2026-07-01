@@ -23,8 +23,32 @@ export {
   type IndexCompleteness,
 } from "./schema/manifest.js";
 export {
-  type AttributionConfidence,
+  EraClaim,
+  ErasArtifact,
+  InflectionPoint,
+  InflectionType,
   INTELLIGENCE_SCHEMA_VERSION,
   IntelligenceArtifact,
+  NamedEra,
+  SEMANTIC_SCHEMA_VERSION,
+  TemporalGraphArtifact,
+  type AttributionConfidence,
+  type EraClaim as EraClaimType,
+  type ErasArtifact as ErasArtifactType,
+  type InflectionPoint as InflectionPointType,
   type IntelligenceArtifact as IntelligenceArtifactType,
-} from "./schema/zod/intelligence.js";
+  type NamedEra as NamedEraType,
+  type TemporalGraphArtifact as TemporalGraphArtifactType,
+} from "./schema/zod/index.js";
+export {
+  buildEraSynthesisContext,
+  type EraSynthesisChurnFile,
+  type EraSynthesisContext,
+  type EraSynthesisDocDelta,
+  type EraSynthesisEraSignal,
+} from "./semantic/context.js";
+export {
+  MAX_ERAS,
+  readErasArtifact,
+  writeErasArtifact,
+} from "./semantic/eras-io.js";

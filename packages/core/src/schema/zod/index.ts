@@ -57,8 +57,8 @@ export {
   TemporalGraphNode,
   TemporalGraphNodeType,
   type TemporalGraphArtifact as TemporalGraphArtifactType,
-  type TemporalGraphEdge as TemporalGraphEdgeType,
+  type TemporalGraphEdge as TemporalGraphEdgeRecord,
   type TemporalGraphEdgeType as TemporalGraphEdgeTypeValue,
-  type TemporalGraphNode as TemporalGraphNodeType,
+  type TemporalGraphNode as TemporalGraphNodeRecord,
   type TemporalGraphNodeType as TemporalGraphNodeTypeValue,
 } from "./temporal-graph.js";

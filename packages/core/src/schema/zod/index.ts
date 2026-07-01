@@ -7,3 +7,22 @@ export {
   type ChangeType as ChangeTypeValue,
   type FileChangeRecord as FileChangeRecordType,
 } from "./file-change.js";
+export {
+  AttributionConfidence,
+  ChurnFileEntry,
+  CoChangeEdge,
+  EraBoundarySignal,
+  ExpertiseProfile,
+  INTELLIGENCE_SCHEMA_VERSION,
+  IntelligenceArtifact,
+  OwnershipAuthor,
+  OwnershipFileEntry,
+  type AttributionConfidence as AttributionConfidenceType,
+  type ChurnFileEntry as ChurnFileEntryType,
+  type CoChangeEdge as CoChangeEdgeType,
+  type EraBoundarySignal as EraBoundarySignalType,
+  type ExpertiseProfile as ExpertiseProfileType,
+  type IntelligenceArtifact as IntelligenceArtifactType,
+  type OwnershipAuthor as OwnershipAuthorType,
+  type OwnershipFileEntry as OwnershipFileEntryType,
+} from "./intelligence.js";

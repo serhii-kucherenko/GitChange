@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import type { CommitListFilters } from "./api/client.js";
+import { fetchTour, tours } from "./api/client.js";
 import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
@@ -10,12 +12,16 @@ import { FileHistoryScrubber } from "./components/FileHistoryScrubber.js";
 import { IndexStatusCard } from "./components/IndexStatusCard.js";
 import { MigrationThreadPanel } from "./components/MigrationThreadPanel.js";
 import { OpenThreadsPanel } from "./components/OpenThreadsPanel.js";
+import { TourChapterNav } from "./components/TourChapterNav.js";
+import { TourPicker } from "./components/TourPicker.js";
+import { TourPlayer } from "./components/TourPlayer.js";
 import {
   DashboardLayout,
   type IntelligenceTab,
 } from "./layout/DashboardLayout.js";
 import { fetchSnapshot, type SnapshotLoadState } from "./snapshot.js";
 import { eraToCommitFilters, useDrillStore } from "./store/drill.js";
+import { useTourStore } from "./store/tour.js";
 
 export function App() {
   const [loadState, setLoadState] = useState<SnapshotLoadState>({
@@ -27,6 +33,24 @@ export function App() {
   const selectedEra = useDrillStore((state) => state.selectedEra);
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
   const selectedThreadId = useDrillStore((state) => state.selectedThreadId);
+  const activeTourId = useTourStore((state) => state.activeTourId);
+  const hydrateFromStorage = useTourStore((state) => state.hydrateFromStorage);
+  const persistToStorage = useTourStore((state) => state.persistToStorage);
+
+  const headSha =
+    loadState.status === "ready" ? loadState.data.manifest.repo.head : null;
+
+  const tourDetailQuery = useQuery({
+    queryKey: activeTourId ? tours.detail(activeTourId) : ["tours", "detail", "none"],
+    queryFn: () => {
+      if (!activeTourId) {
+        throw new Error("no_active_tour");
+      }
+      return fetchTour(activeTourId);
+    },
+    enabled: Boolean(activeTourId) && intelligenceTab === "tours",
+    staleTime: 60_000,
+  });
 
   const mergedFilters = useMemo<CommitListFilters>(() => {
     if (!selectedEra) {
@@ -63,11 +87,35 @@ export function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!headSha) {
+      return;
+    }
+    hydrateFromStorage(headSha);
+  }, [headSha, hydrateFromStorage]);
+
+  useEffect(() => {
+    if (!headSha) {
+      return;
+    }
+
+    return useTourStore.subscribe(() => {
+      persistToStorage(headSha);
+    });
+  }, [headSha, persistToStorage]);
+
   const intelligencePanel =
     intelligenceTab === "decisions" ? (
       <DecisionsPanel />
     ) : intelligenceTab === "open-work" ? (
       <OpenThreadsPanel />
+    ) : intelligenceTab === "tours" ? (
+      <div className="space-y-4">
+        <TourPicker />
+        {tourDetailQuery.data ? (
+          <TourChapterNav chapters={tourDetailQuery.data.chapters} />
+        ) : null}
+      </div>
     ) : null;
 
   const mainContent =
@@ -84,6 +132,11 @@ export function App() {
             Select a thread to view its migration timeline and drill into
             commits.
           </p>
+        ) : intelligenceTab === "tours" ? (
+          <TourPlayer
+            onDrillToTimeline={() => setIntelligenceTab("timeline")}
+            onDrillToDecisions={() => setIntelligenceTab("decisions")}
+          />
         ) : (
           <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
             Select a decision to view evidence and drill into commits.

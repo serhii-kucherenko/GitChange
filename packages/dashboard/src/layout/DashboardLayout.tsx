@@ -3,7 +3,11 @@ import { AttributionBadge } from "../components/ConfidenceBadge.js";
 import type { SnapshotLoadState } from "../snapshot.js";
 import { resolveDisplayedAttribution } from "../utils/confidence.js";
 
-export type IntelligenceTab = "timeline" | "decisions" | "open-work";
+export type IntelligenceTab =
+  | "timeline"
+  | "decisions"
+  | "open-work"
+  | "tours";
 
 interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
@@ -21,6 +25,7 @@ const TAB_LABELS: Record<IntelligenceTab, string> = {
   timeline: "Timeline",
   decisions: "Decisions",
   "open-work": "Open work",
+  tours: "Tours",
 };
 
 export function DashboardLayout({

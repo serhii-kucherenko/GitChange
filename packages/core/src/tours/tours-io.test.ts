@@ -79,27 +79,27 @@ describe("tours-io", () => {
     applyBasicScenarioErasFixture(fixture.gitchangeDir);
 
     const artifact = buildValidArtifact(fixture.gitchangeDir);
-    const invalid = {
-      ...artifact,
-      tours: [
-        {
-          ...artifact.tours[0]!,
-          chapters: artifact.tours[0]!.chapters.map((chapter) => ({
-            ...chapter,
-            stops: [
-              TourStop.parse({
-                id: "stop:bad",
-                narrative: "Missing evidence.",
-                evidence: [],
-                drillTarget: { eraId: chapter.eraIds[0] },
-              }),
-            ],
-          })),
-        },
-      ],
-    };
-
-    expect(() => writeToursArtifact(fixture.gitchangeDir, invalid)).toThrow();
+    expect(() =>
+      writeToursArtifact(fixture.gitchangeDir, {
+        ...artifact,
+        tours: [
+          {
+            ...artifact.tours[0]!,
+            chapters: artifact.tours[0]!.chapters.map((chapter) => ({
+              ...chapter,
+              stops: [
+                {
+                  id: "stop:bad",
+                  narrative: "Missing evidence.",
+                  evidence: [],
+                  drillTarget: { eraId: chapter.eraIds[0] },
+                },
+              ],
+            })),
+          },
+        ],
+      }),
+    ).toThrow();
   });
 
   it("rejects write when integrity check fails", async () => {

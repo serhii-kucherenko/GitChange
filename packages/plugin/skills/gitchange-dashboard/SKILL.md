@@ -21,6 +21,8 @@ If **missing**, stop and tell the user to run `/gitchange` first. Do not serve a
 
 Same as `/gitchange`: walk up for `.git`, use absolute `--repo` path.
 
+For the GitChange install root and CLI binary, use P3-D-04 from `packages/plugin/scripts/resolve-root.ts` (`resolveGitChangeRoot`, `resolveCliBin`) when PATH does not include `gitchange`.
+
 ### 2. Ensure server is running
 
 Default health check:

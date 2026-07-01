@@ -14,9 +14,9 @@ GitChange supplies **artifacts and schemas only**. The host AI reads results and
 ## Prerequisites
 
 - A git repository in the workspace (a `.git` directory reachable by walking up from the workspace root).
-- The `gitchange` CLI on PATH. If missing, tell the user:
-  1. Clone the GitChange repo and run `pnpm install && pnpm build` from the monorepo root.
-  2. Link or add `packages/cli` to PATH (see `docs/QUICKSTART.md` when published).
+- The `gitchange` CLI on PATH, or resolvable via `resolveCliBin()` from `packages/plugin/scripts/resolve-root.ts` (P3-D-04). If missing, tell the user:
+  1. Run the one-line installer: `curl -fsSL https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.sh | bash`
+  2. Or clone the GitChange repo and run `pnpm install && pnpm build` from the monorepo root.
   3. Verify with `gitchange --version` or `gitchange status`.
 
 ## Steps
@@ -25,7 +25,16 @@ GitChange supplies **artifacts and schemas only**. The host AI reads results and
 
 Walk up from the workspace root until a `.git` directory is found. Use that directory as `--repo` (absolute path). Do **not** assume the plugin install path or monorepo layout.
 
-Optional override: `GITCHANGE_ROOT` environment variable when the host provides it.
+### 1b. Resolve GitChange install root (CLI + schemas)
+
+When the host needs the GitChange plugin tree (schemas, build hints), resolve the **install root** separately from the git repo root using P3-D-04 precedence:
+
+1. `GITCHANGE_ROOT` environment variable when set and contains `.cursor-plugin/plugin.json`
+2. Walk up from cwd for `.cursor-plugin/plugin.json` (cloned / marketplace install)
+3. Walk up for `node_modules/.bin/gitchange` at the same root
+4. Walk up from the loaded skill/module path (monorepo dev)
+
+Implementation: `packages/plugin/scripts/resolve-root.ts` exports `resolveGitChangeRoot()` and `resolveCliBin()`. Use `resolveCliBin()` before invoking the CLI when PATH may not include `gitchange`.
 
 ### 2. Decide full vs incremental index
 

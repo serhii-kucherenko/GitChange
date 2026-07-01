@@ -96,6 +96,15 @@
     },
     "openWorkSchemaVersion": {
       "type": "string"
+    },
+    "toursComputedAt": {
+      "type": "string"
+    },
+    "toursHeadSha": {
+      "type": "string"
+    },
+    "toursSchemaVersion": {
+      "type": "string"
     }
   },
   "required": [

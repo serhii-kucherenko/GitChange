@@ -10,6 +10,8 @@ import {
   IntelligenceArtifact,
   InterviewRecord,
   ManifestSchema,
+  TourChapter,
+  ToursArtifact,
 } from "@gitchange/core";
 
 const PLUGIN_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -296,6 +298,70 @@ writeSchema("status-query-response.schema.json", StatusQueryResponseSchema, {
   title: "GitChangeStatusQueryResponse",
   description:
     "Host-AI response shape for migration progress and in-flight status queries (STAT-04).",
+});
+
+const TourEraSummarySchema = z.object({
+  id: z.string().min(1),
+  name: z.string(),
+  summary: z.string(),
+  window: z.object({
+    startAt: z.number().int(),
+    endAt: z.number().int(),
+  }),
+});
+
+const TourExpertiseTopicSchema = z.object({
+  topic: z.string(),
+  topPaths: z.array(z.string()),
+});
+
+const TourDecisionSeedSchema = z.object({
+  id: z.string().min(1),
+  title: z.string(),
+  status: z.string(),
+  confidence: z.number(),
+});
+
+const TourOpenWorkSeedSchema = z.object({
+  id: z.string().min(1),
+  title: z.string(),
+  status: z.string(),
+  relatedPaths: z.array(z.string()),
+});
+
+const TourRolePathHintsSchema = z.object({
+  backend: z.array(z.string()),
+  frontend: z.array(z.string()),
+});
+
+const TourSynthesisContextSchema = z.object({
+  eraSummaries: z.array(TourEraSummarySchema),
+  outlineChapters: z.array(TourChapter),
+  expertiseTopics: z.array(TourExpertiseTopicSchema),
+  decisionSeeds: z.array(TourDecisionSeedSchema),
+  openWorkSeeds: z.array(TourOpenWorkSeedSchema),
+  rolePathHints: TourRolePathHintsSchema,
+  headSha: z.string().length(40),
+  capsReminder: z.object({
+    maxDefaultTours: z.number().int(),
+    maxRoleTours: z.number().int(),
+    maxTopicTours: z.number().int(),
+    defaultChapterMin: z.number().int(),
+    defaultChapterMax: z.number().int(),
+    topicStopMax: z.number().int(),
+  }),
+});
+
+writeSchema("tour-synthesis-context.schema.json", TourSynthesisContextSchema, {
+  title: "GitChangeTourSynthesisContext",
+  description:
+    "Bounded input for host-AI tour synthesis from eras, decisions, open-work, and intelligence.",
+});
+
+writeSchema("tours.schema.json", ToursArtifact, {
+  title: "GitChangeToursArtifact",
+  description:
+    "Guided tours: default onboarding, role variants, and topic-thread tours with evidence-backed stops.",
 });
 
 // Sanity: generated schemas round-trip through fromJSONSchema for manifest.

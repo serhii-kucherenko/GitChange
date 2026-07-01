@@ -160,8 +160,8 @@ describe("mergeTourBuilderOutput", () => {
   it("rejects invented era id references", async () => {
     const { gitchangeDir } = await toursFixture();
     const agentJson = buildAgentOutput(gitchangeDir);
-    const defaultTour = agentJson.tours[0]!;
-    defaultTour.chapters[0]!.eraIds = ["era:INVENTED"];
+    const roleTour = agentJson.tours[1]!;
+    roleTour.chapters[0]!.eraIds = ["era:INVENTED"];
 
     expect(() => mergeTourBuilderOutput(gitchangeDir, agentJson)).toThrow(
       /unknown eraId/,

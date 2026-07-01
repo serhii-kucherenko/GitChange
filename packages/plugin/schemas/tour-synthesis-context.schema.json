@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/tour-synthesis-context.schema.json",
+  "title": "GitChangeTourSynthesisContext",
+  "description": "Bounded input for host-AI tour synthesis from eras, decisions, open-work, and intelligence.",
+  "type": "object",
+  "properties": {
+    "eraSummaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "window": {
+            "type": "object",
+            "properties": {
+              "startAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "endAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "startAt",
+              "endAt"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "summary",
+          "window"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "outlineChapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "eraIds": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "stops": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "narrative": {
+                  "type": "string",
+                  "maxLength": 400
+                },
+                "evidence": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "commit"
+                          },
+                          "sha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "sha"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "file"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "doc"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          },
+                          "excerpt": {
+                            "type": "string",
+                            "maxLength": 500
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha",
+                          "excerpt"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "hunk"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "commitSha": {
+                            "type": "string",
+                            "minLength": 40,
+                            "maxLength": 40
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "commitSha",
+                          "startLine",
+                          "endLine"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "interview"
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "recordedAt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "excerpt": {
+                            "type": "string",
+                            "maxLength": 500
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "path",
+                          "recordedAt",
+                          "excerpt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "drillTarget": {
+                  "type": "object",
+                  "properties": {
+                    "eraId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "commitSha": {
+                      "type": "string",
+                      "minLength": 40,
+                      "maxLength": 40
+                    },
+                    "filePath": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "decisionId": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "id",
+                "narrative",
+                "evidence",
+                "drillTarget"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "order",
+          "title",
+          "summary",
+          "eraIds",
+          "stops"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "expertiseTopics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "topPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "topic",
+          "topPaths"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "decisionSeeds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "confidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "openWorkSeeds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "relatedPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "relatedPaths"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rolePathHints": {
+      "type": "object",
+      "properties": {
+        "backend": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "frontend": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "backend",
+        "frontend"
+      ],
+      "additionalProperties": false
+    },
+    "headSha": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 40
+    },
+    "capsReminder": {
+      "type": "object",
+      "properties": {
+        "maxDefaultTours": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "maxRoleTours": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "maxTopicTours": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "defaultChapterMin": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "defaultChapterMax": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "topicStopMax": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "maxDefaultTours",
+        "maxRoleTours",
+        "maxTopicTours",
+        "defaultChapterMin",
+        "defaultChapterMax",
+        "topicStopMax"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "eraSummaries",
+    "outlineChapters",
+    "expertiseTopics",
+    "decisionSeeds",
+    "openWorkSeeds",
+    "rolePathHints",
+    "headSha",
+    "capsReminder"
+  ],
+  "additionalProperties": false
+}

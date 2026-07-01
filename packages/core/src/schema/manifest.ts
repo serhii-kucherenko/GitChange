@@ -39,6 +39,9 @@ export const ManifestSchema = z.object({
   openWorkComputedAt: z.string().optional(),
   decisionsSchemaVersion: z.string().optional(),
   openWorkSchemaVersion: z.string().optional(),
+  toursComputedAt: z.string().optional(),
+  toursHeadSha: z.string().optional(),
+  toursSchemaVersion: z.string().optional(),
 });
 
 export type Manifest = z.infer<typeof ManifestSchema>;

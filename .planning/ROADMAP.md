@@ -199,14 +199,17 @@ Plans:
 - [ ] 05-02-PLAN.md — Commit search/filter by author, path, message, date (INGX-06)
 - [ ] 05-04-PLAN.md — Index-time hunk capture + commit→file→hunk drill panels (TIME-02)
 
-**Wave 3** *(blocked on Wave 1–2 partial)*
+**Wave 3** *(blocked on Wave 2 filters)*
 
 - [ ] 05-03-PLAN.md — vis-timeline era markers + era-filtered commits (TIME-01)
+
+**Wave 4** *(blocked on hunk capture)*
+
 - [ ] 05-05-PLAN.md — File-centric history scrubber (TIME-03)
 
-**Wave 4** *(blocked on Waves 1–3)*
+**Wave 5** *(blocked on Waves 1–4)*
 
-- [ ] 05-06-PLAN.md — Confidence badges, index status polish, PRIV-04 gate, E2E test (EVD-02, DASH-03)
+- [ ] 05-06-PLAN.md — Confidence badges, PRIV-04 gate, SCALE-02 E2E (EVD-02, DASH-03)
 **UI hint**: yes
 
 ### Phase 6: Decisions, Status & Open Work

@@ -279,7 +279,7 @@ Plans:
 
 **Wave 3** *(blocked on Waves 2–3)*
 
-- [ ] 07-04-PLAN.md — Tour player + role/topic picker + drill-down + open-work badges
+- [x] 07-04-PLAN.md — Tour player + role/topic picker + drill-down + open-work badges
 
 **Wave 4** *(blocked on Wave 3)*
 
@@ -333,7 +333,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
-| 7. Guided Tours & Onboarding UX | 3/5 | In Progress|  |
+| 7. Guided Tours & Onboarding UX | 4/5 | In Progress|  |
 | 8. Hardening, Scale & Multi-Repo | 0/5 | Not started | - |
 
 ---

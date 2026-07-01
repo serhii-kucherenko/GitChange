@@ -1,0 +1,603 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/intelligence-full.schema.json",
+  "title": "GitChangeIntelligenceArtifact",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "computedAt": {
+      "type": "string"
+    },
+    "headSha": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 40
+    },
+    "attributionConfidence": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "degraded"
+      ]
+    },
+    "churn": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "changeCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "insertions": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "deletions": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "lastTouchedAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "evidence": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "commit"
+                        },
+                        "sha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "sha"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "file"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "commitSha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "path",
+                        "commitSha"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "path",
+              "changeCount",
+              "insertions",
+              "deletions",
+              "lastTouchedAt",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "coChange": {
+      "type": "object",
+      "properties": {
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pathA": {
+                "type": "string"
+              },
+              "pathB": {
+                "type": "string"
+              },
+              "coOccurrence": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "lastCoChangeAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "weight": {
+                "type": "number",
+                "minimum": 0
+              },
+              "relationship": {
+                "type": "string",
+                "const": "co_change"
+              },
+              "disclaimer": {
+                "type": "string",
+                "const": "historical correlation, not import dependency"
+              }
+            },
+            "required": [
+              "pathA",
+              "pathB",
+              "coOccurrence",
+              "lastCoChangeAt",
+              "weight",
+              "relationship",
+              "disclaimer"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "edges"
+      ],
+      "additionalProperties": false
+    },
+    "ownership": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "authors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "authorId": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "lineCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "percentage": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "authorId",
+                    "name",
+                    "email",
+                    "lineCount",
+                    "percentage"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "evidence": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "commit"
+                        },
+                        "sha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "sha"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "file"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "commitSha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "path",
+                        "commitSha"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "path",
+              "authors",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "eraSignals": {
+      "type": "object",
+      "properties": {
+        "boundaries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "signalType": {
+                "type": "string"
+              },
+              "score": {
+                "type": "number"
+              },
+              "startCommitSha": {
+                "type": "string"
+              },
+              "endCommitSha": {
+                "type": "string"
+              },
+              "startAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "endAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "evidence": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "commit"
+                        },
+                        "sha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "sha"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "file"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "commitSha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "path",
+                        "commitSha"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "signalType",
+              "score",
+              "startCommitSha",
+              "endCommitSha",
+              "startAt",
+              "endAt",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "boundaries"
+      ],
+      "additionalProperties": false
+    },
+    "eraOwnership": {
+      "type": "object",
+      "properties": {
+        "eras": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "eraId": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "label": {
+                "type": "string"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "authors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "authorId": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "touchCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "percentage": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "authorId",
+                          "name",
+                          "email",
+                          "touchCount",
+                          "percentage"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "authors"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "eraId",
+              "label",
+              "files"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "eras"
+      ],
+      "additionalProperties": false
+    },
+    "expertise": {
+      "type": "object",
+      "properties": {
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "topic": {
+                "type": "string"
+              },
+              "suggestedContributors": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "authorId": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "rationale": {
+                      "type": "string"
+                    },
+                    "evidence": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "commit"
+                              },
+                              "sha": {
+                                "type": "string",
+                                "minLength": 40,
+                                "maxLength": 40
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sha"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "file"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "commitSha": {
+                                "type": "string",
+                                "minLength": 40,
+                                "maxLength": 40
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "path",
+                              "commitSha"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "authorId",
+                    "name",
+                    "email",
+                    "score",
+                    "rationale",
+                    "evidence"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "topic",
+              "suggestedContributors"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "topics"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "computedAt",
+    "headSha",
+    "attributionConfidence",
+    "churn",
+    "coChange",
+    "ownership",
+    "eraSignals",
+    "eraOwnership",
+    "expertise"
+  ],
+  "additionalProperties": false
+}

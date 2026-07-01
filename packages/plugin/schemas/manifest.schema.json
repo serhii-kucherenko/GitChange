@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/manifest.schema.json",
+  "title": "GitChangeManifest",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "lastIndexedCommit": {
+      "type": "string"
+    },
+    "indexedAt": {
+      "type": "string"
+    },
+    "repo": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "type": "string"
+        },
+        "branch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "head",
+        "branch"
+      ],
+      "additionalProperties": false
+    },
+    "indexCompleteness": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "shallow_clone",
+              "force_push_detected",
+              "out_of_order_commits"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "intelligenceComputedAt": {
+      "type": "string"
+    },
+    "intelligenceHeadSha": {
+      "type": "string"
+    },
+    "intelligenceSchemaVersion": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "lastIndexedCommit",
+    "indexedAt",
+    "repo",
+    "indexCompleteness",
+    "warnings"
+  ],
+  "additionalProperties": false
+}

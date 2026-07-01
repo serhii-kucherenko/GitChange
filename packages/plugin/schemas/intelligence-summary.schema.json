@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/intelligence-summary.schema.json",
+  "title": "GitChangeIntelligenceSummary",
+  "description": "Trimmed intelligence artifact for host-AI chat context (churn + expertise only).",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "computedAt": {
+      "type": "string"
+    },
+    "headSha": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 40
+    },
+    "attributionConfidence": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "degraded"
+      ]
+    },
+    "churn": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "changeCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "insertions": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "deletions": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "lastTouchedAt": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "evidence": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "commit"
+                        },
+                        "sha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "sha"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "file"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "commitSha": {
+                          "type": "string",
+                          "minLength": 40,
+                          "maxLength": 40
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "path",
+                        "commitSha"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "path",
+              "changeCount",
+              "insertions",
+              "deletions",
+              "lastTouchedAt",
+              "evidence"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "expertise": {
+      "type": "object",
+      "properties": {
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "topic": {
+                "type": "string"
+              },
+              "suggestedContributors": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "authorId": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "rationale": {
+                      "type": "string"
+                    },
+                    "evidence": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "commit"
+                              },
+                              "sha": {
+                                "type": "string",
+                                "minLength": 40,
+                                "maxLength": 40
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "sha"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "file"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "commitSha": {
+                                "type": "string",
+                                "minLength": 40,
+                                "maxLength": 40
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "path",
+                              "commitSha"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "authorId",
+                    "name",
+                    "email",
+                    "score",
+                    "rationale",
+                    "evidence"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "topic",
+              "suggestedContributors"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "topics"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "computedAt",
+    "headSha",
+    "attributionConfidence",
+    "churn",
+    "expertise"
+  ],
+  "additionalProperties": false
+}

@@ -1,12 +1,23 @@
 {
   "name": "@gitchange/plugin",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
+  "description": "GitChange IDE plugin — slash command skills, agent specs, and host-AI JSON schemas",
+  "license": "MIT",
+  "files": ["skills", "agents", "schemas"],
   "scripts": {
-    "build": "echo \"plugin packaging lands in Plan 03-04\"",
-    "test": "echo \"no plugin tests yet\"",
-    "lint": "echo \"no plugin sources yet\"",
-    "typecheck": "echo \"plugin typecheck lands in Plan 03-04\""
+    "build": "tsx scripts/generate-schemas.ts",
+    "test": "pnpm --dir ../.. exec vitest run tests/integration/plugin-schemas.test.ts",
+    "lint": "node -e \"console.log('no lint targets in plugin package')\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@gitchange/core": "workspace:*",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "tsx": "4.22.4",
+    "typescript": "6.0.3"
   }
 }

@@ -117,7 +117,21 @@ importers:
         specifier: 8.1.2
         version: 8.1.2(@types/node@26.0.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.22.4)
 
-  packages/plugin: {}
+  packages/plugin:
+    dependencies:
+      '@gitchange/core':
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: 4.4.3
+        version: 4.4.3
+    devDependencies:
+      tsx:
+        specifier: 4.22.4
+        version: 4.22.4
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/server:
     dependencies:

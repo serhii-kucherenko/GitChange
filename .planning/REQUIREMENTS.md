@@ -32,7 +32,7 @@
 
 - [x] **ERA-01**: System detects named engineering eras/chapters with evidence bundles (commits, file arrivals, pivot signals)
 - [x] **ERA-02**: User can see how the project evolved through era summaries tied to proof
-- [ ] **ERA-03**: System detects inflection types: tech pivots, scope steering, process shifts, and team/ownership changes
+- [x] **ERA-03**: System detects inflection types: tech pivots, scope steering, process shifts, and team/ownership changes
 
 ### Guided Tours (TOUR)
 
@@ -176,7 +176,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | TIME-04 | Phase 6 | Pending |
 | ERA-01 | Phase 4 | Complete |
 | ERA-02 | Phase 4 | Complete |
-| ERA-03 | Phase 4 | Pending |
+| ERA-03 | Phase 4 | Complete |
 | TOUR-01 | Phase 7 | Pending |
 | TOUR-02 | Phase 7 | Pending |
 | TOUR-03 | Phase 7 | Pending |

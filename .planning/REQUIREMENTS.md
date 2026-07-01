@@ -8,7 +8,7 @@
 ### Ingestion & Index (INGX)
 
 - [ ] **INGX-01**: User can index a local git clone and produce a `.gitchange/` derived index without network access
-- [ ] **INGX-02**: System parses commits, authors, timestamps, messages, merges, renames, and file-level diffs from local git
+- [x] **INGX-02**: System parses commits, authors, timestamps, messages, merges, renames, and file-level diffs from local git
 - [ ] **INGX-03**: System analyzes docs tracked in git (README, CHANGELOG, docs/, ADRs) as they changed over time
 - [ ] **INGX-04**: System incrementally re-indexes only commits after `lastIndexedCommit` on subsequent runs
 - [ ] **INGX-05**: System detects force-push or shallow-clone conditions and surfaces index freshness warnings
@@ -161,7 +161,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | INGX-01 | Phase 1 | Pending |
-| INGX-02 | Phase 1 | Pending |
+| INGX-02 | Phase 1 | Complete |
 | INGX-03 | Phase 1 | Pending |
 | INGX-04 | Phase 1 | Pending |
 | INGX-05 | Phase 1 | Pending |

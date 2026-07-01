@@ -7,6 +7,8 @@ schemas:
   - packages/plugin/schemas/intelligence-summary.schema.json
   - packages/plugin/schemas/era-synthesis-context.schema.json
   - packages/plugin/schemas/eras.schema.json
+  - packages/plugin/schemas/decision-mining-context.schema.json
+  - packages/plugin/schemas/decisions.schema.json
 ---
 
 # /gitchange — First analysis
@@ -108,6 +110,39 @@ Otherwise (missing eras, stale `headSha`, or user asks to refresh), run semantic
 
 When manifest HEAD is unchanged but intelligence was recomputed, offer re-synthesis if `eras.json` `headSha` differs from current `intelligence.json` `headSha`.
 
+### 5b. Phase 3 — Decision synthesis
+
+Run **after** Phase 2 when `eras.json` and `intelligence.json` exist. Skip automatic re-synthesis when:
+
+- `.gitchange/decisions.json` already validates against `decisions.schema.json`, **and**
+- `decisions.json` `headSha` matches `intelligence.json` `headSha`
+
+Otherwise (missing decisions, stale `headSha`, or user asks to refresh), run decision synthesis:
+
+1. **Verify prerequisites** — `intelligence.json` and `eras.json` must exist under `<repo>/.gitchange/`. If either is missing, stop and ask the user to complete index + era synthesis first.
+
+2. **Build bounded context** — load mining input (no live git):
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/build-decision-context.ts "<absolute-path-to-.gitchange>"
+   ```
+
+   Validate stdout JSON against `packages/plugin/schemas/decision-mining-context.schema.json`.
+
+3. **Mine decisions** — follow `packages/plugin/agents/decision-miner.md`. Host AI outputs a single `DecisionsArtifact` JSON object with `candidateId` on each decision.
+
+4. **Validate output** — check against `packages/plugin/schemas/decisions.schema.json` before persisting. Confirm every `candidateId` exists in the context bundle.
+
+5. **Persist** — write via merge gate (validates evidence refs, attaches attribution, sets `reviewStatus: pending`):
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/write-decisions.ts "<absolute-path-to-.gitchange>" /path/to/decisions-output.json
+   ```
+
+6. **Present to user (DEC-02)** — list decision titles, status, and confidence. Note `reviewStatus: pending` on agent-mined rows until maintainer confirms via interview loop (DEC-03). Explain `supersededBy` / `supersedes` links when present.
+
+When `decisions.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
+
 ### 6. Follow-up questions
 
 Answer questions using **schemas and artifacts only** (ownership, migrations, era claims) — still **no** embedded model calls from GitChange code.
@@ -123,3 +158,4 @@ Answer questions using **schemas and artifacts only** (ownership, migrations, er
 - **Not a git repo**: ask the user to open a folder containing `.git`.
 - **Index errors**: show CLI stderr; suggest `gitchange status` after fixing the repo state.
 - **Semantic errors**: show `build-era-context` or `write-eras` stderr; verify `intelligence.json` exists and output matches `eras.schema.json`.
+- **Decision errors**: show `build-decision-context` or `write-decisions` stderr; verify `eras.json` exists and output matches `decisions.schema.json`.

@@ -365,6 +365,8 @@ This is a presentational redesign of source files only — no rename/migration o
 
 ## Open Questions
 
+> **Resolution (post-planning):** Both are non-blocking discretion items the planner resolved. 09-01 restructures `DashboardLayoutProps` together with its only caller `App.tsx` in a single Wave-A task (typecheck-guarded). The era-label `max-width` is applied as a concrete value and left for the UI-checker to tune against the ≤8-era legibility target.
+
 1. **Does `DashboardLayoutProps` need a new slot shape for per-view layouts?**
    - What we know: current slots (`sidebar/fileHistory/timeline/commitFilterBar/main/intelligencePanel`) were built for the old grid; `App.tsx` is the only caller.
    - What's unclear: whether per-view layouts are cleaner as new props vs. as extracted sub-layout components.

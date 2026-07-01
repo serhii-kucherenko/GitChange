@@ -1,9 +1,9 @@
 ---
 phase: 9
 slug: dashboard-ui-redesign
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-07-01
 ---
 
@@ -78,11 +78,11 @@ Run `pnpm --dir packages/dashboard dev` (server on 9876 for data) and confirm pe
 
 ## Validation Sign-Off
 
-- [ ] All tasks have typecheck/existing-test verify or are manual-visual with checklist steps
-- [ ] Sampling continuity: typecheck runs after every task commit
-- [ ] Wave 0 covers all MISSING references (none required)
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have typecheck/existing-test verify or are manual-visual with checklist steps
+- [x] Sampling continuity: typecheck runs after every task commit
+- [x] Wave 0 covers all MISSING references (none required)
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-07-01

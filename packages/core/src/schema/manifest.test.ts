@@ -114,6 +114,16 @@ describe("ManifestSchema", () => {
 
     expect(ManifestSchema.parse(manifest)).toEqual(manifest);
   });
+
+  it("round-trips optional semantic checkpoint fields", () => {
+    const manifest = sampleManifest({
+      semanticComputedAt: "2026-07-01T12:00:00.000Z",
+      semanticHeadSha: SHA,
+      semanticSchemaVersion: "1",
+    });
+
+    expect(ManifestSchema.parse(manifest)).toEqual(manifest);
+  });
 });
 
 describe("exhaustive narrowing helpers", () => {

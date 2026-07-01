@@ -58,3 +58,9 @@ export {
   readTemporalGraph,
   writeTemporalGraph,
 } from "./semantic/graph-io.js";
+export { runSemanticPipeline } from "./semantic/pipeline.js";
+export type { RunSemanticPipelineResult } from "./semantic/pipeline.js";
+export {
+  checkSemanticIntegrity,
+  type SemanticIntegrityReport,
+} from "./verify/semantic-integrity.js";

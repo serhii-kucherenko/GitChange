@@ -32,6 +32,9 @@ export const ManifestSchema = z.object({
   intelligenceComputedAt: z.string().optional(),
   intelligenceHeadSha: z.string().optional(),
   intelligenceSchemaVersion: z.string().optional(),
+  semanticComputedAt: z.string().optional(),
+  semanticHeadSha: z.string().optional(),
+  semanticSchemaVersion: z.string().optional(),
 });
 
 export type Manifest = z.infer<typeof ManifestSchema>;

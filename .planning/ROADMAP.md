@@ -339,7 +339,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 09-01-PLAN.md — App-frame + IA rewrite: full-width header, tablist out of sidebar, per-view layouts, centered states
+- [x] 09-01-PLAN.md — App-frame + IA rewrite: full-width header, tablist out of sidebar, per-view layouts, centered states
 
 **Wave 2** *(blocked on Wave 1; parallel — disjoint files)*
 
@@ -363,7 +363,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
 | 8. Hardening, Scale & Multi-Repo | 5/5 | Complete   | 2026-07-01 |
-| 9. Dashboard UI Redesign | 0/4 | Planning   | — |
+| 9. Dashboard UI Redesign | 1/4 | In Progress|  |
 
 ---
 *Roadmap created: 2026-06-30*

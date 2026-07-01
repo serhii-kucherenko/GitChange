@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 9 UI-SPEC approved
-last_updated: "2026-07-01T18:41:45.656Z"
-last_activity: 2026-07-01 -- Phase 09 planning complete
+last_updated: "2026-07-01T18:51:11.623Z"
+last_activity: 2026-07-01
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 50
-  completed_plans: 46
+  completed_plans: 47
   percent: 89
 ---
 
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** v1.0 milestone complete — all 8 phases delivered
+**Current focus:** Phase 09 — dashboard-ui-redesign
 
 ## Current Position
 
-Phase: 8 of 8 complete (Hardening, Scale & Multi-Repo)
-Plan: 5 of 5 complete in Phase 8 (08-01 through 08-05)
+Phase: 09 (dashboard-ui-redesign) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-01 -- Phase 09 planning complete
+Last activity: 2026-07-01
 Stopped at: Phase 9 UI-SPEC approved
 
-Progress: [██████████] 100%
+Progress: [█████████░] 94%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [██████████] 100%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 09 P01 | 4m | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -148,6 +149,8 @@ Recent decisions affecting current work:
 - Piscina maxThreads defaults to max(1, cpus-1)
 - Scale fixture uses git fast-import for sub-second 10k history
 - CLI index emits progress every 500 commits on stderr
+- [Phase ?]: Dashboard active tab uses sky-400 underline (border-b-2) per UI-SPEC top-level nav preference
+- [Phase ?]: DashboardLayoutProps restructured to per-view slots; App.tsx sole caller updated same plan, typecheck-guarded
 
 ### Pending Todos
 
@@ -167,6 +170,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T18:20:29.265Z
+Last session: 2026-07-01T18:50:56.035Z
 Stopped at: Completed 08-05-PLAN.md — milestone gate E2E + workspace integrity
-Resume file: .planning/phases/09-dashboard-ui-redesign/09-UI-SPEC.md
+Resume file: None

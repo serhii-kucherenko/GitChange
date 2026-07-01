@@ -4,6 +4,19 @@ interface FileHunkViewProps {
   file: CommitDetailFile;
 }
 
+function diffLineClassName(line: string): string {
+  if (line.startsWith("@@")) {
+    return "text-slate-500";
+  }
+  if (line.startsWith("+") && !line.startsWith("+++")) {
+    return "bg-emerald-950/40 text-emerald-200";
+  }
+  if (line.startsWith("-") && !line.startsWith("---")) {
+    return "bg-red-950/40 text-red-200";
+  }
+  return "text-slate-300";
+}
+
 export function FileHunkView({ file }: FileHunkViewProps) {
   if (file.contentIgnored) {
     return (
@@ -39,8 +52,15 @@ export function FileHunkView({ file }: FileHunkViewProps) {
           <header className="border-b border-slate-800 px-3 py-2 text-xs text-slate-400">
             Lines {hunk.startLine}–{hunk.endLine}
           </header>
-          <pre className="overflow-x-auto p-3 font-mono text-xs leading-relaxed text-slate-200">
-            {hunk.patch}
+          <pre className="overflow-x-auto p-3 font-mono text-xs leading-relaxed">
+            {hunk.patch.split("\n").map((line, index) => (
+              <div
+                key={`${index}-${line.slice(0, 40)}`}
+                className={`px-1 whitespace-pre ${diffLineClassName(line)}`}
+              >
+                {line.length === 0 ? " " : line}
+              </div>
+            ))}
           </pre>
         </section>
       ))}

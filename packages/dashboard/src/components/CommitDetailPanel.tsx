@@ -8,7 +8,7 @@ import { DrillBreadcrumb } from "./DrillBreadcrumb.js";
 import { FileHunkView } from "./FileHunkView.js";
 
 function formatCommittedAt(timestamp: number): string {
-  const date = new Date(timestamp * 1000);
+  const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) {
     return String(timestamp);
   }

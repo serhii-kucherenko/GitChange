@@ -12,7 +12,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - Decimal phases (e.g., 2.1): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Index Foundation** - Deterministic git/doc ingestion, `.gitchange/` schema, privacy, and golden fixtures (completed 2026-07-01)
-- [ ] **Phase 2: Repository Intelligence & Ownership** - Churn, co-change, and line-survival ownership profiles
+- [x] **Phase 2: Repository Intelligence & Ownership** - Churn, co-change, and line-survival ownership profiles (completed 2026-07-01)
 - [ ] **Phase 3: CLI & Plugin Scaffold** - Install/first-run UX (UA pattern), CLI, `/gitchange`, minimal `/gitchange-dashboard`
 - [ ] **Phase 4: Era Detection & Semantic Pipeline** - Named eras, inflection points, and temporal graph artifacts
 - [ ] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI
@@ -98,7 +98,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 02-05-PLAN.md — Golden intelligence fixtures, evidence integrity, manifest checkpoint, optional index hook
+- [x] 02-05-PLAN.md — Golden intelligence fixtures, evidence integrity, manifest checkpoint, optional index hook
 
 ### Phase 3: CLI & Plugin Scaffold
 
@@ -208,7 +208,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
-| 2. Repository Intelligence & Ownership | 4/5 | In Progress|  |
+| 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |

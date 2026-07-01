@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 02-04-PLAN.md — era ownership timelines and contributor expertise
-last_updated: "2026-07-01T09:05:16.284Z"
+status: ready
+stopped_at: Completed 02-05-PLAN.md — golden intelligence fixtures close Phase 2
+last_updated: "2026-07-01T09:12:32.634Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 13
-  completed_plans: 12
-  percent: 13
+  completed_plans: 13
+  percent: 25
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 2 — Repository Intelligence & Ownership
+**Current focus:** Phase 3 — CLI & Plugin Scaffold
 
 ## Current Position
 
-Phase: 2 of 8 in progress (Repository Intelligence & Ownership)
-Plan: 4 of 5 complete in Phase 2 (next: 02-05)
-Status: Ready to execute
+Phase: 2 of 8 complete (Repository Intelligence & Ownership)
+Plan: 5 of 5 complete in Phase 2
+Status: Phase 2 complete — ready for Phase 3
 Last activity: 2026-07-01
-Stopped at: Completed 02-04-PLAN.md — era ownership timelines and contributor expertise
+Stopped at: Completed 02-05-PLAN.md — golden intelligence fixtures close Phase 2
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -74,6 +74,9 @@ Progress: [█████████░] 92%
 - Expertise export uses topics[] with suggestedContributors and evidence min 1
 - Merge commits remapped to origCommitId before ownership aggregation
 
+- Ownership file evidence uses last indexed touch commit, not HEAD, for referential integrity
+- rebuildIntelligence defaults false for backward-compatible index-only flows
+
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
@@ -99,6 +102,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T09:05:16.276Z
-Stopped at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
+Last session: 2026-07-01T09:12:32.624Z
+Stopped at: Completed 02-05-PLAN.md — golden intelligence fixtures close Phase 2
 Resume file: None

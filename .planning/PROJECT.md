@@ -12,7 +12,7 @@ It answers five core questions with evidence you can drill into from a local web
 4. **What decisions and migrations are still in flight?** — open threads, incomplete refactors, WIP migrations
 5. **What is the current progress?** — status and confidence on ongoing work
 
-The product follows the [Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) plugin pattern: slash commands in Cursor/Claude Code trigger a multi-agent analysis pipeline, write results to `.gitchange/`, and spin up a local server for an interactive UI (timeline, temporal graph, tour player, era → commit → file drill-down). The host AI chat is the LLM — GitChange supplies tools, context, and artifacts, not its own model layer.
+The product follows an IDE plugin pattern: slash commands in Cursor/Claude Code trigger a multi-agent analysis pipeline, write results to `.gitchange/`, and spin up a local server for an interactive UI (timeline, temporal graph, tour player, era → commit → file drill-down). The host AI chat is the LLM — GitChange supplies tools, context, and artifacts, not its own model layer.
 
 ## Core Value
 
@@ -51,7 +51,7 @@ If everything else fails, that must work.
 - Cloud SaaS hosting — local plugin + server only in v1
 - GitHub/GitLab API integration — local git clone only
 - Mobile UI
-- Forking or extending Understand-Anything codebase — inspired-by, separate codebase; copy plugin packaging patterns only
+- Forking or extending external plugin codebases — inspired-by, separate codebase; copy plugin packaging patterns only
 
 ## Context
 
@@ -60,7 +60,7 @@ If everything else fails, that must work.
 **Differentiation vs similar tools (Repowise, Vestige, Codebase Time Machine, Historex):**
 - Best-in-class **guided onboarding tour** tied to real git evidence
 - **Decision depth** with interview loop for gaps competitors leave fuzzy
-- Understand-Anything-style **plugin + dashboard** UX applied to temporal/git narrative
+- IDE plugin **plugin + dashboard** UX applied to temporal/git narrative
 
 **Building GitChange:**
 - Project source maintained **AI-first from chat** — artifacts-first so agents can read, verify, and extend the codebase
@@ -82,9 +82,9 @@ If everything else fails, that must work.
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Understand-Anything plugin pattern | Proven multi-platform distribution; slash commands → pipeline → `.folder/` → dashboard | — Pending |
-| Separate codebase (not UA fork) | GitChange is temporal/git-focused; UA is structural/code-focused | — Pending |
-| `.gitchange/` generated folder | Matches UA `.understand-anything/` pattern; team can opt-in commit | — Pending |
+| IDE plugin pattern | Proven multi-platform distribution; slash commands → pipeline → `.folder/` → dashboard | — Pending |
+| Separate codebase (not plugin fork) | GitChange is temporal/git-focused; plugin is structural/code-focused | — Pending |
+| `.gitchange/` generated folder | Matches plugin `.gitchange/` pattern; team can opt-in commit | — Pending |
 | Git/docs canonical; index derived | Artifacts live in history and project docs; `.gitchange/` is query cache | — Pending |
 | All five core questions as product spine | User-defined success criteria for what the tool must answer | — Pending |
 | Thin vertical slice v1 | Prove end-to-end: ingest → tour → dashboard → agent commands | — Pending |

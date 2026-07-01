@@ -92,7 +92,7 @@ Recent decisions affecting current work:
 - gitchange validate exits 1 when eras.json missing without faking semantic pass
 
 - Roadmap: Evidence contract (EVD-01) established in Phase 1 schema; confidence UI in Phase 5; honest gaps in Phase 6
-- Roadmap: Phase 3 delivers First Run UX (UA pattern: marketplace install → `/gitchange` → `/gitchange-dashboard`); Phase 5 expands minimal dashboard into full drill-down
+- Roadmap: Phase 3 delivers First Run UX (plugin pattern: marketplace install → `/gitchange` → `/gitchange-dashboard`); Phase 5 expands minimal dashboard into full drill-down
 - Cursor pagination uses committedAt desc + sha tiebreaker with base64url cursor tuple
 - Dashboard API types duplicated locally — no @gitchange/core in client bundle
 - Per-file hunk capture via es-git pathspecs + print(Patch) at index time; 20 hunks / 32KB cap per file

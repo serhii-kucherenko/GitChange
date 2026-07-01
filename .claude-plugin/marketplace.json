@@ -11,8 +11,8 @@
       "cursor-plugin",
       "claude-code"
     ],
-    "repository": "https://github.com/Egonex-AI/GitChange",
-    "homepage": "https://github.com/Egonex-AI/GitChange"
+    "repository": "https://github.com/serhii-kucherenko/GitChange",
+    "homepage": "https://github.com/serhii-kucherenko/GitChange"
   },
   "owner": {
     "name": "GitChange"

@@ -74,12 +74,12 @@
 - [x] **PLUG-01**: User can run `/gitchange` slash command to trigger analysis pipeline from Cursor/Claude Code
 - [x] **PLUG-02**: User can run `/gitchange-dashboard` to open the local web UI
 - [x] **PLUG-03**: CLI supports `gitchange index`, `gitchange serve`, and `gitchange status` commands
-- [x] **PLUG-04**: Plugin follows Understand-Anything packaging pattern (skills, agents, multi-platform install)
+- [x] **PLUG-04**: Plugin follows IDE plugin packaging pattern (skills, agents, multi-platform install)
 - [x] **PLUG-05**: Host AI is the LLM — GitChange supplies tools, schemas, and artifacts only
 
 ### Install & First Run (INST)
 
-- [x] **INST-01**: User can install via plugin marketplace or one-line installer following the Understand-Anything pattern
+- [x] **INST-01**: User can install via plugin marketplace or one-line installer following the IDE plugin pattern
 - [x] **INST-02**: User completes first analysis with a single `/gitchange` slash command after install — no manual config required
 - [x] **INST-03**: User opens dashboard with `/gitchange-dashboard` and sees initial value (index status, basic repo snapshot) without manual configuration
 - [x] **INST-04**: Quickstart docs cover install → `/gitchange` → `/gitchange-dashboard` in under 5 steps
@@ -125,8 +125,8 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | Cloud SaaS as core path | v1 is local-first; conflicts with privacy persona |
 | GitHub/GitLab API as primary source | v1 uses local git clone only |
 | Mobile UI | Poor fit for code evidence drill-down |
-| Forking Understand-Anything codebase | Separate temporal-focused codebase; copy plugin patterns only |
-| Static dependency/call graphs | Repowise/UA territory; not temporal onboarding core |
+| Forking external plugin codebases | Separate temporal-focused codebase; copy plugin patterns only |
+| Static dependency/call graphs | Repowise structural-graph territory; not temporal onboarding core |
 | Own LLM orchestration | Host chat (Cursor/Claude) is the model |
 | Ungrounded AI narratives | Trust failure mode; evidence contract required |
 | Real-time collaborative lore editing | Scope explosion; maintainer interview → docs PR instead |

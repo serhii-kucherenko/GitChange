@@ -170,7 +170,7 @@ Phase 2 (Temporal Analysis) for metrics; Phase 4 (Open Threads / risk surfacing)
 `.gitchange/` says migration X is in flight; `main` finished it last week. Team commits index to repo; branches diverge; dashboard shows contradictory state to different users. Maintainers stop trusting the tool.
 
 **Why it happens:**
-Treating generated index as source of truth instead of derived cache. No invalidation on new commits, branch switch, or doc update. UA pattern encourages committing graph JSON for sharing — works for structural graphs, riskier for temporal/inference state.
+Treating generated index as source of truth instead of derived cache. No invalidation on new commits, branch switch, or doc update. plugin pattern encourages committing graph JSON for sharing — works for structural graphs, riskier for temporal/inference state.
 
 **How to avoid:**
 - **Git + project docs are canonical**; `.gitchange/` is query cache (GitChange key decision). Store `indexed_at`, `head_sha`, `branch`, `index_schema_version`.
@@ -196,7 +196,7 @@ Phase 1 (schema/meta); Phase 4 (Status & Open Threads); Phase 7 (Incremental Sca
 Index stores raw diff hunks containing `.env` values, API keys from old commits, or internal URLs. Dashboard on `localhost` still exposes them to anyone on the network; agent context dumps secrets into chat logs.
 
 **Why it happens:**
-Full `git log -p` ingestion reads entire history including deleted secrets. Gitleaks/secret-history document that removed files remain in history. Tools focused on narrative miss redaction. Understand-Anything flagged serving `knowledge-graph.json` on shared machines.
+Full `git log -p` ingestion reads entire history including deleted secrets. Gitleaks/secret-history document that removed files remain in history. Tools focused on narrative miss redaction. Some tools flagged serving `knowledge-graph.json` on shared machines.
 
 **How to avoid:**
 - Secret redaction pipeline during ingest (pattern + entropy, gitleaks-style rules); never persist raw secret values — store match type + location only.
@@ -296,13 +296,13 @@ Phase 8 (Multi-repo & Scale) — after single-repo pipeline is proven.
 `/gitchange` works in one install (cloned repo) but fails in Cursor global plugin path, symlinked skill dir, or Windows paths. Pipeline can't find core binaries; dashboard never launches.
 
 **Why it happens:**
-Understand-Anything SKILL.md explicitly warns: don't assume plugin root from skill path — symlinks, `~/.agents/`, and multi-platform installs differ. GitChange copies UA packaging pattern without inheriting UA codebase.
+Plugin SKILL docs often warn: don't assume plugin root from skill path — symlinks, `~/.agents/`, and multi-platform installs differ. GitChange uses its own plugin packaging without inheriting plugin codebase.
 
 **How to avoid:**
-- Resolve plugin root at runtime from host-provided paths first, then universal symlinks, then walk-up discovery (UA precedence order).
+- Resolve plugin root at runtime from host-provided paths first, then universal symlinks, then walk-up discovery (plugin precedence order).
 - Integration test matrix: cloned repo, global plugin install, symlinked skill.
 - `doctor` command: verify git, index writable, dashboard port, schema version.
-- Don't launch dashboard unless index validation passes (UA Phase 6 gate).
+- Don't launch dashboard unless index validation passes (plugin Phase 6 gate).
 
 **Warning signs:**
 - Hardcoded `../../` paths to core package.
@@ -328,7 +328,7 @@ Shortcuts that seem reasonable but create long-term problems.
 | Commit `.gitchange/` to repo without rebuild CI | Team shares dashboard instantly | Stale/conflicting index across branches | Only if CI regenerates on merge |
 | Use libgit2 for all git ops | Single library dependency | Poor diff performance at huge scale (UE 45min+ reports) | Benchmark first; git CLI for hot paths |
 | Single global confidence threshold | Simpler UX | Hides weak decisions or over-prunes real ones | MVP with maintainer review queue only |
-| Reuse UA graph schema for temporal data | Faster UI bootstrap | Wrong abstractions for time, eras, migrations | Never — temporal schema is distinct |
+| Reuse plugin graph schema for temporal data | Faster UI bootstrap | Wrong abstractions for time, eras, migrations | Never — temporal schema is distinct |
 
 ## Integration Gotchas
 
@@ -458,8 +458,6 @@ How roadmap phases should address these pitfalls.
 - [LACY onboarding study](https://arxiv.org/html/2603.25391) — AI-only vs expert-guided tour comprehension (HIGH)
 - [AI Codebase Tour workflow](https://aitoolsguidebook.com/en/articles/ai-codebase-tour-workflow/) — verify file:line cites; hallucination risk (MEDIUM)
 - [Tour Kit contributor onboarding](https://usertourkit.com/blog/product-tours-open-source-contributor-onboarding) — ≤6 steps, completion drop (MEDIUM)
-- [Understand-Anything SKILL.md](https://github.com/Egonex-AI/Understand-Anything) — plugin path resolution, dashboard launch gate (HIGH)
-- [Understand-Anything security note](https://ddewhurst.com/blog/understand-anything-knowledge-graph-for-your-codebase/) — local server exposure (MEDIUM)
 - [Gittyup indexer issue #876](https://github.com/Murmele/Gittyup/issues/876) — full index scale limits, streaming results (MEDIUM)
 - [Chisel README](https://github.com/IronAdamant/Chisel) — sharding, incremental update, MCP timeout fallback (MEDIUM)
 - [gitleaks](https://github.com/gitleaks/gitleaks) — `git log -p` secret exposure in history scans (HIGH)

@@ -82,7 +82,7 @@ Deliver deterministic git and doc ingestion into a trustworthy `.gitchange/` der
 - None — greenfield repository. Planning artifacts only; no `packages/` implementation yet.
 
 ### Established Patterns
-- Understand-Anything plugin pattern referenced in PROJECT.md — copy packaging ideas later (Phase 3), not UA codebase fork
+- IDE plugin pattern referenced in PROJECT.md — copy packaging ideas later (Phase 3), not plugin codebase fork
 - Research prescribes `packages/core` with `ingestion/`, `schema/`, `artifacts/`, `privacy/` subdirs — adopt when scaffolding monorepo in this phase
 
 ### Integration Points
@@ -95,7 +95,7 @@ Deliver deterministic git and doc ingestion into a trustworthy `.gitchange/` der
 ## Specific Ideas
 
 - User delegated area selection ("whatever") then confirmed four core decisions explicitly; follow-up questions on doc scope, git policy, and evidence granularity were skipped — recommended defaults applied (D-13 through D-18)
-- Align with agent-analyzer / UA patterns for `lastIndexedCommit` incremental checkpoints and force-push full-rebuild semantics
+- Align with agent-analyzer / plugin patterns for `lastIndexedCommit` incremental checkpoints and force-push full-rebuild semantics
 
 </specifics>
 

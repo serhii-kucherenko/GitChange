@@ -2,7 +2,7 @@
 
 ## Overview
 
-GitChange delivers evidence-backed answers to five core onboarding questions — who changed what, how the project evolved, what decisions were made, what's still in flight, and current progress — through a local-first pipeline: deterministic git ingestion → repository intelligence → semantic agents (host LLM) → local dashboard and IDE slash commands. Eight vertical MVP phases follow the fact-before-fiction order: index and privacy first, then ownership metrics, CLI/plugin scaffold with smooth first-run install UX (Understand-Anything pattern), era detection, full interactive dashboard drill-down, decisions and open work, guided tours, and finally scale plus multi-repo unification.
+GitChange delivers evidence-backed answers to five core onboarding questions — who changed what, how the project evolved, what decisions were made, what's still in flight, and current progress — through a local-first pipeline: deterministic git ingestion → repository intelligence → semantic agents (host LLM) → local dashboard and IDE slash commands. Eight vertical MVP phases follow the fact-before-fiction order: index and privacy first, then ownership metrics, CLI/plugin scaffold with smooth first-run install UX (IDE plugin pattern), era detection, full interactive dashboard drill-down, decisions and open work, guided tours, and finally scale plus multi-repo unification.
 
 ## Phases
 
@@ -13,7 +13,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 
 - [x] **Phase 1: Index Foundation** - Deterministic git/doc ingestion, `.gitchange/` schema, privacy, and golden fixtures (completed 2026-07-01)
 - [x] **Phase 2: Repository Intelligence & Ownership** - Churn, co-change, and line-survival ownership profiles (completed 2026-07-01)
-- [x] **Phase 3: CLI & Plugin Scaffold** - Install/first-run UX (UA pattern), CLI, `/gitchange`, minimal `/gitchange-dashboard` (completed 2026-07-01)
+- [x] **Phase 3: CLI & Plugin Scaffold** - Install/first-run UX (plugin pattern), CLI, `/gitchange`, minimal `/gitchange-dashboard` (completed 2026-07-01)
 - [x] **Phase 4: Era Detection & Semantic Pipeline** - Named eras, inflection points, and temporal graph artifacts (completed 2026-07-01)
 - [x] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI (completed 2026-07-01)
 - [x] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop (completed 2026-07-01)
@@ -102,13 +102,13 @@ Plans:
 
 ### Phase 3: CLI & Plugin Scaffold
 
-**Goal**: User can install GitChange, complete a first analysis, and open a minimal dashboard in a few steps — matching the Understand-Anything install → slash command → dashboard pattern
+**Goal**: User can install GitChange, complete a first analysis, and open a minimal dashboard in a few steps — matching the standard install → slash command → dashboard pattern
 **Mode:** mvp
 **Depends on**: Phase 2
 **Requirements**: PLUG-01, PLUG-02, PLUG-03, PLUG-04, PLUG-05, INST-01, INST-02, INST-03, INST-04
 **Success Criteria** (what must be TRUE):
 
-  1. User installs via plugin marketplace or one-line installer following the Understand-Anything packaging pattern (no manual config required)
+  1. User installs via plugin marketplace or one-line installer following the IDE plugin packaging pattern (no manual config required)
   2. User completes first analysis with a single `/gitchange` slash command after install and sees meaningful output without extra setup
   3. User opens a minimal localhost dashboard via `/gitchange-dashboard` and sees initial value (index status, basic repo snapshot) without manual configuration
   4. User runs `gitchange index`, `gitchange serve`, and `gitchange status` successfully on an indexed repo from terminal
@@ -133,7 +133,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 partial — 03-04)*
 
-- [x] 03-05-PLAN.md — Install UX + plugin path resolver (UA pattern)
+- [x] 03-05-PLAN.md — Install UX + plugin path resolver (plugin pattern)
 
 **Wave 5** *(blocked on Waves 3–4)*
 

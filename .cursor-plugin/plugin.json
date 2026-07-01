@@ -6,8 +6,8 @@
   "author": {
     "name": "GitChange"
   },
-  "homepage": "https://github.com/Egonex-AI/GitChange",
-  "repository": "https://github.com/Egonex-AI/GitChange",
+  "homepage": "https://github.com/serhii-kucherenko/GitChange",
+  "repository": "https://github.com/serhii-kucherenko/GitChange",
   "license": "MIT",
   "keywords": [
     "git-history",

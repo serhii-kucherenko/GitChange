@@ -4,15 +4,15 @@
 **Files analyzed:** 29 (new — greenfield repository)
 **Analogs found:** 29 / 29 (all external-reference analogs — no existing codebase files)
 
-**Greenfield note:** This repository has no `packages/` implementation yet — only `.planning/` artifacts and root scaffolding (`CLAUDE.md`, `README.md`, `.gitignore`). Every "analog" below is an **external reference** (RESEARCH.md verified code examples, ARCHITECTURE.md structural patterns, or the Understand-Anything / Repowise reference architectures) rather than a sibling file in this codebase. The planner should treat these as the pattern source of truth since there is no local prior art to copy from.
+**Greenfield note:** This repository has no `packages/` implementation yet — only `.planning/` artifacts and root scaffolding (`CLAUDE.md`, `README.md`, `.gitignore`). Every "analog" below is an **external reference** (RESEARCH.md verified code examples, ARCHITECTURE.md structural patterns, or the Repowise reference architectures) rather than a sibling file in this codebase. The planner should treat these as the pattern source of truth since there is no local prior art to copy from.
 
 ## File Classification
 
 | New File | Role | Data Flow | Closest Analog | Match Quality |
 |----------|------|-----------|-----------------|---------------|
-| `package.json` (root) | config | — | Understand-Anything monorepo root (`STACK.md` Monorepo Layout) | reference |
-| `pnpm-workspace.yaml` | config | — | Understand-Anything pnpm workspace pattern | reference |
-| `turbo.json` | config | — | Understand-Anything turbo pipeline (`STACK.md`) | reference |
+| `package.json` (root) | config | — | TypeScript plugin monorepo root (`STACK.md` Monorepo Layout) | reference |
+| `pnpm-workspace.yaml` | config | — | standard pnpm workspace pattern | reference |
+| `turbo.json` | config | — | standard Turborepo pipeline (`STACK.md`) | reference |
 | `tsconfig.base.json` | config | — | STACK.md TS 6.0.3 `strict`/`moduleResolution: "bundler"` | reference |
 | `biome.json` | config | — | STACK.md Biome single-tool lint/format | reference |
 | `.nvmrc` | config | — | RESEARCH.md Pitfall 5 (Node pin for native addons) | reference |
@@ -45,7 +45,7 @@
 
 ### Monorepo scaffold (`package.json`, `pnpm-workspace.yaml`, `turbo.json`, `tsconfig.base.json`, `biome.json`, `.nvmrc`)
 
-**Analog:** Understand-Anything monorepo layout, adapted per `STACK.md` "Monorepo Layout" and RESEARCH.md "Recommended Project Structure."
+**Analog:** TypeScript plugin monorepo layout, adapted per `STACK.md` "Monorepo Layout" and RESEARCH.md "Recommended Project Structure."
 
 **Structure to follow** (RESEARCH.md lines 219–248):
 ```

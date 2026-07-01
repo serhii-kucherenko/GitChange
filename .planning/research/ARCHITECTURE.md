@@ -2,13 +2,13 @@
 
 **Domain:** Git-history onboarding / temporal codebase intelligence (local-first plugin + dashboard)
 **Researched:** 2026-06-30
-**Confidence:** HIGH (patterns verified across Understand-Anything, Historex, RepoGraph, repowise, Deciduous/Drift)
+**Confidence:** HIGH (patterns verified across Repowise, Historex, RepoGraph, repowise, Deciduous/Drift)
 
 ## Standard Architecture
 
 ### System Overview
 
-Git-history onboarding tools converge on a **layered pipeline** with a hard split between **deterministic git ingestion** and **LLM interpretation**, plus a **derived artifact store** that feeds both a **local dashboard** and **host-AI plugin commands**. GitChange should follow the Understand-Anything pattern (slash commands → multi-agent pipeline → `.gitchange/` → local server) while borrowing temporal-specific patterns from Historex, RepoGraph, and decision-mining tools.
+Git-history onboarding tools converge on a **layered pipeline** with a hard split between **deterministic git ingestion** and **LLM interpretation**, plus a **derived artifact store** that feeds both a **local dashboard** and **host-AI plugin commands**. GitChange should follow the IDE plugin pattern (slash commands → multi-agent pipeline → `.gitchange/` → local server) while borrowing temporal-specific patterns from Historex, RepoGraph, and decision-mining tools.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -69,9 +69,9 @@ Git-history onboarding tools converge on a **layered pipeline** with a hard spli
 | **Repository intelligence** | Compute churn, co-change pairs, ownership %, bus factor, era boundaries, keyword signals | Pure functions over ingestion output; no LLM | Historex/RepoGraph pattern: facts before interpretation |
 | **Semantic agents** | Eras, decision narratives, tours, open-work status, interview prompts | Host-LLM subagents driven by markdown specs; input = structured JSON only | Constrain LLM to evidence spans; never raw full-repo analysis |
 | **Artifact writer** | Persist derived index to `.gitchange/`; schema versioning; incremental merge | JSON (+ optional SQLite for large repos); manifest with `lastIndexedCommit` | Git/docs remain canonical; `.gitchange/` is disposable cache |
-| **Graph reviewer** | Validate referential integrity (era→commit, decision→evidence, tour→nodes) | Deterministic checks + optional LLM review pass | Same role as Understand-Anything `graph-reviewer` |
+| **Graph reviewer** | Validate referential integrity (era→commit, decision→evidence, tour→nodes) | Deterministic checks + optional LLM review pass | Same role as artifact integrity reviewers |
 | **Orchestrator / CLI** | Run full or incremental pipeline; multi-repo merge; privacy redaction | Node or Python CLI invoked by slash commands | `/gitchange` triggers pipeline; `/gitchange-dashboard` serves UI |
-| **Plugin surface** | Slash commands, skills, platform installers | `.cursor-plugin/`, skill markdown, install scripts | Copy UA packaging patterns only; separate codebase |
+| **Plugin surface** | Slash commands, skills, platform installers | `.cursor-plugin/`, skill markdown, install scripts | Copy plugin packaging patterns only; separate codebase |
 | **Query / read API** | Serve artifacts to dashboard and chat context | Thin static server or FastAPI/Express reading `.gitchange/` | No write path except pipeline + interview writeback |
 | **Dashboard** | Timeline, temporal graph, tour player, drill-down (era→commit→file) | React + graph lib (React Flow / D3) + local Vite dev server | Reads artifacts only; no ingestion in browser |
 | **Interview loop** | Surface weak-evidence gaps; write maintainer answers to project docs | Chat-driven; persists to `docs/` or `.gitchange/interviews/` then re-index | Host AI asks; GitChange supplies evidence gaps |
@@ -97,16 +97,16 @@ gitchange/
 │       └── components/          # Timeline, TourPlayer, OpenThreads, DrillDown
 ├── fixtures/                    # Golden repos + expected .gitchange/ outputs
 ├── package.json                 # Monorepo root (pnpm workspaces recommended)
-└── .cursor-plugin/              # Cursor auto-discovery (UA pattern)
+└── .cursor-plugin/              # Cursor auto-discovery (plugin pattern)
 ```
 
 ### Structure Rationale
 
-- **`packages/core/`:** All deterministic logic and artifact I/O live here so ingestion stays testable without a running LLM or browser. Matches Understand-Anything's `packages/core` split and Historex's `ingestion/` + `analysis/` separation.
+- **`packages/core/`:** All deterministic logic and artifact I/O live here so ingestion stays testable without a running LLM or browser. Matches standard `packages/core` split and Historex's `ingestion/` + `analysis/` separation.
 - **`packages/plugin/`:** Agent orchestration is markdown + command wiring; host AI executes agents. Keeps GitChange from owning an LLM runtime.
 - **`packages/dashboard/`:** Read-only consumer of `.gitchange/` JSON. Can ship before semantic agents are complete if core artifacts exist.
 - **`packages/cli/`:** Enables CI, dogfooding, and dashboard bootstrapping without an IDE session.
-- **`.gitchange/` at repo root (generated):** Mirrors `.understand-anything/` — team may commit for onboarding; `intermediate/` stays gitignored.
+- **`.gitchange/` at repo root (generated):** Uses a generated `.gitchange/` folder — team may commit for onboarding; `intermediate/` stays gitignored.
 
 ## Architectural Patterns
 
@@ -134,7 +134,7 @@ const eras = await hostAgent.run("era-synthesizer", {
 
 **What:** Canonical truth stays in `.git/` and project docs; `.gitchange/` is a versioned, rebuildable index with `lastIndexedCommit`, per-entity fingerprints, and schema version.
 **When to use:** All indexing runs; required for 100k+ commit monorepos.
-**Trade-offs:** Must handle schema migrations; disk size (mitigate with git-lfs for large graphs, per UA guidance).
+**Trade-offs:** Must handle schema migrations; disk size (mitigate with git-lfs for large graphs, per plugin guidance).
 
 **Example:**
 ```typescript
@@ -151,13 +151,13 @@ interface GitChangeManifest {
 }
 ```
 
-### Pattern 3: Plugin-as-Orchestrator (Understand-Anything Pattern)
+### Pattern 3: Plugin-as-Orchestrator
 
 **What:** Slash commands define multi-phase pipelines; the IDE's agent runtime executes specialized subagents; deterministic scripts run between agent phases.
 **When to use:** GitChange's primary distribution model (Cursor, Claude Code).
 **Trade-offs:** Depends on host agent quality; mitigated by strict agent I/O schemas and graph-reviewer validation.
 
-**Pipeline phases (adapted from UA + semantic batching):**
+**Pipeline phases (adapted from plugin + semantic batching):**
 ```
 Phase 0   repo-selector / multi-repo config     → repos.json
 Phase 1   git-ingestion (+ doc-ingestion)       → commits-index.json, doc-snapshots/
@@ -358,7 +358,7 @@ Dependencies dictate phase ordering. Build the **fact pipeline** before **semant
 
 **What people do:** Single LLM pass for eras + decisions + tours + status.
 **Why it's wrong:** Context overflow on large repos; poor validation; one failure loses all outputs.
-**Do this instead:** Specialized agents per concern (UA/Historex pattern) with graph-reviewer between phases.
+**Do this instead:** Specialized agents per concern (Historex-style pattern) with graph-reviewer between phases.
 
 ### Anti-Pattern 5: Graph Without Stable IDs
 
@@ -392,18 +392,16 @@ Dependencies dictate phase ordering. Build the **fact pipeline** before **semant
 
 | Tool | Ingestion | Intelligence | Semantic | Store | UI | Agent Surface |
 |------|-----------|--------------|----------|-------|-----|---------------|
-| **Understand-Anything** | Tree-sitter scan | Import graph | Host LLM agents | `.understand-anything/*.json` | React dashboard | Slash commands |
+| **Structural graph tools** | Tree-sitter scan | Import graph | Host LLM agents | `.gitchange/*.json` | React dashboard | Slash commands |
 | **Historex** | GitPython | Python analysis | Ollama (local) | HTML/MD reports | FastAPI web | Web form |
 | **RepoGraph** | GitPython | Graph metrics | None | FalkorDB | Flask + D3 | CLI |
 | **repowise** | Tree-sitter + git | Multi-layer index | Docs generation | SQLite + vectors | Next.js + MCP | MCP tools |
 | **GitChange (target)** | Git + docs | Temporal metrics | Host LLM agents | `.gitchange/*.json` | React dashboard | Slash commands |
 
-**GitChange positioning:** UA's plugin + dashboard shape, Historex's git-archaeology layering, RepoGraph's contributor/co-change graph model, repowise/Deciduous's evidence-linked decision graph — applied to the five onboarding questions.
+**GitChange positioning:** A plugin + dashboard shape, Historex's git-archaeology layering, RepoGraph's contributor/co-change graph model, repowise/Deciduous's evidence-linked decision graph — applied to the five onboarding questions.
 
 ## Sources
 
-- [Understand-Anything README](https://github.com/Egonex-AI/Understand-Anything) — plugin pipeline, Tree-sitter + LLM hybrid, `.understand-anything/` artifacts, incremental updates (HIGH)
-- [Understand-Anything monorepo design spec](https://github.com/egonex-ai/understand-anything/blob/main/docs/superpowers/specs/2026-03-14-understand-anything-design.md) — core/skill/dashboard packages (HIGH, Context7)
 - [Historex README](https://github.com/beingbiplov/Historex) — ingestion → analysis → LLM → output layering; evidence-first LLM (HIGH)
 - [RepoGraph README](https://github.com/FalkorDB/RepoGraph) — git analyzer → graph builder → query → web; temporal snapshots (HIGH)
 - [repowise concepts](https://github.com/repowise-dev/repowise/blob/main/website/concepts.md) — scan → extract → analysis → indexing → persistence; decision lineage (MEDIUM)

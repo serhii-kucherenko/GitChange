@@ -9,7 +9,7 @@ requires:
     provides: slash commands, plugin manifests, host-AI schemas
 provides:
   - P3-D-04 resolveGitChangeRoot / resolveCliBin with unit tests
-  - UA-style install.sh and install.ps1 (clone, build, CLI link)
+  - plugin-style install.sh and install.ps1 (clone, build, CLI link)
   - README install section and marketplace metadata polish
   - validate-plugin.yml CI (manifest JSON, skills dirs, resolver tests)
 affects: [03-06-PLAN, INST-02, INST-03]
@@ -50,7 +50,7 @@ completed: 2026-07-01
 
 # Phase 3 Plan 05: Install UX + Plugin Path Resolver Summary
 
-**P3-D-04 path resolver with unit tests, UA-style one-line installers, and CI manifest validation for marketplace discovery**
+**P3-D-04 path resolver with unit tests, plugin-style one-line installers, and CI manifest validation for marketplace discovery**
 
 ## Performance
 

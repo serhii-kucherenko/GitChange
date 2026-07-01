@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# GitChange one-line installer (Understand-Anything pattern)
-# Official repository: https://github.com/Egonex-AI/GitChange
+# GitChange one-line installer (IDE plugin pattern)
+# Official repository: https://github.com/serhii-kucherenko/GitChange
 set -euo pipefail
 
-readonly OFFICIAL_REPO="https://github.com/Egonex-AI/GitChange.git"
+readonly OFFICIAL_REPO="https://github.com/serhii-kucherenko/GitChange.git"
 GITCHANGE_REPO_URL="${GITCHANGE_REPO_URL:-$OFFICIAL_REPO}"
 GITCHANGE_INSTALL_DIR="${GITCHANGE_INSTALL_DIR:-$HOME/.gitchange-plugin}"
 

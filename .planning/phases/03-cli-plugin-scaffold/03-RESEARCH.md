@@ -1,7 +1,7 @@
 # Phase 3: CLI & Plugin Scaffold - Research
 
 **Researched:** 2026-07-01
-**Domain:** Local-first CLI, Hono API server, minimal React dashboard, Understand-Anything plugin packaging
+**Domain:** Local-first CLI, Hono API server, minimal React dashboard, IDE plugin packaging
 **Confidence:** HIGH
 
 <user_constraints>
@@ -21,9 +21,9 @@ No `03-CONTEXT.md` exists for this phase. Locked decisions inherited from Phase 
 - **P3-D-01:** Default `gitchange serve` binds **`127.0.0.1:9876`** (configurable via `GITCHANGE_PORT`); satisfies minimal-dashboard localhost requirement even though PRIV-04 is formally Phase 5.
 - **P3-D-02:** `gitchange index` runs **`indexFull` or `indexIncremental`** based on manifest presence; always runs **`computeIntelligence`** after successful index (unlike library default `rebuildIntelligence: false`).
 - **P3-D-03:** Dashboard is **read-only** — all data from pre-built `.gitchange/` via Hono JSON API; **no live git walks** in server hot path (SCALE-02).
-- **P3-D-04:** Plugin root resolution follows UA precedence: host-provided workspace root → `GITCHANGE_ROOT` env → walk-up from `cwd` for `.git` + `.gitchange/` → monorepo dev fallback (PITFALLS Pitfall 12).
+- **P3-D-04:** Plugin root resolution follows plugin precedence: host-provided workspace root → `GITCHANGE_ROOT` env → walk-up from `cwd` for `.git` + `.gitchange/` → monorepo dev fallback (PITFALLS Pitfall 12).
 - **P3-D-05:** Minimal dashboard shows **index status + basic repo snapshot** only: manifest freshness, commit count, warnings, top churn files, expertise topics — **not** full timeline/drill-down (Phase 5).
-- **P3-D-06:** Package layout mirrors UA: `packages/cli`, `packages/server`, `packages/dashboard`, `packages/plugin` + root `.cursor-plugin/` and `.claude-plugin/` manifests.
+- **P3-D-06:** Package layout mirrors standard: `packages/cli`, `packages/server`, `packages/dashboard`, `packages/plugin` + root `.cursor-plugin/` and `.claude-plugin/` manifests.
 
 ### Claude's Discretion
 
@@ -50,9 +50,9 @@ No `03-CONTEXT.md` exists for this phase. Locked decisions inherited from Phase 
 | PLUG-01 | `/gitchange` slash command triggers analysis pipeline | `packages/plugin/skills/gitchange/SKILL.md` orchestrates CLI `gitchange index`; agent markdown specs only |
 | PLUG-02 | `/gitchange-dashboard` opens local web UI | Skill invokes `gitchange serve` (if not running) + opens `http://127.0.0.1:9876` |
 | PLUG-03 | CLI `index`, `serve`, `status` | `@gitchange/cli` with commander; wires `@gitchange/core` |
-| PLUG-04 | UA packaging pattern (skills, agents, multi-platform install) | `.cursor-plugin/`, `.claude-plugin/`, `packages/plugin/`, install script |
+| PLUG-04 | plugin packaging pattern (skills, agents, multi-platform install) | `.cursor-plugin/`, `.claude-plugin/`, `packages/plugin/`, install script |
 | PLUG-05 | Host AI is LLM — tools/schemas/artifacts only | Zod-exported JSON schemas in `packages/plugin/schemas/`; grep gate forbids LLM SDK imports |
-| INST-01 | Marketplace or one-line installer (UA pattern) | `.claude-plugin/marketplace.json`, `scripts/install.sh` |
+| INST-01 | Marketplace or one-line installer (plugin pattern) | `.claude-plugin/marketplace.json`, `scripts/install.sh` |
 | INST-02 | First analysis via single `/gitchange` after install — no manual config | Skill auto-detects repo root; runs index + intelligence; surfaces manifest summary |
 | INST-03 | `/gitchange-dashboard` shows initial value without manual config | Minimal React SPA reads `/api/snapshot` |
 | INST-04 | Quickstart ≤5 steps: install → `/gitchange` → `/gitchange-dashboard` | `docs/QUICKSTART.md` |
@@ -60,7 +60,7 @@ No `03-CONTEXT.md` exists for this phase. Locked decisions inherited from Phase 
 
 ## Summary
 
-Phase 3 delivers the **distribution and first-run surface** for GitChange: terminal CLI, localhost server, minimal dashboard, and IDE slash commands — copying Understand-Anything's packaging pattern while wiring the **already-built** Phase 1 index and Phase 2 intelligence passes. The walking skeleton proves `gitchange index` on a fixture repo produces `.gitchange/` and `intelligence.json`; subsequent plans layer serve/status API, dashboard shell, plugin skills, install UX, and quickstart docs.
+Phase 3 delivers the **distribution and first-run surface** for GitChange: terminal CLI, localhost server, minimal dashboard, and IDE slash commands — copying standard packaging pattern while wiring the **already-built** Phase 1 index and Phase 2 intelligence passes. The walking skeleton proves `gitchange index` on a fixture repo produces `.gitchange/` and `intelligence.json`; subsequent plans layer serve/status API, dashboard shell, plugin skills, install UX, and quickstart docs.
 
 **Primary recommendation:** Six vertical MVP plans — (1) package scaffold + `index` E2E, (2) Hono server + `serve`/`status`, (3) minimal dashboard SPA, (4) plugin slash commands + schemas, (5) install + path resolver, (6) quickstart + integration tests.
 
@@ -76,7 +76,7 @@ Phase 3 delivers the **distribution and first-run surface** for GitChange: termi
 | Slash command orchestration | Plugin (`packages/plugin/skills/`) | CLI subprocess | Host AI executes skill markdown |
 | Host AI tool schemas | Plugin (`packages/plugin/schemas/`) | Zod from core | Bounded payloads for chat context |
 | Plugin root resolution | Plugin (`packages/plugin/scripts/`) | env + walk-up | Pitfall 12 mitigation |
-| Install / marketplace | Repo root manifests + scripts | — | UA multi-platform pattern |
+| Install / marketplace | Repo root manifests + scripts | — | plugin multi-platform pattern |
 
 **No LLM tier in GitChange** — host chat executes agent specs.
 
@@ -147,7 +147,7 @@ User installs plugin (marketplace or install.sh)
 Minimal dashboard  ◀── GET /api/snapshot (manifest + counts + intelligence slice)
 ```
 
-### UA Plugin Packaging (copy pattern, separate codebase)
+### plugin Plugin Packaging (copy pattern, separate codebase)
 
 ```
 gitchange/
@@ -163,7 +163,7 @@ gitchange/
 └── scripts/install.sh
 ```
 
-Reference: [Understand-Anything `.cursor-plugin/plugin.json`](https://github.com/Egonex-AI/Understand-Anything/blob/main/.cursor-plugin/plugin.json) — `skills` and `agents` directory pointers.
+Reference: 
 
 ### Read API Contract (minimal snapshot)
 
@@ -181,12 +181,12 @@ Server opens SQLite **read-only**; never calls es-git.
 ### Pitfall 12: Plugin Path Fragility (mitigate in Phase 3, full doctor in Phase 8)
 
 - Never hardcode `../../packages/cli` from skill paths
-- `resolveGitChangeRoot(cwd)` with UA precedence order
+- `resolveGitChangeRoot(cwd)` with plugin precedence order
 - Integration test from monorepo dev layout only is insufficient — Plan 03-06 tests CLI directly
 
 ### Dashboard Launch Gate
 
-- `/gitchange-dashboard` skill MUST check manifest exists; if missing, instruct user to run `/gitchange` first (UA pattern)
+- `/gitchange-dashboard` skill MUST check manifest exists; if missing, instruct user to run `/gitchange` first (plugin pattern)
 - Do not silently serve empty dashboard on missing index
 
 ### Native Module in Browser
@@ -200,7 +200,6 @@ Server opens SQLite **read-only**; never calls es-git.
 - [GitChange ARCHITECTURE.md](../../research/ARCHITECTURE.md) — plugin pipeline, package layout
 - [GitChange STACK.md](../../research/STACK.md) — commander, Hono, React/Vite versions
 - [GitChange PITFALLS.md](../../research/PITFALLS.md) — Pitfall 12 plugin fragility
-- [Understand-Anything plugin.json](https://github.com/Egonex-AI/Understand-Anything/blob/main/.cursor-plugin/plugin.json) — packaging reference (HIGH)
 - Phase 1 SKELETON.md — later phases add cli/server/dashboard/plugin
 - Phase 2 SUMMARY — computeIntelligence, intelligence.json, manifest checkpoint fields
 

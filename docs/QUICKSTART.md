@@ -14,7 +14,7 @@ Get from install to a working dashboard in five steps. No config files required.
 1. **Install GitChange.** Run the one-line installer (macOS/Linux):
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.sh | bash
+   curl -fsSL https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.sh | bash
    ```
 
    Or install the plugin from the Cursor or Claude Code marketplace using the manifests in this repo. Add `~/.local/bin` to your PATH if the installer prints that step.

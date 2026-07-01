@@ -170,7 +170,7 @@ useDrillStore (existing Phase 5 drill-down)
 |---------|-------------|-----|
 | Custom worker pool | piscina | Battle-tested thread pool; STACK.md locked |
 | Merge SQLite files | Federated read layer | PITFALLS #11; per-repo rebuild independence |
-| Custom graph canvas | @xyflow/react | STACK.md; proven in Understand-Anything |
+| Custom graph canvas | @xyflow/react | STACK.md; proven in Structural graph tools |
 | Cross-repo inference | Manual `links[]` only | PITFALLS #11 false narrative |
 
 ## Common Pitfalls

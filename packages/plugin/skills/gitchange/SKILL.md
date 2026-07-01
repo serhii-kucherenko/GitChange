@@ -22,7 +22,7 @@ GitChange supplies **artifacts and schemas only**. The host AI reads results and
 
 - A git repository in the workspace (a `.git` directory reachable by walking up from the workspace root).
 - The `gitchange` CLI on PATH, or resolvable via `resolveCliBin()` from `packages/plugin/scripts/resolve-root.ts` (P3-D-04). If missing, tell the user:
-  1. Run the one-line installer: `curl -fsSL https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.sh | bash`
+  1. Run the one-line installer: `curl -fsSL https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.sh | bash`
   2. Or clone the GitChange repo and run `pnpm install && pnpm build` from the monorepo root.
   3. Verify with `gitchange --version` or `gitchange status`.
 

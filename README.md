@@ -15,13 +15,13 @@ GitChange analyzes git history from a local clone and helps new teammates and ma
 One-line install (macOS/Linux):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.sh | bash
 ```
 
 Windows (PowerShell):
 
 ```powershell
-irm https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.ps1 | iex
 ```
 
 The installer clones or updates GitChange under `~/.gitchange-plugin` by default, runs `pnpm install && pnpm build`, links the `gitchange` CLI into `~/.local/bin`, and prints symlink steps for Cursor and Claude Code plugin manifests.
@@ -32,7 +32,7 @@ Override install location:
 GITCHANGE_INSTALL_DIR=~/tools/gitchange curl -fsSL .../install.sh | bash
 ```
 
-> **Repository URL:** The official source is [github.com/Egonex-AI/GitChange](https://github.com/Egonex-AI/GitChange). The install scripts pin to that URL; overriding `GITCHANGE_REPO_URL` prints a warning.
+> **Repository URL:** The official source is [github.com/serhii-kucherenko/GitChange](https://github.com/serhii-kucherenko/GitChange). The install scripts pin to that URL; overriding `GITCHANGE_REPO_URL` prints a warning.
 
 ## Verify
 

@@ -42,7 +42,7 @@ created: 2026-07-01
 | PLUG-01 `/gitchange` slash command | 03-04 | `pnpm vitest run tests/integration/plugin-schemas.test.ts` | Dogfood `/gitchange` in Cursor/Claude | ✅ green |
 | PLUG-02 `/gitchange-dashboard` | 03-03, 03-04 | `tests/integration/dashboard-snapshot.test.ts` | Open dashboard via slash command | ✅ green |
 | PLUG-03 CLI index/serve/status | 03-01, 03-02 | `cli-index.test.ts`, `cli-serve-status.test.ts` | — | ✅ green |
-| PLUG-04 UA packaging pattern | 03-05 | `.github/workflows/validate-plugin.yml`, `resolve-root.test.ts` | Marketplace symlink steps from installer | ✅ green |
+| PLUG-04 plugin packaging pattern | 03-05 | `.github/workflows/validate-plugin.yml`, `resolve-root.test.ts` | Marketplace symlink steps from installer | ✅ green |
 | PLUG-05 Host AI only (no LLM SDK) | 03-04 | `plugin-schemas.test.ts` grep gate (forbidden imports) | — | ✅ green |
 | INST-01 One-line / marketplace install | 03-05 | `bash -n scripts/install.sh`; README install section | Run installer on clean machine | ✅ green |
 | INST-02 First analysis via `/gitchange` | 03-04 | Skill docs + `cli-index.test.ts` | Slash command in host IDE | ✅ green |

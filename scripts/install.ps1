@@ -1,8 +1,8 @@
 # GitChange installer for Windows (PowerShell)
-# Official repository: https://github.com/Egonex-AI/GitChange
+# Official repository: https://github.com/serhii-kucherenko/GitChange
 $ErrorActionPreference = "Stop"
 
-$OfficialRepo = "https://github.com/Egonex-AI/GitChange.git"
+$OfficialRepo = "https://github.com/serhii-kucherenko/GitChange.git"
 $RepoUrl = if ($env:GITCHANGE_REPO_URL) { $env:GITCHANGE_REPO_URL } else { $OfficialRepo }
 $InstallDir = if ($env:GITCHANGE_INSTALL_DIR) { $env:GITCHANGE_INSTALL_DIR } else { Join-Path $env:USERPROFILE ".gitchange-plugin" }
 

@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-GitChange is a local-first git archaeology and onboarding tool that answers five evidence-backed questions — who changed what, how the project evolved, what decisions were made, what's still in flight, and current progress — through a guided tour, timeline, and drill-down dashboard. Experts in this space (Understand-Anything, Repowise, Historex, Vestige) converge on a **layered pipeline**: deterministic git ingestion and metrics first, host-LLM semantic synthesis second, with all outputs persisted to a derived artifact store (`.gitchange/`) that feeds both a local dashboard and IDE slash commands. GitChange should not fork Understand-Anything but copy its plugin packaging pattern while building a **temporal** (not structural) intelligence layer.
+GitChange is a local-first git archaeology and onboarding tool that answers five evidence-backed questions — who changed what, how the project evolved, what decisions were made, what's still in flight, and current progress — through a guided tour, timeline, and drill-down dashboard. Experts in this space (Repowise, Repowise, Historex, Vestige) converge on a **layered pipeline**: deterministic git ingestion and metrics first, host-LLM semantic synthesis second, with all outputs persisted to a derived artifact store (`.gitchange/`) that feeds both a local dashboard and IDE slash commands. GitChange should build its own plugin packaging while building a **temporal** (not structural) intelligence layer.
 
 The recommended approach is a **TypeScript monorepo** (pnpm + Turborepo) with `es-git` for 100k+ commit walks, `better-sqlite3` + Drizzle for incremental OLTP indexing, Zod-validated artifacts, and a React + Vite SPA served by Hono on localhost. The v1 thin vertical slice is **ingest → era detection → dashboard → default tour → slash commands**, proving all five core questions at a basic level before adding temporal graph UI, role/topic tour variants, or multi-repo unification. Host AI (Cursor/Claude Code) is the LLM runtime; GitChange supplies schemas, tools, and artifacts only.
 
@@ -17,7 +17,7 @@ The dominant risks are **trust failures** (hallucinated narratives, git diffs mi
 
 ### Recommended Stack
 
-Build as a pnpm workspace mirroring Understand-Anything's proven layout: `packages/core` (ingestion, SQLite index, schemas), `packages/cli`, `packages/server` (Hono), `packages/dashboard` (React/Vite), and `packages/plugin` (skills/agents). Core exposes browser-safe subpath exports so the dashboard never imports Node-only modules (`es-git`, `better-sqlite3`).
+Build as a pnpm workspace mirroring standard proven layout: `packages/core` (ingestion, SQLite index, schemas), `packages/cli`, `packages/server` (Hono), `packages/dashboard` (React/Vite), and `packages/plugin` (skills/agents). Core exposes browser-safe subpath exports so the dashboard never imports Node-only modules (`es-git`, `better-sqlite3`).
 
 **Core technologies:**
 - **TypeScript 6 + Node 22 LTS + pnpm 11 + Turborepo 2:** Shared types across CLI, core, server, dashboard, plugin; fast TDD loop via `turbo test --filter=@gitchange/core`
@@ -56,7 +56,7 @@ Build as a pnpm workspace mirroring Understand-Anything's proven layout: `packag
 - GitHub/GitLab PR/issue mining — API-dependent; local-git wedge first
 - Hosted/synced team lore — conflicts with local-first positioning
 - Multi-repo unified story — high complexity; after single-repo proof
-- Static dependency/call graphs — Repowise/Understand-Anything territory
+- Static dependency/call graphs — Repowise structural-graph territory
 - Own LLM orchestration — host chat is the model
 
 ### Architecture Approach
@@ -69,7 +69,7 @@ Follow **deterministic-first, LLM-second** with a derived artifact store: `.git/
 3. **Semantic agents (plugin)** — era-synthesizer, decision-miner, tour-builder, status-inferencer; markdown specs executed by host AI
 4. **Artifact store (`.gitchange/`)** — SQLite index + JSON artifacts; incremental merge; graph-reviewer validates referential integrity
 5. **Local server + dashboard** — Hono serves API + static SPA; timeline, tour player, open-threads panel, drill-down
-6. **Plugin surface** — slash commands, skills, multi-platform installers; copies UA packaging, separate codebase
+6. **Plugin surface** — slash commands, skills, multi-platform installers; copies plugin packaging, separate codebase
 
 ### Critical Pitfalls
 
@@ -101,7 +101,7 @@ Based on combined research, dependency chains, and pitfall prevention, suggested
 **Delivers:** Artifact writer with checkpoint resume; CLI (`gitchange index | serve | status`); plugin package with `/gitchange` wiring; monorepo layout (`packages/core`, `cli`, `plugin`)
 **Addresses:** IDE/agent integration surface (deterministic path), local-first indexing, `.gitchange/` artifact pattern
 **Avoids:** Plugin path fragility (start resolver early — Pitfall 12)
-**Uses:** commander, Turborepo pipelines, UA plugin packaging patterns
+**Uses:** commander, Turborepo pipelines, plugin plugin packaging patterns
 
 ### Phase 4: Era Detection & Semantic Pipeline
 **Rationale:** First LLM artifact; answers "how did the project evolve?" and provides scaffolding for tours and temporal graph; must run only after intelligence layer produces era signals.
@@ -151,17 +151,17 @@ Phases likely needing `/gsd:plan-phase --research-phase` during planning:
 - **Phase 5:** vis-timeline React adapter quality — may need thin custom wrapper research
 
 Phases with standard patterns (skip research-phase):
-- **Phase 3:** CLI (commander), Hono localhost server, pnpm/Turborepo monorepo — well-documented, UA precedent
-- **Phase 7:** Tour player UX — Vestige/UA tour patterns exist; content model is product design, not unknown tech
-- **Stack choices overall:** HIGH confidence from UA + es-git benchmarks + Repowise SQLite pattern
+- **Phase 3:** CLI (commander), Hono localhost server, pnpm/Turborepo monorepo — well-documented, plugin precedent
+- **Phase 7:** Tour player UX — Vestige-style tour patterns exist; content model is product design, not unknown tech
+- **Stack choices overall:** HIGH confidence from plugin + es-git benchmarks + Repowise SQLite pattern
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | UA monorepo precedent, es-git official benchmarks, npm versions verified 2026-06-30 |
+| Stack | HIGH | plugin monorepo precedent, es-git official benchmarks, npm versions verified 2026-06-30 |
 | Features | HIGH | Competitor docs + GitChange PROJECT.md; no formal market standard for table stakes (noted MEDIUM on market-wide consensus) |
-| Architecture | HIGH | Convergent patterns across UA, Historex, RepoGraph, Repowise; build order dependencies clear |
+| Architecture | HIGH | Convergent patterns across plugin, Historex, RepoGraph, Repowise; build order dependencies clear |
 | Pitfalls | HIGH | Multiple corroborating sources: MSR research, production post-mortems, competitor limitations |
 
 **Overall confidence:** HIGH
@@ -177,7 +177,6 @@ Phases with standard patterns (skip research-phase):
 ## Sources
 
 ### Primary (HIGH confidence)
-- [Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) — plugin pipeline, monorepo layout, React Flow dashboard, slash commands
 - [es-git performance benchmarks](https://es-git.dev/performance.html) — revwalk speed vs child_process and nodegit
 - [Repowise architecture & docs](https://www.repowise.dev/architecture) — SQLite persistence, git intelligence layers, MCP pattern
 - [Historex README](https://github.com/beingbiplov/Historex) — ingestion → analysis → LLM layering

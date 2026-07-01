@@ -17,7 +17,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - [x] **Phase 4: Era Detection & Semantic Pipeline** - Named eras, inflection points, and temporal graph artifacts (completed 2026-07-01)
 - [x] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI (completed 2026-07-01)
 - [x] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop (completed 2026-07-01)
-- [ ] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops
+- [x] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops (completed 2026-07-01)
 - [ ] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story
 
 ## Phase Details
@@ -283,7 +283,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 07-05-PLAN.md — Golden tours integrity + dashboard tour E2E + validate CLI gate
+- [x] 07-05-PLAN.md — Golden tours integrity + dashboard tour E2E + validate CLI gate
 **UI hint**: yes
 
 ### Phase 8: Hardening, Scale & Multi-Repo
@@ -333,7 +333,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
-| 7. Guided Tours & Onboarding UX | 4/5 | In Progress|  |
+| 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
 | 8. Hardening, Scale & Multi-Repo | 0/5 | Not started | - |
 
 ---

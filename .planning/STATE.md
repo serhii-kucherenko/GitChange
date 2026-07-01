@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 07-04-PLAN.md — tour player UX
-last_updated: "2026-07-01T12:28:00.000Z"
+stopped_at: Completed 07-05-PLAN.md — tours golden gate + E2E
+last_updated: "2026-07-01T12:35:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 46
-  completed_plans: 40
-  percent: 87
+  completed_plans: 41
+  percent: 88
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 7 — Guided Tours (07-04 complete)
+**Current focus:** Phase 8 — Hardening, Scale & Multi-Repo (Phase 7 complete)
 
 ## Current Position
 
-Phase: 7 of 8 in progress (Guided Tours & Onboarding UX)
-Plan: 4 of 5 complete in Phase 7 (07-04)
-Status: In progress — 07-05 remaining
+Phase: 7 of 8 complete (Guided Tours & Onboarding UX)
+Plan: 5 of 5 complete in Phase 7 (07-05)
+Status: Phase 7 complete — ready for Phase 8
 Last activity: 2026-07-01
-Stopped at: Completed 07-04-PLAN.md — tour player UX
+Stopped at: Completed 07-05-PLAN.md — tours golden gate + E2E
 
-Progress: [█████████░] 87%
+Progress: [█████████░] 89%
 
 ## Performance Metrics
 
@@ -135,6 +135,9 @@ Recent decisions affecting current work:
 - Tour progress persists via zustand subscribe on headSha from snapshot manifest
 - Era/decision drills switch intelligence tab; commit/file drills stay on tours tab with CommitDetailPanel
 
+- BASIC_SCENARIO_TOURS_SNAPSHOT locks 3 tours, 4 default chapters, 6 total stops
+- validate runs checkToursIntegrity when tours.json present; errors if manifest checkpoint without file
+
 ### Pending Todos
 
 None yet.
@@ -153,6 +156,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:28:00.000Z
-Stopped at: Completed 07-04-PLAN.md — tour player UX
+Last session: 2026-07-01T12:35:00.000Z
+Stopped at: Completed 07-05-PLAN.md — tours golden gate + E2E
 Resume file: None

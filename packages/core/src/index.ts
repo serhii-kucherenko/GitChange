@@ -12,12 +12,22 @@ export {
   DEFAULT_COMMIT_PAGE_LIMIT,
   encodeCommitCursor,
   InvalidCommitCursorError,
+  InvalidCommitFilterError,
   listCommits,
   MAX_COMMIT_PAGE_LIMIT,
+  type CommitListFilters,
   type CommitListPage,
   type CommitSummary,
   type ListCommitsOptions,
 } from "./read/commits.js";
+export {
+  CommitNotFoundError,
+  getCommitDetail,
+  InvalidCommitShaError,
+  type CommitDetail,
+  type CommitDetailCommit,
+  type CommitDetailFile,
+} from "./read/commit-detail.js";
 export {
   getRepoSnapshot,
   type RepoSnapshot,

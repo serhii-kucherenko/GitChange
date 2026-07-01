@@ -18,7 +18,7 @@ affects: [08-03-federated-read-apis, large-monorepo-onboarding]
 tech-stack:
   added: [piscina@5.2.0]
   patterns:
-    - "Workers receive repoPath + sha + ignore rules; each opens read-only es-git repo"
+    - "Workers receive repoPath + sha + ignore rules; each thread caches one read-only es-git repo"
     - "indexCommitStream batches 500 SHAs per pool dispatch; useWorkers:false for deterministic tests"
     - "Scale fixture built via git fast-import for sub-second 10k history"
 
@@ -80,8 +80,9 @@ Each task was committed atomically:
 
 1. **Task 1: Piscina worker pool + SQLite tuning** - `0ee5311` (feat)
 2. **Task 2: Progress CLI + 10k scale benchmark gate** - `0f7d3fb` (feat)
+3. **Worker repo cache (post-gate perf)** - `b9b01b3` (perf)
 
-**Plan metadata:** `a6607f1` (docs)
+**Plan metadata:** `cb8a248` (docs)
 
 ## Files Created/Modified
 
@@ -110,9 +111,24 @@ Each task was committed atomically:
 - **Verification:** `pnpm exec vitest run tests/scale/index-benchmark.test.ts` — 3 passed, 1 skipped
 - **Committed in:** `0f7d3fb`
 
+**2. [Rule 1 - Bug] Per-commit openRepository exceeded 120s index budget**
+- **Found during:** Task 2 (10k benchmark after fast-import fixture)
+- **Issue:** Each worker task called `openRepository` per SHA; 10k opens pushed index past 120s
+- **Fix:** Cache repo and ignore matcher per worker thread; export `buildCommitRecordsFromRepo` for worker use
+- **Files modified:** `packages/core/src/index/worker.ts`, `packages/core/src/index/process-commit.ts`
+- **Verification:** 10k benchmark completes in ~12s total test run
+- **Committed in:** `b9b01b3`
+
+**3. [Rule 2 - Missing Critical] Progress interval test**
+- **Found during:** Task 2 verification
+- **Issue:** No automated assertion that `onProgress` fires at 500-commit intervals
+- **Fix:** Added benchmark case with 600-commit fixture asserting progress includes 500
+- **Files modified:** `tests/scale/index-benchmark.test.ts`
+- **Committed in:** `b9b01b3`
+
 ---
 
-**Total deviations:** 1 auto-fixed (Rule 1)
+**Total deviations:** 3 auto-fixed (2 Rule 1, 1 Rule 2)
 **Impact on plan:** Required for CI gate to run; index <120s assertion unchanged
 
 ## Issues Encountered
@@ -135,6 +151,7 @@ None - no external service configuration required.
 - FOUND: packages/core/src/index/worker-pool.ts
 - FOUND: commit 0ee5311
 - FOUND: commit 0f7d3fb
+- FOUND: commit b9b01b3
 
 ---
 *Phase: 08-hardening-scale-multi-repo*

@@ -187,7 +187,26 @@ Plans:
   4. User searches and filters commits by author, path, message keyword, and date range in the dashboard
   5. Dashboard shows index freshness and schema version; large commit lists remain responsive via virtualization
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 05-01-PLAN.md — Walking skeleton: paginated /api/commits + virtualized commit list (SCALE-02)
+
+**Wave 2** *(blocked on Wave 1; parallel)*
+
+- [ ] 05-02-PLAN.md — Commit search/filter by author, path, message, date (INGX-06)
+- [ ] 05-04-PLAN.md — Index-time hunk capture + commit→file→hunk drill panels (TIME-02)
+
+**Wave 3** *(blocked on Wave 1–2 partial)*
+
+- [ ] 05-03-PLAN.md — vis-timeline era markers + era-filtered commits (TIME-01)
+- [ ] 05-05-PLAN.md — File-centric history scrubber (TIME-03)
+
+**Wave 4** *(blocked on Waves 1–3)*
+
+- [ ] 05-06-PLAN.md — Confidence badges, index status polish, PRIV-04 gate, E2E test (EVD-02, DASH-03)
 **UI hint**: yes
 
 ### Phase 6: Decisions, Status & Open Work
@@ -251,7 +270,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
-| 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |
+| 5. Dashboard & Evidence Drill-Down | 0/6 | Not started | - |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |

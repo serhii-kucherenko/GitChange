@@ -32,6 +32,9 @@ export const TemporalGraphEdge = z.object({
   source: z.string().min(1),
   target: z.string().min(1),
   type: TemporalGraphEdgeType,
+  disclaimer: z
+    .literal("historical correlation, not import dependency")
+    .optional(),
 });
 
 export type TemporalGraphEdge = z.infer<typeof TemporalGraphEdge>;

@@ -8,6 +8,8 @@ import {
   type IntelligenceArtifact as IntelligenceArtifactType,
 } from "../schema/zod/intelligence.js";
 import { getFileChurnRows } from "./churn.js";
+import { getCoChangeEdges } from "./cochange.js";
+import { getEraBoundarySignals } from "./era-signals.js";
 
 const INTELLIGENCE_FILENAME = "intelligence.json";
 
@@ -38,9 +40,9 @@ export function buildIntelligenceArtifact(
         evidence: row.evidence,
       })),
     },
-    coChange: { edges: [] },
+    coChange: { edges: getCoChangeEdges(db) },
     ownership: { files: [] },
-    eraSignals: { boundaries: [] },
+    eraSignals: { boundaries: getEraBoundarySignals(db) },
     expertise: { profiles: [] },
   });
 }

@@ -5,6 +5,8 @@ import type { Manifest } from "../schema/manifest.js";
 import { readManifest } from "../schema/manifest.js";
 import type { AttributionConfidence } from "../schema/zod/intelligence.js";
 import { computeChurn, getChurnFileCount } from "./churn.js";
+import { computeCoChange } from "./cochange.js";
+import { computeEraSignals } from "./era-signals.js";
 import { exportIntelligence } from "./export.js";
 
 export interface ComputeIntelligenceOptions {
@@ -60,6 +62,8 @@ export async function computeIntelligence(
 
   const db = openDb(gitchangeDir);
   computeChurn(db);
+  computeCoChange(db);
+  computeEraSignals(db);
 
   exportIntelligence(db, {
     gitchangeDir,

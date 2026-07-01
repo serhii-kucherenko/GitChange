@@ -49,5 +49,20 @@ describe("computeIntelligence", () => {
 
     expect(result.churnFileCount).toBe(artifact.churn.files.length);
     expect(result.manifest.repo.head).toBe(repo.headSha);
+
+    expect(artifact.coChange.edges.length).toBeGreaterThanOrEqual(1);
+    for (const edge of artifact.coChange.edges) {
+      expect(edge.relationship).toBe("co_change");
+      expect(edge.disclaimer).toBe(
+        "historical correlation, not import dependency",
+      );
+    }
+
+    expect(artifact.eraSignals.boundaries.length).toBeGreaterThanOrEqual(1);
+    for (const boundary of artifact.eraSignals.boundaries) {
+      expect(boundary.evidence.length).toBeGreaterThanOrEqual(1);
+      expect(boundary.startCommitSha).toHaveLength(40);
+      expect(boundary.endCommitSha).toHaveLength(40);
+    }
   });
 });

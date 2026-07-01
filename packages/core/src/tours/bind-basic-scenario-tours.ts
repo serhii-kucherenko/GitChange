@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { eq } from "drizzle-orm";
 import { openDb } from "../artifacts/db.js";
 import { readDecisionsArtifact } from "../decisions/decisions-io.js";
@@ -51,33 +53,50 @@ function bindEvidence(
         type: "commit",
         sha: remapSha(evidence.sha, first, mid, last),
       };
-    case "file":
+    case "file": {
+      const path =
+        evidence.path === "src/main.ts" && mainTouch
+          ? mainTouch.path
+          : evidence.path === "src/feature.ts" && featureTouch
+            ? featureTouch.path
+            : evidence.path;
+      const commitSha =
+        evidence.path === "src/main.ts" && mainTouch
+          ? mainTouch.commitSha
+          : evidence.path === "src/feature.ts" && featureTouch
+            ? featureTouch.commitSha
+            : remapSha(evidence.commitSha, first, mid, last);
+
       return {
         type: "file",
-        path:
-          evidence.path === "src/main.ts" && mainTouch
-            ? mainTouch.path
-            : evidence.path === "src/feature.ts" && featureTouch
-              ? featureTouch.path
-              : evidence.path,
-        commitSha: remapSha(evidence.commitSha, first, mid, last),
+        path,
+        commitSha,
       };
-    case "doc":
+    }
+    case "doc": {
+      const path =
+        evidence.path === "README.md" && readmeTouch
+          ? readmeTouch.path
+          : evidence.path;
+      const commitSha =
+        evidence.path === "README.md" && readmeTouch
+          ? readmeTouch.commitSha
+          : remapSha(evidence.commitSha, first, mid, last);
+
       return {
         type: "doc",
-        path:
-          evidence.path === "README.md" && readmeTouch
-            ? readmeTouch.path
-            : evidence.path,
-        commitSha: remapSha(evidence.commitSha, first, mid, last),
+        path,
+        commitSha,
         excerpt: evidence.excerpt,
       };
+    }
     case "hunk":
       return {
         type: "hunk",
         path: evidence.path,
         commitSha: remapSha(evidence.commitSha, first, mid, last),
-        hunkId: evidence.hunkId,
+        startLine: evidence.startLine,
+        endLine: evidence.endLine,
       };
     case "interview":
       return evidence;
@@ -293,6 +312,21 @@ export function bindBasicScenarioToursTemplate(
     headSha: last.sha,
     tours,
   });
+}
+
+export function loadBasicScenarioToursTemplate(): ToursArtifactType {
+  const fixturePath = join(
+    import.meta.dirname,
+    "../../../../tests/fixtures/tours/tours-basic-scenario.json",
+  );
+  return ToursArtifact.parse(JSON.parse(readFileSync(fixturePath, "utf-8")));
+}
+
+export function applyBasicScenarioToursFixture(gitchangeDir: string): void {
+  applyBasicScenarioToursTemplate(
+    gitchangeDir,
+    loadBasicScenarioToursTemplate(),
+  );
 }
 
 export function applyBasicScenarioToursTemplate(

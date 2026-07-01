@@ -9,6 +9,8 @@ schemas:
   - packages/plugin/schemas/eras.schema.json
   - packages/plugin/schemas/decision-mining-context.schema.json
   - packages/plugin/schemas/decisions.schema.json
+  - packages/plugin/schemas/tour-synthesis-context.schema.json
+  - packages/plugin/schemas/tours.schema.json
   - packages/plugin/schemas/status-query-response.schema.json
 ---
 
@@ -144,7 +146,46 @@ Otherwise (missing decisions, stale `headSha`, or user asks to refresh), run dec
 
 When `decisions.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
 
-### Phase 4 — Status queries (STAT-04)
+### 5c. Phase 4 — Tour synthesis
+
+Run **after** decision synthesis when `eras.json`, `decisions.json`, and `open-work.json` exist. Skip automatic re-synthesis when:
+
+- `.gitchange/tours.json` already validates against `tours.schema.json`, **and**
+- `tours.json` `headSha` matches `intelligence.json` `headSha`
+
+Otherwise (missing tours, stale `headSha`, or user asks to refresh), run tour synthesis:
+
+1. **Verify prerequisites** — `intelligence.json`, `eras.json`, `decisions.json`, and `open-work.json` must exist under `<repo>/.gitchange/`. If any is missing, stop and ask the user to complete prior phases first.
+
+2. **Build bounded context** — load synthesis input (no live git):
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/build-tour-context.ts "<absolute-path-to-.gitchange>"
+   ```
+
+   Validate stdout JSON against `packages/plugin/schemas/tour-synthesis-context.schema.json`.
+
+3. **Synthesize tours** — follow `packages/plugin/agents/tour-builder.md`. Host AI outputs a single `ToursArtifact` JSON object with one default tour (4–6 chapters) and optional role/topic variants within caps.
+
+4. **Validate output** — check against `packages/plugin/schemas/tours.schema.json` before persisting. Confirm every `eraId` and `decisionId` exists in the context bundle.
+
+5. **Persist** — write via merge gate (preserves default outline order, validates evidence refs, enforces caps):
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/write-tours.ts "<absolute-path-to-.gitchange>" /path/to/tours-output.json
+   ```
+
+6. **Checkpoint manifest** — after `tours.json` is written:
+
+   ```bash
+   pnpm exec tsx -e "import { runToursPipeline } from '@gitchange/core'; runToursPipeline(process.argv[1]);" "<absolute-path-to-.gitchange>"
+   ```
+
+7. **Present to user (TOUR-01)** — list tour titles, kinds (`default` / `role` / `topic`), and chapter counts. Highlight `defaultTourId` for the onboarding path.
+
+When `tours.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
+
+### Phase 5 — Status queries (STAT-04)
 
 When the user asks about **migration progress**, **what is in flight**, **open work**, or **current status** on ongoing refactors:
 
@@ -186,4 +227,5 @@ Answer questions using **schemas and artifacts only** (ownership, migrations, er
 - **Index errors**: show CLI stderr; suggest `gitchange status` after fixing the repo state.
 - **Semantic errors**: show `build-era-context` or `write-eras` stderr; verify `intelligence.json` exists and output matches `eras.schema.json`.
 - **Decision errors**: show `build-decision-context` or `write-decisions` stderr; verify `eras.json` exists and output matches `decisions.schema.json`.
+- **Tour errors**: show `build-tour-context` or `write-tours` stderr; verify `decisions.json` and `open-work.json` exist and output matches `tours.schema.json`.
 - **Pending decisions**: direct maintainer to `/gitchange-interview` for confirm/reject; answers persist under `.gitchange/interviews/` and merge into `decisions.json`.

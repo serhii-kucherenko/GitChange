@@ -234,8 +234,10 @@ export {
 } from "./tours/context.js";
 export { outlineDefaultTourChapters } from "./tours/outline.js";
 export {
+  applyBasicScenarioToursFixture,
   applyBasicScenarioToursTemplate,
   bindBasicScenarioToursTemplate,
+  loadBasicScenarioToursTemplate,
 } from "./tours/bind-basic-scenario-tours.js";
 export { mergeTourBuilderOutput } from "./tours/merge-agent-output.js";
 export {

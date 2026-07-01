@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1",
+  "computedAt": "2026-07-01T14:00:00.000Z",
+  "headSha": "cccccccccccccccccccccccccccccccccccccccc",
+  "defaultTourId": "tour:01DEFAULT",
+  "tours": [
+    {
+      "id": "tour:01DEFAULT",
+      "kind": "default",
+      "title": "Onboarding tour",
+      "description": "Default guided tour for new contributors.",
+      "chapters": [
+        {
+          "order": 1,
+          "title": "Bootstrap foundations",
+          "summary": "How the project scaffold landed.",
+          "eraIds": ["era:01HBOOTSTRAP"],
+          "stops": [
+            {
+              "id": "stop:01BOOT",
+              "narrative": "Core modules were established in the first indexed commits.",
+              "evidence": [{ "type": "commit", "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }],
+              "drillTarget": {
+                "eraId": "era:01HBOOTSTRAP",
+                "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "title": "Bootstrap deep dive",
+          "summary": "Monorepo adoption signals in early churn.",
+          "eraIds": ["era:01HBOOTSTRAP"],
+          "stops": [
+            {
+              "id": "stop:02BOOT",
+              "narrative": "Early file touches show where onboarding should start.",
+              "evidence": [
+                {
+                  "type": "file",
+                  "path": "src/main.ts",
+                  "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              ],
+              "drillTarget": {
+                "filePath": "src/main.ts",
+                "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "title": "Growth era overview",
+          "summary": "Documentation and feature expansion.",
+          "eraIds": ["era:01HGROWTH"],
+          "stops": [
+            {
+              "id": "stop:03GROW",
+              "narrative": "README evolution marks a scope steering inflection.",
+              "evidence": [
+                {
+                  "type": "doc",
+                  "path": "README.md",
+                  "commitSha": "cccccccccccccccccccccccccccccccccccccccc",
+                  "excerpt": "# Fixture Repo"
+                }
+              ],
+              "drillTarget": {
+                "eraId": "era:01HGROWTH",
+                "commitSha": "cccccccccccccccccccccccccccccccccccccccc"
+              }
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "title": "Growth era deep dive",
+          "summary": "Later commits refined public docs and entry points.",
+          "eraIds": ["era:01HGROWTH"],
+          "stops": [
+            {
+              "id": "stop:04GROW",
+              "narrative": "Feature work continued on the growth branch.",
+              "evidence": [{ "type": "commit", "sha": "cccccccccccccccccccccccccccccccccccccccc" }],
+              "drillTarget": {
+                "commitSha": "cccccccccccccccccccccccccccccccccccccccc"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tour:01BACKEND",
+      "kind": "role",
+      "roleTag": "backend",
+      "title": "Backend tour",
+      "description": "Backend path emphasis for core and server packages.",
+      "chapters": [
+        {
+          "order": 1,
+          "title": "Core entry points",
+          "summary": "Start with indexed backend churn paths.",
+          "eraIds": ["era:01HBOOTSTRAP"],
+          "stops": [
+            {
+              "id": "stop:01ROLE",
+              "narrative": "src/main.ts is the primary backend onboarding anchor.",
+              "evidence": [
+                {
+                  "type": "file",
+                  "path": "src/main.ts",
+                  "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                }
+              ],
+              "drillTarget": {
+                "filePath": "src/main.ts",
+                "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tour:01AUTH",
+      "kind": "topic",
+      "topicKey": "auth",
+      "title": "Auth topic tour",
+      "description": "Decision-linked thread across bootstrap and growth eras.",
+      "chapters": [
+        {
+          "order": 1,
+          "title": "SQLite index decision",
+          "summary": "Accepted store decision with commit evidence.",
+          "eraIds": ["era:01HBOOTSTRAP"],
+          "stops": [
+            {
+              "id": "stop:01TOPIC",
+              "narrative": "SQLite index store decision anchors persistence onboarding.",
+              "evidence": [{ "type": "commit", "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }],
+              "drillTarget": {
+                "decisionId": "decision:01HSQLITE",
+                "eraId": "era:01HBOOTSTRAP"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

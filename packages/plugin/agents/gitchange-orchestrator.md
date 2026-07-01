@@ -69,13 +69,41 @@ Delegate to `packages/plugin/agents/decision-miner.md` after era synthesis when 
 
 6. Present decision titles, status, confidence, and `reviewStatus` to the user.
 
-### Phase 5 — Optional follow-up
+### Phase 6 — Tour synthesis
+
+Delegate to `packages/plugin/agents/tour-builder.md` after decision synthesis when `eras.json`, `decisions.json`, and `open-work.json` are available.
+
+1. Confirm `<repo>/.gitchange/intelligence.json`, `eras.json`, `decisions.json`, and `open-work.json` exist.
+2. Skip if valid `tours.json` exists and `tours.headSha` matches `intelligence.headSha`; otherwise proceed (or when user requests refresh).
+3. Build context:
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/build-tour-context.ts "<repo>/.gitchange"
+   ```
+
+4. Host AI synthesizes `ToursArtifact` per tour-builder spec (default 4–6 chapter tour, optional role/topic variants).
+5. Validate against `tours.schema.json`; persist via merge gate:
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/write-tours.ts "<repo>/.gitchange" /path/to/tours-output.json
+   ```
+
+6. Run pipeline checkpoint:
+
+   ```bash
+   pnpm exec tsx -e "import { runToursPipeline } from '@gitchange/core'; runToursPipeline(process.argv[1]);" "<repo>/.gitchange"
+   ```
+
+7. Present tour titles, kinds, and chapter counts to the user.
+
+### Phase 7 — Optional follow-up
 
 Answer questions using **schemas and artifacts only**:
 
 - Ownership and expertise → `intelligence.json` (trimmed via `intelligence-summary.schema.json`)
 - Era evolution → `eras.json` (validated via `eras.schema.json`)
 - Decisions and migrations → `decisions.json` (validated via `decisions.schema.json`)
+- Guided tours → `tours.json` (validated via `tours.schema.json`)
 - Repo snapshot cards → `snapshot.schema.json` fields
 - Never invent commit SHAs or file paths not present in evidence arrays
 
@@ -91,6 +119,8 @@ Do not invoke OpenAI, Anthropic, LangChain, or Vercel AI SDK from GitChange pack
 | Named eras | `.gitchange/eras.json` | `eras.schema.json` |
 | Decision mining input | `buildDecisionMiningContext()` stdout | `decision-mining-context.schema.json` |
 | Decisions | `.gitchange/decisions.json` | `decisions.schema.json` |
+| Tour synthesis input | `buildTourSynthesisContext()` stdout | `tour-synthesis-context.schema.json` |
+| Tours | `.gitchange/tours.json` | `tours.schema.json` |
 | API snapshot | `GET /api/snapshot` | `snapshot.schema.json` |
 
 ## Dashboard handoff

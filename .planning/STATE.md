@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 02-05-PLAN.md — golden intelligence fixtures close Phase 2
-last_updated: "2026-07-01T09:12:32.634Z"
+stopped_at: Completed 03-01-PLAN.md — gitchange index CLI walking skeleton
+last_updated: "2026-07-01T09:30:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 2
-  total_plans: 13
-  completed_plans: 13
-  percent: 25
+  total_plans: 19
+  completed_plans: 14
+  percent: 74
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 2 of 8 complete (Repository Intelligence & Ownership)
-Plan: 5 of 5 complete in Phase 2
-Status: Phase 2 complete — ready for Phase 3
+Phase: 3 of 8 in progress (CLI & Plugin Scaffold)
+Plan: 1 of 6 complete in Phase 3
+Status: Wave 1 plan 03-01 complete
 Last activity: 2026-07-01
-Stopped at: Completed 02-05-PLAN.md — golden intelligence fixtures close Phase 2
+Stopped at: Completed 03-01-PLAN.md — gitchange index CLI walking skeleton
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 74%
 
 ## Performance Metrics
 
@@ -76,6 +76,8 @@ Progress: [██████████] 100%
 
 - Ownership file evidence uses last indexed touch commit, not HEAD, for referential integrity
 - rebuildIntelligence defaults false for backward-compatible index-only flows
+- CLI always calls computeIntelligence after index (P3-D-02)
+- resolveRepoPath walks up until .git found (P3-D-04 partial)
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -102,6 +104,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T09:12:32.624Z
-Stopped at: Completed 02-05-PLAN.md — golden intelligence fixtures close Phase 2
+Last session: 2026-07-01T09:30:00.000Z
+Stopped at: Completed 03-01-PLAN.md — gitchange index CLI walking skeleton
 Resume file: None

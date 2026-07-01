@@ -120,7 +120,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — Package scaffold + walking skeleton `gitchange index` (index + intelligence E2E)
+- [x] 03-01-PLAN.md — Package scaffold + walking skeleton `gitchange index` (index + intelligence E2E)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -231,7 +231,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
-| 3. CLI & Plugin Scaffold | 0/6 | Not started | - |
+| 3. CLI & Plugin Scaffold | 1/6 | In Progress|  |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |

@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 9 UI-SPEC approved
-last_updated: "2026-07-01T18:54:02.551Z"
+last_updated: "2026-07-01T18:57:27.265Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 50
-  completed_plans: 48
+  completed_plans: 49
   percent: 89
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 09 (dashboard-ui-redesign) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-01
 Stopped at: Phase 9 UI-SPEC approved
 
-Progress: [██████████] 96%
+Progress: [██████████] 98%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██████████] 96%
 *Updated after each plan completion*
 | Phase 09 P01 | 4m | 2 tasks | 2 files |
 | Phase 09 P02 | 4m | 1 tasks | 2 files |
+| Phase 09 P03 | 5m | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -153,6 +154,7 @@ Recent decisions affecting current work:
 - [Phase ?]: Dashboard active tab uses sky-400 underline (border-b-2) per UI-SPEC top-level nav preference
 - [Phase ?]: DashboardLayoutProps restructured to per-view slots; App.tsx sole caller updated same plan, typecheck-guarded
 - [Phase ?]: Era label max-width 12rem with ellipsis + native vis-timeline title tooltip; no library swap (09-02)
+- [Phase ?]: [09-03]: Virtualized lists use min-h-[24rem] flex-1 flex-fill (not fixed h/max-h caps); ROW_HEIGHT constants unchanged since no row-height edits
 
 ### Pending Todos
 
@@ -172,6 +174,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T18:53:57.918Z
+Last session: 2026-07-01T18:57:23.714Z
 Stopped at: Completed 08-05-PLAN.md — milestone gate E2E + workspace integrity
 Resume file: None

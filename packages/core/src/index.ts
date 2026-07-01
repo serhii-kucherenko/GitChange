@@ -1,2 +1,5 @@
 /** Node-only @gitchange/core public surface. */
-export const CORE_SCHEMA_VERSION = "1";
+export { CORE_SCHEMA_VERSION } from "./index/full.js";
+export { indexFull } from "./index/full.js";
+export { indexIncremental } from "./index/incremental.js";
+export type { IndexOptions, IndexResult } from "./index/types.js";

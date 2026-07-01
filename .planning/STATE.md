@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 04-04-PLAN.md — semantic integrity + pipeline + manifest checkpoint
-last_updated: "2026-07-01T10:25:51.434Z"
+status: ready
+stopped_at: Completed 04-05-PLAN.md — golden semantic gate + validate CLI + snapshot erasSummary; Phase 4 complete
+last_updated: "2026-07-01T10:49:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 24
-  completed_plans: 23
-  percent: 38
+  completed_plans: 24
+  percent: 50
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 4 — Era Detection & Semantic Pipeline
+**Current focus:** Phase 5 — Dashboard & Evidence Drill-Down
 
 ## Current Position
 
-Phase: 4 of 8 in progress (Era Detection & Semantic Pipeline)
-Plan: 4 of 5 complete in Phase 4
-Status: Ready to execute
+Phase: 4 of 8 complete (Era Detection & Semantic Pipeline)
+Plan: 5 of 5 complete in Phase 4
+Status: Phase 4 complete — ready for Phase 5
 Last activity: 2026-07-01
-Stopped at: Completed 04-04-PLAN.md — semantic integrity + pipeline + manifest checkpoint
+Stopped at: Completed 04-05-PLAN.md — golden semantic gate + validate CLI + snapshot erasSummary; Phase 4 complete
 
-Progress: [██████████] 96%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -87,6 +87,9 @@ Recent decisions affecting current work:
 - Doc evidence type added additively with 500-char excerpt cap per P4-D-07
 - Named eras capped at 8 at writeErasArtifact boundary
 - Era synthesis context reads intelligence.json + doc_snapshots only (no live git)
+- bindBasicScenarioErasTemplate in core avoids drizzle resolution failures from tests/fixtures
+- erasSummary truncates summaries to 200 chars for snapshot API disclosure control
+- gitchange validate exits 1 when eras.json missing without faking semantic pass
 
 - Roadmap: Evidence contract (EVD-01) established in Phase 1 schema; confidence UI in Phase 5; honest gaps in Phase 6
 - Roadmap: Phase 3 delivers First Run UX (UA pattern: marketplace install → `/gitchange` → `/gitchange-dashboard`); Phase 5 expands minimal dashboard into full drill-down
@@ -109,6 +112,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T10:25:51.424Z
-Stopped at: Completed 04-04-PLAN.md — semantic integrity + pipeline + manifest checkpoint
+Last session: 2026-07-01T10:49:00.000Z
+Stopped at: Completed 04-05-PLAN.md — golden semantic gate + validate CLI + snapshot erasSummary; Phase 4 complete
 Resume file: None

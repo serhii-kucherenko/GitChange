@@ -366,7 +366,10 @@ export function DecisionsPanel() {
           {decisions.length} decision{decisions.length === 1 ? "" : "s"}
         </p>
       </header>
-      <div ref={parentRef} className="min-h-[24rem] flex-1 overflow-y-auto">
+      <div
+        ref={parentRef}
+        className="min-h-[24rem] max-h-[min(70vh,40rem)] flex-1 overflow-y-auto"
+      >
         <div
           style={{
             height: `${virtualizer.getTotalSize()}px`,

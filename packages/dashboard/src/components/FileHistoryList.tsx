@@ -143,7 +143,7 @@ export function FileHistoryList({ path }: FileHistoryListProps) {
   return (
     <div
       ref={parentRef}
-      className="min-h-[24rem] flex-1 overflow-auto rounded border border-slate-800"
+      className="min-h-[24rem] max-h-[min(70vh,40rem)] flex-1 overflow-auto rounded border border-slate-800"
     >
       <div
         style={{

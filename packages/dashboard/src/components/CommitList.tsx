@@ -195,7 +195,10 @@ export function CommitList({ filters }: CommitListProps) {
         </p>
       </header>
 
-      <div ref={parentRef} className="min-h-[24rem] flex-1 overflow-auto">
+      <div
+        ref={parentRef}
+        className="min-h-[24rem] max-h-[min(70vh,40rem)] flex-1 overflow-auto"
+      >
         <div
           style={{
             height: virtualizer.getTotalSize(),

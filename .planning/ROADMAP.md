@@ -309,7 +309,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 — 08-02)*
 
-- [ ] 08-03-PLAN.md — MULTI-02: federated commit/tour APIs, repoId on evidence, dashboard RepoBadge
+- [x] 08-03-PLAN.md — MULTI-02: federated commit/tour APIs, repoId on evidence, dashboard RepoBadge
 
 **Wave 3** *(blocked on Waves 1–2)*
 
@@ -334,7 +334,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
-| 8. Hardening, Scale & Multi-Repo | 1/5 | In Progress|  |
+| 8. Hardening, Scale & Multi-Repo | 2/5 | In Progress|  |
 
 ---
 *Roadmap created: 2026-06-30*

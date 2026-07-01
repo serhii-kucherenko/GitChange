@@ -29,6 +29,11 @@ export {
   type CommitDetailFile,
 } from "./read/commit-detail.js";
 export {
+  listErasForDashboard,
+  type DashboardEra,
+  type DashboardErasResult,
+} from "./read/eras.js";
+export {
   getRepoSnapshot,
   type RepoSnapshot,
   type RepoSnapshotEraHighlight,

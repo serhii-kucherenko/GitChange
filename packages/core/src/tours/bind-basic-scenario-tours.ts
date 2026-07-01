@@ -317,7 +317,7 @@ export function bindBasicScenarioToursTemplate(
 export function loadBasicScenarioToursTemplate(): ToursArtifactType {
   const fixturePath = join(
     import.meta.dirname,
-    "../../../../tests/fixtures/tours/tours-basic-scenario.json",
+    "../../../../tests/fixtures/tours/basic-scenario-tours.json",
   );
   return ToursArtifact.parse(JSON.parse(readFileSync(fixturePath, "utf-8")));
 }

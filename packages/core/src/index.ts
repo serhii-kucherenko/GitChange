@@ -1,4 +1,37 @@
 /** Node-only @gitchange/core public surface. */
+
+export { assembleOpenWork } from "./decisions/assemble-open-work.js";
+export {
+  capInferredConfidence,
+  INFERRED_MEDIUM_CONFIDENCE_CAP,
+  resolveDecisionAttribution,
+} from "./decisions/attribution.js";
+export {
+  type DecisionCandidate,
+  extractDecisionCandidates,
+} from "./decisions/candidates.js";
+export {
+  buildDecisionMiningContext,
+  type DecisionMiningContext,
+  type DecisionMiningDocDelta,
+  type DecisionMiningErasSummary,
+} from "./decisions/context.js";
+export {
+  readDecisionsArtifact,
+  writeDecisionsArtifact,
+} from "./decisions/decisions-io.js";
+export {
+  AgentDecisionMinerOutput,
+  mergeDecisionMinerOutput,
+} from "./decisions/merge-agent-output.js";
+export {
+  readOpenWorkArtifact,
+  writeOpenWorkArtifact,
+} from "./decisions/open-work-io.js";
+export {
+  EVD03_GAP_MESSAGE,
+  isBelowEvidenceThreshold,
+} from "./decisions/threshold.js";
 export { CORE_SCHEMA_VERSION, indexFull } from "./index/full.js";
 export { indexIncremental } from "./index/incremental.js";
 export type { IndexOptions, IndexResult } from "./index/types.js";
@@ -8,43 +41,43 @@ export type {
 } from "./intelligence/compute.js";
 export { computeIntelligence } from "./intelligence/compute.js";
 export {
-  decodeCommitCursor,
-  DEFAULT_COMMIT_PAGE_LIMIT,
-  encodeCommitCursor,
-  InvalidCommitCursorError,
-  InvalidCommitFilterError,
-  listCommits,
-  MAX_COMMIT_PAGE_LIMIT,
-  type CommitListFilters,
-  type CommitListPage,
-  type CommitSummary,
-  type ListCommitsOptions,
-} from "./read/commits.js";
-export {
-  CommitNotFoundError,
-  getCommitDetail,
-  InvalidCommitShaError,
   type CommitDetail,
   type CommitDetailCommit,
   type CommitDetailFile,
+  CommitNotFoundError,
+  getCommitDetail,
+  InvalidCommitShaError,
 } from "./read/commit-detail.js";
+export {
+  type CommitListFilters,
+  type CommitListPage,
+  type CommitSummary,
+  DEFAULT_COMMIT_PAGE_LIMIT,
+  decodeCommitCursor,
+  encodeCommitCursor,
+  InvalidCommitCursorError,
+  InvalidCommitFilterError,
+  type ListCommitsOptions,
+  listCommits,
+  MAX_COMMIT_PAGE_LIMIT,
+} from "./read/commits.js";
+export {
+  type DashboardEra,
+  type DashboardErasResult,
+  listErasForDashboard,
+} from "./read/eras.js";
 export {
   decodeFileHistoryCursor,
   encodeFileHistoryCursor,
+  type FileHistoryEvent,
+  type FileHistoryPage,
+  type GetFileHistoryOptions,
   getFileHistory,
   InvalidFileHistoryCursorError,
   InvalidFilePathError,
   MAX_FILE_PATH_LENGTH,
   validateFilePath,
-  type FileHistoryEvent,
-  type FileHistoryPage,
-  type GetFileHistoryOptions,
 } from "./read/file-history.js";
-export {
-  listErasForDashboard,
-  type DashboardEra,
-  type DashboardErasResult,
-} from "./read/eras.js";
 export {
   getRepoSnapshot,
   type RepoSnapshot,
@@ -64,6 +97,12 @@ export {
 } from "./schema/manifest.js";
 export {
   type AttributionConfidence,
+  DECISIONS_SCHEMA_VERSION,
+  DecisionRecord,
+  type DecisionRecord as DecisionRecordType,
+  DecisionsArtifact,
+  type DecisionsArtifact as DecisionsArtifactType,
+  Evidence,
   EraClaim,
   type EraClaim as EraClaimType,
   ErasArtifact,
@@ -76,6 +115,11 @@ export {
   type IntelligenceArtifact as IntelligenceArtifactType,
   NamedEra,
   type NamedEra as NamedEraType,
+  OPEN_WORK_SCHEMA_VERSION,
+  OpenWorkArtifact,
+  type OpenWorkArtifact as OpenWorkArtifactType,
+  OpenWorkThread,
+  type OpenWorkThread as OpenWorkThreadType,
   SEMANTIC_SCHEMA_VERSION,
   TemporalGraphArtifact,
   type TemporalGraphArtifact as TemporalGraphArtifactType,
@@ -98,50 +142,34 @@ export {
   readTemporalGraph,
   writeTemporalGraph,
 } from "./semantic/graph-io.js";
-export { runSemanticPipeline } from "./semantic/pipeline.js";
-export type { RunSemanticPipelineResult } from "./semantic/pipeline.js";
+export type {
+  RunDecisionsPipelineResult,
+  RunSemanticPipelineResult,
+} from "./semantic/pipeline.js";
 export {
-  DECISIONS_SCHEMA_VERSION,
-  DecisionRecord,
-  type DecisionRecord as DecisionRecordType,
-  DecisionsArtifact,
-  type DecisionsArtifact as DecisionsArtifactType,
-  OPEN_WORK_SCHEMA_VERSION,
-  OpenWorkArtifact,
-  type OpenWorkArtifact as OpenWorkArtifactType,
-  OpenWorkThread,
-  type OpenWorkThread as OpenWorkThreadType,
-} from "./schema/zod/index.js";
+  runDecisionsPipeline,
+  runSemanticPipeline,
+} from "./semantic/pipeline.js";
 export {
-  buildDecisionMiningContext,
-  type DecisionMiningContext,
-  type DecisionMiningDocDelta,
-  type DecisionMiningErasSummary,
-} from "./decisions/context.js";
+  detectDocsCodeDivergence,
+  INFERENCE_SIGNAL_CODES,
+  type InferenceSignal,
+  type InferenceSignalCode,
+  type InferOpenWorkStatusResult,
+  inferOpenWorkStatus,
+} from "./status/infer.js";
 export {
-  extractDecisionCandidates,
-  type DecisionCandidate,
-} from "./decisions/candidates.js";
-export {
-  EVD03_GAP_MESSAGE,
-  isBelowEvidenceThreshold,
-} from "./decisions/threshold.js";
-export {
-  readDecisionsArtifact,
-  writeDecisionsArtifact,
-} from "./decisions/decisions-io.js";
-export {
-  readOpenWorkArtifact,
-  writeOpenWorkArtifact,
-} from "./decisions/open-work-io.js";
-export {
-  checkSemanticIntegrity,
-  type SemanticIntegrityReport,
-} from "./verify/semantic-integrity.js";
+  buildThreadEvents,
+  MAX_THREAD_EVENTS,
+} from "./status/thread-events.js";
 export {
   checkIntelligenceIntegrity,
   type IntelligenceIntegrityReport,
 } from "./verify/intelligence-integrity.js";
+export {
+  checkSemanticIntegrity,
+  type SemanticIntegrityReport,
+} from "./verify/semantic-integrity.js";
 export {
   BASIC_SCENARIO_SEMANTIC_SNAPSHOT,
   collectSemanticSnapshot,

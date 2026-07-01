@@ -35,6 +35,10 @@ export const ManifestSchema = z.object({
   semanticComputedAt: z.string().optional(),
   semanticHeadSha: z.string().optional(),
   semanticSchemaVersion: z.string().optional(),
+  decisionsComputedAt: z.string().optional(),
+  openWorkComputedAt: z.string().optional(),
+  decisionsSchemaVersion: z.string().optional(),
+  openWorkSchemaVersion: z.string().optional(),
 });
 
 export type Manifest = z.infer<typeof ManifestSchema>;

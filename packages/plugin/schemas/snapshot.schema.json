@@ -287,6 +287,34 @@
                             "commitSha"
                           ],
                           "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "doc"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "commitSha": {
+                              "type": "string",
+                              "minLength": 40,
+                              "maxLength": 40
+                            },
+                            "excerpt": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "commitSha",
+                            "excerpt"
+                          ],
+                          "additionalProperties": false
                         }
                       ]
                     }
@@ -457,6 +485,34 @@
                             "commitSha"
                           ],
                           "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "doc"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "commitSha": {
+                              "type": "string",
+                              "minLength": 40,
+                              "maxLength": 40
+                            },
+                            "excerpt": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "commitSha",
+                            "excerpt"
+                          ],
+                          "additionalProperties": false
                         }
                       ]
                     }
@@ -555,6 +611,34 @@
                             "type",
                             "path",
                             "commitSha"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "doc"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "commitSha": {
+                              "type": "string",
+                              "minLength": 40,
+                              "maxLength": 40
+                            },
+                            "excerpt": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path",
+                            "commitSha",
+                            "excerpt"
                           ],
                           "additionalProperties": false
                         }
@@ -742,6 +826,34 @@
                                   "type",
                                   "path",
                                   "commitSha"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "const": "doc"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "commitSha": {
+                                    "type": "string",
+                                    "minLength": 40,
+                                    "maxLength": 40
+                                  },
+                                  "excerpt": {
+                                    "type": "string",
+                                    "maxLength": 500
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "path",
+                                  "commitSha",
+                                  "excerpt"
                                 ],
                                 "additionalProperties": false
                               }

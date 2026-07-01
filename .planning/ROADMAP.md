@@ -18,7 +18,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - [x] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI (completed 2026-07-01)
 - [x] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop (completed 2026-07-01)
 - [x] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops (completed 2026-07-01)
-- [ ] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story
+- [x] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story (completed 2026-07-01)
 
 ## Phase Details
 
@@ -317,7 +317,7 @@ Plans:
 
 **Wave 4** *(blocked on Waves 1–3)*
 
-- [ ] 08-05-PLAN.md — Golden multi-repo integrity + dashboard E2E + scale regression gate
+- [x] 08-05-PLAN.md — Golden multi-repo integrity + dashboard E2E + scale regression gate
 **UI hint**: yes
 
 ## Progress
@@ -334,7 +334,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
-| 8. Hardening, Scale & Multi-Repo | 4/5 | In Progress|  |
+| 8. Hardening, Scale & Multi-Repo | 5/5 | Complete   | 2026-07-01 |
 
 ---
 *Roadmap created: 2026-06-30*

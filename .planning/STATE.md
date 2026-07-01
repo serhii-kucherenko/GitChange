@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 08-04-PLAN.md — temporal graph UI + drill-down
-last_updated: "2026-07-01T13:06:49.203Z"
+status: verifying
+stopped_at: Completed 08-05-PLAN.md — milestone gate E2E + workspace integrity
+last_updated: "2026-07-01T13:14:34.111Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 46
-  completed_plans: 45
-  percent: 88
+  completed_plans: 46
+  percent: 100
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 8 — Hardening, Scale & Multi-Repo (Phase 7 complete)
+**Current focus:** v1.0 milestone complete — all 8 phases delivered
 
 ## Current Position
 
-Phase: 8 of 8 in progress (Hardening, Scale & Multi-Repo)
-Plan: 5 of 5 complete in Phase 8 (08-01, 08-02, 08-03, 08-04)
-Status: Ready to execute
+Phase: 8 of 8 complete (Hardening, Scale & Multi-Repo)
+Plan: 5 of 5 complete in Phase 8 (08-01 through 08-05)
+Status: Phase complete — ready for verification
 Last activity: 2026-07-01
-Stopped at: Completed 08-04-PLAN.md — temporal graph UI + drill-down
+Stopped at: Completed 08-05-PLAN.md — milestone gate E2E + workspace integrity
 
-Progress: [██████████] 98%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -141,6 +141,10 @@ Recent decisions affecting current work:
 - Workspace file stored in primary repo gitchangeDir; discovered by walking up for workspace.json
 - indexWorkspace stamps manifest.repoId after each successful index
 
+- indexWorkspace skips computeIntelligence when incremental pass indexes zero commits
+- workspace CLI subcommands accept --cwd for E2E harness from monorepo root
+- serve auto-discovers workspace gitchangeDir when workspace.json absent in repo .gitchange
+
 - Piscina maxThreads defaults to max(1, cpus-1)
 - Scale fixture uses git fast-import for sub-second 10k history
 - CLI index emits progress every 500 commits on stderr
@@ -163,6 +167,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T13:06:49.189Z
-Stopped at: Completed 08-01-PLAN.md — SCALE worker pool + benchmark
+Last session: 2026-07-01T13:14:34.080Z
+Stopped at: Completed 08-05-PLAN.md — milestone gate E2E + workspace integrity
 Resume file: None

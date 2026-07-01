@@ -75,7 +75,7 @@ completed: 2026-07-01
 2. **Task 2: Schemas + migration + churn** - `88e5e53` (feat)
 3. **Task 3: computeIntelligence + export + API** - `f8f466c`, `03192ad` (feat)
 
-**Plan metadata:** pending final docs commit
+**Plan metadata:** `a020cb1` (docs: complete plan)
 
 ## Files Created/Modified
 

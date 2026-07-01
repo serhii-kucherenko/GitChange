@@ -5,6 +5,7 @@ import { createWriter } from "../artifacts/writer.js";
 import { openRepo, walkRange } from "../ingestion/git-walk.js";
 import { loadIgnore } from "../privacy/gitchangeignore.js";
 import * as schema from "../schema/drizzle/schema.js";
+import { computeIntelligence } from "../intelligence/compute.js";
 import { readManifest, writeManifest, type Manifest } from "../schema/manifest.js";
 import { checkCursorReachable, ForcePushHaltError } from "./freshness.js";
 import { ensureGitignored } from "./gitignore-guard.js";
@@ -37,6 +38,9 @@ function refreshManifest(
     },
     indexCompleteness: previous?.indexCompleteness ?? "complete",
     warnings: previous?.warnings ?? [],
+    intelligenceComputedAt: previous?.intelligenceComputedAt,
+    intelligenceHeadSha: previous?.intelligenceHeadSha,
+    intelligenceSchemaVersion: previous?.intelligenceSchemaVersion,
   };
 }
 
@@ -54,8 +58,17 @@ export async function indexIncremental(options: IndexOptions): Promise<IndexResu
   const headSha = resolveHeadSha(repo);
 
   if (existingManifest.lastIndexedCommit === headSha) {
-    const manifest = refreshManifest(repo, existingManifest);
+    let manifest = refreshManifest(repo, existingManifest);
     writeManifest(gitchangeDir, manifest);
+
+    if (options.rebuildIntelligence) {
+      const intelligence = await computeIntelligence({
+        repoPath: options.repoPath,
+        gitchangeDir,
+      });
+      manifest = intelligence.manifest;
+    }
+
     return {
       commitsIndexed: 0,
       fileChanges: 0,
@@ -87,8 +100,16 @@ export async function indexIncremental(options: IndexOptions): Promise<IndexResu
 
   writer.flush();
 
-  const manifest = refreshManifest(repo, existingManifest);
+  let manifest = refreshManifest(repo, existingManifest);
   writeManifest(gitchangeDir, manifest);
+
+  if (options.rebuildIntelligence) {
+    const intelligence = await computeIntelligence({
+      repoPath: options.repoPath,
+      gitchangeDir,
+    });
+    manifest = intelligence.manifest;
+  }
 
   if (commitsIndexed > 0) {
     console.log(

@@ -104,6 +104,16 @@ describe("ManifestSchema", () => {
       ),
     ).toThrow();
   });
+
+  it("round-trips optional intelligence checkpoint fields", () => {
+    const manifest = sampleManifest({
+      intelligenceComputedAt: "2026-07-01T12:00:00.000Z",
+      intelligenceHeadSha: SHA,
+      intelligenceSchemaVersion: "1",
+    });
+
+    expect(ManifestSchema.parse(manifest)).toEqual(manifest);
+  });
 });
 
 describe("exhaustive narrowing helpers", () => {

@@ -2,8 +2,9 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { openDb } from "../artifacts/db.js";
 import type { Manifest } from "../schema/manifest.js";
-import { readManifest } from "../schema/manifest.js";
+import { readManifest, writeManifest } from "../schema/manifest.js";
 import type { AttributionConfidence } from "../schema/zod/intelligence.js";
+import { INTELLIGENCE_SCHEMA_VERSION } from "../schema/zod/intelligence.js";
 import { computeChurn, getChurnFileCount } from "./churn.js";
 import { computeCoChange } from "./cochange.js";
 import { computeEraOwnership } from "./era-ownership.js";
@@ -71,14 +72,22 @@ export async function computeIntelligence(
   computeEraOwnership(db);
   computeExpertise(db);
 
-  exportIntelligence(db, {
+  const artifact = exportIntelligence(db, {
     gitchangeDir,
     headSha: manifest.repo.head,
     attributionConfidence: resolveAttributionConfidence(manifest),
   });
 
+  const updatedManifest: Manifest = {
+    ...manifest,
+    intelligenceComputedAt: artifact.computedAt,
+    intelligenceHeadSha: artifact.headSha,
+    intelligenceSchemaVersion: INTELLIGENCE_SCHEMA_VERSION,
+  };
+  writeManifest(gitchangeDir, updatedManifest);
+
   return {
     churnFileCount: getChurnFileCount(db),
-    manifest,
+    manifest: updatedManifest,
   };
 }

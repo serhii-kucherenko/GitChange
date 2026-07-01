@@ -5,6 +5,8 @@ export interface IndexOptions {
   gitchangeDir?: string;
   batchSize?: number;
   maxBlobBytes?: number;
+  /** When true, run computeIntelligence after manifest write (default false). */
+  rebuildIntelligence?: boolean;
 }
 
 export interface IndexResult {

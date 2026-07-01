@@ -6,6 +6,7 @@ import { createWriter } from "../artifacts/writer.js";
 import { openRepo, walkFromHead } from "../ingestion/git-walk.js";
 import { loadIgnore } from "../privacy/gitchangeignore.js";
 import * as schema from "../schema/drizzle/schema.js";
+import { computeIntelligence } from "../intelligence/compute.js";
 import {
   writeManifest,
   type IndexCompleteness,
@@ -139,8 +140,16 @@ export async function indexFull(options: IndexOptions): Promise<IndexResult> {
     );
   }
 
-  const manifest = buildManifest(repo, { indexCompleteness, warnings });
+  let manifest = buildManifest(repo, { indexCompleteness, warnings });
   writeManifest(gitchangeDir, manifest);
+
+  if (options.rebuildIntelligence) {
+    const intelligence = await computeIntelligence({
+      repoPath: options.repoPath,
+      gitchangeDir,
+    });
+    manifest = intelligence.manifest;
+  }
 
   echoWarnings(manifest.warnings);
 

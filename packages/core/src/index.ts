@@ -62,10 +62,34 @@ export {
   MAX_COMMIT_PAGE_LIMIT,
 } from "./read/commits.js";
 export {
+  type DecisionDetailResponse,
+  type DecisionGapResponse,
+  type DecisionListPage,
+  DecisionNotFoundError,
+  type DecisionRecordResponse,
+  type DecisionSummary,
+  decodeDecisionCursor,
+  DEFAULT_DECISION_PAGE_LIMIT,
+  encodeDecisionCursor,
+  getDecisionById,
+  InvalidDecisionCursorError,
+  type ListDecisionsOptions,
+  listDecisions,
+  MAX_DECISION_PAGE_LIMIT,
+} from "./read/decisions.js";
+export {
   type DashboardEra,
   type DashboardErasResult,
   listErasForDashboard,
 } from "./read/eras.js";
+export {
+  getOpenWorkThread,
+  listOpenWork,
+  type OpenWorkListResult,
+  OpenWorkThreadNotFoundError,
+  type OpenWorkThreadDetail,
+  type OpenWorkThreadSummary,
+} from "./read/open-work.js";
 export {
   decodeFileHistoryCursor,
   encodeFileHistoryCursor,

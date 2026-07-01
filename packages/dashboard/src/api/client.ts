@@ -367,3 +367,54 @@ export async function fetchWorkspace(): Promise<WorkspaceResponse> {
 
   return (await response.json()) as WorkspaceResponse;
 }
+
+export interface GraphNodeDrillData {
+  eraId?: string;
+  commitSha?: string;
+  parentEraId?: string;
+  label?: string;
+}
+
+export interface GraphNode {
+  id: string;
+  type: "era" | "commit" | "file" | "contributor" | "inflection";
+  repoId?: string;
+  data: GraphNodeDrillData;
+}
+
+export interface GraphEdge {
+  id: string;
+  source: string;
+  target: string;
+  type: string;
+  disclaimer?: string;
+}
+
+export interface GraphResponse {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+}
+
+export const graph = {
+  all: ["graph"] as const,
+};
+
+export async function fetchGraph(repoId?: string | null): Promise<GraphResponse> {
+  const search = new URLSearchParams();
+  if (repoId?.trim()) {
+    search.set("repoId", repoId.trim());
+  }
+
+  const query = search.toString();
+  const response = await fetch(`/api/graph${query ? `?${query}` : ""}`);
+
+  if (response.status === 404) {
+    throw new Error("graph_not_available");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Graph request failed (${response.status})`);
+  }
+
+  return (await response.json()) as GraphResponse;
+}

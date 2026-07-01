@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import type { CommitListFilters } from "./api/client.js";
-import { fetchTour, fetchWorkspace, tours } from "./api/client.js";
+import { fetchEras, fetchGraph, fetchTour, fetchWorkspace, graph, tours } from "./api/client.js";
 import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
@@ -16,6 +16,7 @@ import { RepoFilterBar } from "./components/RepoFilterBar.js";
 import { TourChapterNav } from "./components/TourChapterNav.js";
 import { TourPicker } from "./components/TourPicker.js";
 import { TourPlayer } from "./components/TourPlayer.js";
+import { TemporalGraphView } from "./components/TemporalGraphView.js";
 import {
   DashboardLayout,
   type IntelligenceTab,
@@ -53,6 +54,20 @@ export function App() {
       return fetchTour(activeTourId);
     },
     enabled: Boolean(activeTourId) && intelligenceTab === "tours",
+    staleTime: 60_000,
+  });
+
+  const graphQuery = useQuery({
+    queryKey: [...graph.all, selectedRepoId],
+    queryFn: () => fetchGraph(selectedRepoId),
+    enabled: intelligenceTab === "graph" && loadState.status === "ready",
+    staleTime: 60_000,
+  });
+
+  const erasQuery = useQuery({
+    queryKey: ["eras"],
+    queryFn: fetchEras,
+    enabled: intelligenceTab === "graph" && loadState.status === "ready",
     staleTime: 60_000,
   });
 
@@ -142,6 +157,11 @@ export function App() {
           <TourChapterNav chapters={tourDetailQuery.data.chapters} />
         ) : null}
       </div>
+    ) : intelligenceTab === "graph" ? (
+      <p className="text-xs text-slate-500">
+        Click nodes in the graph to drill into eras and commits. Use the repo
+        filter above the commit list when you return to the timeline.
+      </p>
     ) : null;
 
   const mainContent =
@@ -163,6 +183,26 @@ export function App() {
             onDrillToTimeline={() => setIntelligenceTab("timeline")}
             onDrillToDecisions={() => setIntelligenceTab("decisions")}
           />
+        ) : intelligenceTab === "graph" ? (
+          graphQuery.isLoading ? (
+            <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
+              Loading temporal graph…
+            </p>
+          ) : graphQuery.isError ? (
+            <p
+              className="rounded-lg border border-red-800 bg-red-950/40 px-4 py-6 text-sm text-red-200"
+              role="alert"
+            >
+              Temporal graph is not available yet. Run semantic synthesis to
+              build temporal-graph.json.
+            </p>
+          ) : graphQuery.data ? (
+            <TemporalGraphView
+              graph={graphQuery.data}
+              eras={erasQuery.data ?? []}
+              onDrillToTimeline={() => setIntelligenceTab("timeline")}
+            />
+          ) : null
         ) : (
           <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
             Select a decision to view evidence and drill into commits.

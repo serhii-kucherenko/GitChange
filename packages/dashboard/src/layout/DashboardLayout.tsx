@@ -7,7 +7,8 @@ export type IntelligenceTab =
   | "timeline"
   | "decisions"
   | "open-work"
-  | "tours";
+  | "tours"
+  | "graph";
 
 interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
@@ -26,6 +27,7 @@ const TAB_LABELS: Record<IntelligenceTab, string> = {
   decisions: "Decisions",
   "open-work": "Open work",
   tours: "Tours",
+  graph: "Graph",
 };
 
 export function DashboardLayout({

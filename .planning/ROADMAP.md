@@ -80,7 +80,25 @@ Plans:
   3. User views contributor expertise profiles that suggest who to ask about specific topics or areas
   4. Intelligence artifacts (churn, co-change, era boundary signals) are available in `.gitchange/` for downstream agents
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Intelligence walking skeleton: Zod + Drizzle tables, churn from index, `computeIntelligence`, `intelligence.json`
+
+**Wave 2** *(blocked on Wave 1; parallel)*
+
+- [ ] 02-02-PLAN.md — Line-survival ownership at HEAD via es-git blame + simple-git ignore-revs (CONT-04)
+- [ ] 02-03-PLAN.md — Co-change graph with path filters + era boundary signals (pre-LLM)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 02-04-PLAN.md — Per-era ownership timelines + contributor expertise profiles (CONT-01, CONT-03)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 02-05-PLAN.md — Golden intelligence fixtures, evidence integrity, manifest checkpoint, optional index hook
 
 ### Phase 3: CLI & Plugin Scaffold
 
@@ -190,7 +208,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
-| 2. Repository Intelligence & Ownership | 0/TBD | Not started | - |
+| 2. Repository Intelligence & Ownership | 0/5 | Not started | - |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |

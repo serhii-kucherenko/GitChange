@@ -70,7 +70,7 @@ completed: 2026-07-01
 ## Task Commits
 
 1. **Task 1: Graph read API + unified federation** - `0b7d263` (feat)
-2. **Task 2: TemporalGraphView + Graph intelligence tab** - `3a376c8` (feat)
+2. **Task 2: TemporalGraphView + Graph intelligence tab** - `3a376c8` (feat), `5570aa1` (refactor)
 
 **Plan metadata:** `60fade3` (docs: complete plan)
 
@@ -126,6 +126,7 @@ None - no external service configuration required.
 - FOUND: packages/core/src/read/unified/graph.ts
 - FOUND: 0b7d263
 - FOUND: 3a376c8
+- FOUND: 5570aa1
 
 ---
 *Phase: 08-hardening-scale-multi-repo*

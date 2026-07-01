@@ -96,13 +96,17 @@ workspace
   .description("Register a repository in workspace.json")
   .option("--label <name>", "Display label for the repository")
   .option("--id <repoId>", "Stable repo id slug (default: derived from label)")
+  .option(
+    "--cwd <dir>",
+    "Working directory for workspace discovery (default: process cwd)",
+  )
   .action(
     async (
       pathArg: string,
-      options: { label?: string; id?: string },
+      options: { label?: string; id?: string; cwd?: string },
     ) => {
       await runWorkspaceAddCommand({
-        cwd: process.cwd(),
+        cwd: options.cwd ? resolve(options.cwd) : process.cwd(),
         repoPath: pathArg,
         label: options.label,
         repoId: options.id,
@@ -113,15 +117,28 @@ workspace
 workspace
   .command("list")
   .description("List repositories registered in workspace.json")
-  .action(() => {
-    runWorkspaceListCommand(process.cwd());
+  .option(
+    "--cwd <dir>",
+    "Working directory for workspace discovery (default: process cwd)",
+  )
+  .action((options: { cwd?: string }) => {
+    runWorkspaceListCommand(
+      options.cwd ? resolve(options.cwd) : process.cwd(),
+    );
   });
 
 workspace
   .command("remove <repoId>")
   .description("Remove a repository from workspace.json")
-  .action((repoId: string) => {
-    runWorkspaceRemoveCommand({ cwd: process.cwd(), repoId });
+  .option(
+    "--cwd <dir>",
+    "Working directory for workspace discovery (default: process cwd)",
+  )
+  .action((repoId: string, options: { cwd?: string }) => {
+    runWorkspaceRemoveCommand({
+      cwd: options.cwd ? resolve(options.cwd) : process.cwd(),
+      repoId,
+    });
   });
 
 workspace
@@ -132,13 +149,23 @@ workspace
     "--rebuild-intelligence",
     "Rebuild intelligence artifacts during indexing",
   )
-  .action(async (options: { full?: boolean; rebuildIntelligence?: boolean }) => {
-    await runWorkspaceIndexCommand({
-      cwd: process.cwd(),
-      full: options.full,
-      rebuildIntelligence: options.rebuildIntelligence,
-    });
-  });
+  .option(
+    "--cwd <dir>",
+    "Working directory for workspace discovery (default: process cwd)",
+  )
+  .action(
+    async (options: {
+      full?: boolean;
+      rebuildIntelligence?: boolean;
+      cwd?: string;
+    }) => {
+      await runWorkspaceIndexCommand({
+        cwd: options.cwd ? resolve(options.cwd) : process.cwd(),
+        full: options.full,
+        rebuildIntelligence: options.rebuildIntelligence,
+      });
+    },
+  );
 
 program.parseAsync(process.argv).catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);

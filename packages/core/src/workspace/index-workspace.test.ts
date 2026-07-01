@@ -69,7 +69,42 @@ describe("indexWorkspace", () => {
     ).not.toEqual(
       readFileSync(join(loaded!.repos[1]!.gitchangeDir, "manifest.json"), "utf-8"),
     );
-  });
+  }, 60_000);
+
+  it("indexes zero commits on unchanged HEAD for each repo", async () => {
+    const primary = buildRepo(BASIC_SCENARIO);
+    const secondary = buildRepo(BASIC_SCENARIO);
+    repos.push(primary, secondary);
+
+    let workspace = addRepo(loadWorkspaceContext(primary.dir), {
+      repoPath: primary.dir,
+      label: "Primary",
+      repoId: "primary",
+    });
+
+    workspace = addRepo(
+      {
+        cwd: primary.dir,
+        workspace,
+        workspaceGitchangeDir: join(primary.dir, ".gitchange"),
+      },
+      {
+        repoPath: secondary.dir,
+        label: "Secondary",
+        repoId: "secondary",
+      },
+    );
+
+    const loaded = readWorkspace(join(primary.dir, ".gitchange"))!;
+    await indexWorkspace(loaded);
+
+    const secondPass = await indexWorkspace(loaded);
+    expect(secondPass.succeeded).toBe(2);
+    expect(secondPass.failed).toBe(0);
+    for (const entry of secondPass.results) {
+      expect(entry.commitsIndexed).toBe(0);
+    }
+  }, 60_000);
 
   it("continues indexing after a single-repo failure", async () => {
     const primary = buildRepo(BASIC_SCENARIO);

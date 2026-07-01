@@ -2,6 +2,7 @@ import { type ServerType, serve } from "@hono/node-server";
 import { createApp } from "./app.js";
 
 export interface StartServerOptions {
+  /** Primary workspace .gitchange directory (workspace.json lives here when federated). */
   gitchangeDir: string;
   host?: string;
   port?: number;

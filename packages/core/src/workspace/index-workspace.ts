@@ -64,7 +64,10 @@ export async function indexWorkspace(
             rebuildIntelligence: options.rebuildIntelligence,
           });
 
-      if (!options.rebuildIntelligence) {
+      if (
+        !options.rebuildIntelligence &&
+        (indexResult.commitsIndexed ?? 0) > 0
+      ) {
         await computeIntelligence({
           repoPath: repo.repoPath,
           gitchangeDir: repo.gitchangeDir,

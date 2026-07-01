@@ -41,11 +41,11 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 }));
 
 const REPO_COLORS = [
-  "border-sky-700 bg-sky-950/50 text-sky-200",
-  "border-emerald-700 bg-emerald-950/50 text-emerald-200",
-  "border-amber-700 bg-amber-950/50 text-amber-200",
-  "border-violet-700 bg-violet-950/50 text-violet-200",
-  "border-rose-700 bg-rose-950/50 text-rose-200",
+  "border-sky-700 bg-sky-950/40 text-sky-200",
+  "border-emerald-700 bg-emerald-950/40 text-emerald-200",
+  "border-amber-700 bg-amber-950/40 text-amber-200",
+  "border-slate-600 bg-slate-800/60 text-slate-300",
+  "border-red-800 bg-red-950/40 text-red-200",
 ];
 
 export function repoColorClass(repoId: string): string {

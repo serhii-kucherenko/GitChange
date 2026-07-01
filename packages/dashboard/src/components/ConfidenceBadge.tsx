@@ -6,14 +6,14 @@ import {
 } from "../utils/confidence.js";
 
 const EVIDENCE_LEVEL_STYLES: Record<EvidenceConfidenceLevel, string> = {
-  high: "border-emerald-700/60 bg-emerald-950/50 text-emerald-200",
-  medium: "border-sky-700/60 bg-sky-950/50 text-sky-200",
-  low: "border-amber-700/60 bg-amber-950/50 text-amber-200",
+  high: "border-emerald-700 bg-emerald-950/40 text-emerald-200",
+  medium: "border-sky-700 bg-sky-950/40 text-sky-200",
+  low: "border-amber-700 bg-amber-950/40 text-amber-200",
 };
 
 const ATTRIBUTION_STYLES: Record<AttributionConfidence, string> = {
-  complete: "border-emerald-700/60 bg-emerald-950/50 text-emerald-200",
-  degraded: "border-amber-700/60 bg-amber-950/50 text-amber-200",
+  complete: "border-emerald-700 bg-emerald-950/40 text-emerald-200",
+  degraded: "border-amber-700 bg-amber-950/40 text-amber-200",
 };
 
 interface ConfidenceBadgeProps {
@@ -25,7 +25,7 @@ export function ConfidenceBadge({ level }: ConfidenceBadgeProps) {
 
   return (
     <span
-      className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-medium ${EVIDENCE_LEVEL_STYLES[level]}`}
+      className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${EVIDENCE_LEVEL_STYLES[level]}`}
       aria-label={label}
       title={`Heuristic from evidence count (${level})`}
     >
@@ -43,7 +43,7 @@ export function AttributionBadge({ confidence }: AttributionBadgeProps) {
 
   return (
     <span
-      className={`inline-flex rounded-full border px-3 py-1 text-xs font-medium ${ATTRIBUTION_STYLES[confidence]}`}
+      className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${ATTRIBUTION_STYLES[confidence]}`}
       aria-label={label}
       title={label}
     >

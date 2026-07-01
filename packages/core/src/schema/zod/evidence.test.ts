@@ -96,4 +96,22 @@ describe("Evidence", () => {
       }),
     ).toThrow();
   });
+
+  it("accepts optional repoId on all evidence variants", () => {
+    const withRepoId = {
+      type: "commit" as const,
+      sha: SHA,
+      repoId: "backend-api",
+    };
+    const parsed = Evidence.parse(withRepoId);
+    expect(parsed).toEqual(withRepoId);
+
+    const roundTripped = Evidence.parse(JSON.parse(JSON.stringify(withRepoId)));
+    expect(roundTripped).toEqual(withRepoId);
+  });
+
+  it("accepts evidence without repoId for backward compatibility", () => {
+    const parsed = Evidence.parse({ type: "commit", sha: SHA });
+    expect(parsed).toEqual({ type: "commit", sha: SHA });
+  });
 });

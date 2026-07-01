@@ -75,6 +75,22 @@ export {
   MAX_COMMIT_PAGE_LIMIT,
 } from "./read/commits.js";
 export {
+  compareUnifiedCommits,
+  decodeUnifiedCommitCursor,
+  encodeUnifiedCommitCursor,
+  InvalidUnifiedCommitCursorError,
+  type ListCommitsUnifiedOptions,
+  listCommitsUnified,
+  type UnifiedCommitListPage,
+  type UnifiedCommitSummary,
+} from "./read/unified/commits.js";
+export {
+  type ResolvedRepo,
+  resolveRepoGitchangeDir,
+  resolveWorkspaceContext,
+  type WorkspaceReadContext,
+} from "./read/unified/workspace-context.js";
+export {
   type DecisionDetailResponse,
   type DecisionGapResponse,
   type DecisionListPage,

@@ -1,0 +1,21 @@
+{
+  "name": "@gitchange/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "gitchange": "./dist/bin.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "pnpm --dir ../.. exec vitest run tests/integration/cli-index.test.ts",
+    "lint": "biome check src",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@gitchange/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.32"
+  }
+}

@@ -119,4 +119,33 @@ describe("TemporalGraphView", () => {
     expect(useDrillStore.getState().selectedEra?.id).toBe("era:01");
     expect(onDrillToTimeline).toHaveBeenCalled();
   });
+
+  it("calls drill store when a commit node is clicked after era expansion", async () => {
+    const user = userEvent.setup();
+    const onDrillToTimeline = vi.fn();
+    useDrillStore.getState().clearEra();
+
+    render(
+      <TemporalGraphView
+        graph={sampleGraph()}
+        eras={sampleEras}
+        onDrillToTimeline={onDrillToTimeline}
+      />,
+    );
+
+    await user.click(
+      within(screen.getByTestId("react-flow")).getByRole("button", {
+        name: "Bootstrap",
+      }),
+    );
+
+    await user.click(
+      within(screen.getByTestId("react-flow")).getByRole("button", {
+        name: SHA.slice(0, 7),
+      }),
+    );
+
+    expect(useDrillStore.getState().selectedCommitSha).toBe(SHA);
+    expect(onDrillToTimeline).toHaveBeenCalledTimes(2);
+  });
 });

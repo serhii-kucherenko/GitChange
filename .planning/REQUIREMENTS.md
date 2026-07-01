@@ -57,8 +57,8 @@
 
 ### Status & Open Work (STAT)
 
-- [ ] **STAT-01**: System infers migration/task status using pattern-based, keyword/trailer, and docs-vs-code cross-reference methods
-- [ ] **STAT-02**: User can see open threads panel listing in-flight migrations, WIP refactors, and stale work
+- [x] **STAT-01**: System infers migration/task status using pattern-based, keyword/trailer, and docs-vs-code cross-reference methods
+- [x] **STAT-02**: User can see open threads panel listing in-flight migrations, WIP refactors, and stale work
 - [ ] **STAT-03**: Tour stops and timeline show inline badges when related work appears incomplete
 - [ ] **STAT-04**: Agent can answer status queries (e.g., migration progress) with evidence and confidence
 
@@ -189,8 +189,8 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | DEC-02 | Phase 6 | Pending |
 | DEC-03 | Phase 6 | Pending |
 | DEC-04 | Phase 6 | Pending |
-| STAT-01 | Phase 6 | Pending |
-| STAT-02 | Phase 6 | Pending |
+| STAT-01 | Phase 6 | Complete |
+| STAT-02 | Phase 6 | Complete |
 | STAT-03 | Phase 6 | Pending |
 | STAT-04 | Phase 6 | Pending |
 | DASH-01 | Phase 5 | Complete |

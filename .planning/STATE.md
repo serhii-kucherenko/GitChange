@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 06-01-PLAN.md — schemas, deterministic mining, EVD-03 threshold
-last_updated: "2026-07-01T11:34:00.000Z"
+stopped_at: Completed 06-03-PLAN.md — status inferencer, open-work assembly, runDecisionsPipeline
+last_updated: "2026-07-01T04:46:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
-  completed_plans: 31
-  percent: 86
+  completed_plans: 32
+  percent: 63
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 6 of 8 in progress (Decisions, Status & Open Work)
-Plan: 1 of 6 complete in Phase 6 (06-01)
+Plan: 2 of 6 complete in Phase 6 (06-01, 06-03)
 Status: Ready for 06-02
 Last activity: 2026-07-01
-Stopped at: Completed 06-01-PLAN.md — schemas, deterministic mining, EVD-03 threshold
+Stopped at: Completed 06-03-PLAN.md — status inferencer, open-work assembly, runDecisionsPipeline
 
-Progress: [█████████░] 86%
+Progress: [█████████░] 89%
 
 ## Performance Metrics
 
@@ -113,6 +113,10 @@ Recent decisions affecting current work:
 - EVD-03 floor at confidence 0.35 with literal gap message in threshold.ts
 - Deterministic candidate mining reads SQLite only; merge/chore/lockfile noise filtered
 
+- Docs-vs-code divergence checks any indexed doc snapshot for completion keywords against recent code path touches
+- Stale threshold 90 days; docs-vs-code recent window 30 days
+- assembleOpenWork falls back to top deterministic candidate when no in_flight decisions
+
 ### Pending Todos
 
 None yet.
@@ -131,6 +135,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:34:00.000Z
-Stopped at: Completed 06-01-PLAN.md — schemas, deterministic mining, EVD-03 threshold
+Last session: 2026-07-01T04:46:00.000Z
+Stopped at: Completed 06-03-PLAN.md — status inferencer, open-work assembly, runDecisionsPipeline
 Resume file: None

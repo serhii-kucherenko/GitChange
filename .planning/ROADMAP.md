@@ -236,7 +236,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1; parallel)*
 
 - [ ] 06-02-PLAN.md — decision-miner agent + merge + attribution (DEC-01/02, CONT-02)
-- [ ] 06-03-PLAN.md — STAT-01 status inferencer + open-work assembly + pipeline
+- [x] 06-03-PLAN.md — STAT-01 status inferencer + open-work assembly + pipeline
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -296,7 +296,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
-| 6. Decisions, Status & Open Work | 1/6 | In Progress|  |
+| 6. Decisions, Status & Open Work | 2/6 | In Progress|  |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |
 

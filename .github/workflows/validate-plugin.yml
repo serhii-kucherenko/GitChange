@@ -44,11 +44,14 @@ jobs:
           node -e "
             const fs = require('fs');
             const path = require('path');
+            const repoRoot = process.cwd();
             for (const manifest of ['.cursor-plugin/plugin.json', '.claude-plugin/plugin.json']) {
               const j = JSON.parse(fs.readFileSync(manifest, 'utf8'));
-              if (!j.skills) throw new Error(manifest + ' missing skills');
-              const dir = path.resolve(path.dirname(manifest), j.skills);
-              if (!fs.existsSync(dir)) throw new Error('skills dir not found: ' + dir);
+              for (const key of ['skills', 'agents']) {
+                if (!j[key]) throw new Error(manifest + ' missing ' + key);
+                const dir = path.resolve(repoRoot, j[key]);
+                if (!fs.existsSync(dir)) throw new Error(key + ' dir not found: ' + dir);
+              }
             }
           "
 

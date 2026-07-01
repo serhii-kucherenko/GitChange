@@ -158,6 +158,18 @@ export {
   OpenWorkThread,
   type OpenWorkThread as OpenWorkThreadType,
   SEMANTIC_SCHEMA_VERSION,
+  TOURS_CAPS,
+  TOURS_SCHEMA_VERSION,
+  Tour,
+  TourChapter,
+  TourKind,
+  TourStop,
+  ToursArtifact,
+  type Tour as TourType,
+  type TourChapter as TourChapterType,
+  type TourKind as TourKindType,
+  type TourStop as TourStopType,
+  type ToursArtifact as ToursArtifactType,
   TemporalGraphArtifact,
   type TemporalGraphArtifact as TemporalGraphArtifactType,
 } from "./schema/zod/index.js";
@@ -204,6 +216,20 @@ export {
   type IntelligenceIntegrityReport,
 } from "./verify/intelligence-integrity.js";
 export {
+  buildTourSynthesisContext,
+  type TourDecisionSeed,
+  type TourEraSummary,
+  type TourExpertiseTopic,
+  type TourOpenWorkSeed,
+  type TourRolePathHints,
+  type TourSynthesisContext,
+} from "./tours/context.js";
+export { outlineDefaultTourChapters } from "./tours/outline.js";
+export {
+  readToursArtifact,
+  writeToursArtifact,
+} from "./tours/tours-io.js";
+export {
   checkDecisionsIntegrity,
   type DecisionsIntegrityReport,
 } from "./verify/decisions-integrity.js";
@@ -212,6 +238,10 @@ export {
   collectDecisionsSnapshot,
   type DecisionsSnapshot,
 } from "./verify/decisions-snapshot.js";
+export {
+  checkToursIntegrity,
+  type ToursIntegrityReport,
+} from "./verify/tours-integrity.js";
 export {
   checkSemanticIntegrity,
   type SemanticIntegrityReport,

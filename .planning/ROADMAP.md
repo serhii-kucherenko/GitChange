@@ -270,7 +270,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 07-01-PLAN.md — Tours schemas + deterministic outline + context bundler + I/O
+- [x] 07-01-PLAN.md — Tours schemas + deterministic outline + context bundler + I/O
 
 **Wave 2** *(blocked on Wave 1; parallel)*
 
@@ -333,7 +333,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
-| 7. Guided Tours & Onboarding UX | 0/5 | Not started | - |
+| 7. Guided Tours & Onboarding UX | 1/5 | In Progress|  |
 | 8. Hardening, Scale & Multi-Repo | 0/5 | Not started | - |
 
 ---

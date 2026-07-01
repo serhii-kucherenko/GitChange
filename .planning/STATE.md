@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 06-06-PLAN.md — Phase 6 complete; ready for Phase 7
-last_updated: "2026-07-01T12:05:00.000Z"
+stopped_at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
+last_updated: "2026-07-01T12:13:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 6
-  total_plans: 36
-  completed_plans: 36
-  percent: 75
+  total_plans: 46
+  completed_plans: 37
+  percent: 80
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 7 — Tour Player (next)
+**Current focus:** Phase 7 — Guided Tours (07-01 complete)
 
 ## Current Position
 
-Phase: 6 of 8 complete (Decisions, Status & Open Work)
-Plan: 6 of 6 complete in Phase 6 (06-01 through 06-06)
-Status: Phase 6 complete — ready for Phase 7
+Phase: 7 of 8 in progress (Guided Tours & Onboarding UX)
+Plan: 1 of 5 complete in Phase 7 (07-01)
+Status: Ready for 07-02 tour-builder agent
 Last activity: 2026-07-01
-Stopped at: Completed 06-06-PLAN.md — timeline badges, status schema, golden/E2E gate
+Stopped at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
 
-Progress: [██████████] 100%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -123,6 +123,10 @@ Recent decisions affecting current work:
 - Decision surfaces use decisionConfidenceToLevel; era claims keep evidence-count heuristic
 - validate runs checkDecisionsIntegrity when decisions.json present
 
+- Topic tour stop cap (8) enforced at Zod layer alongside artifact kind caps
+- Context tests bind eras via applyBasicScenarioErasFixture from golden semantic fixture
+- writeToursArtifact gates atomic write with checkToursIntegrity against index + eras + decisions
+
 ### Pending Todos
 
 None yet.
@@ -141,6 +145,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:00:23.137Z
-Stopped at: Completed 06-05-PLAN.md — interview loop + durable writeback
+Last session: 2026-07-01T12:13:00.000Z
+Stopped at: Completed 07-01-PLAN.md — tours schemas, outline, context, I/O
 Resume file: None

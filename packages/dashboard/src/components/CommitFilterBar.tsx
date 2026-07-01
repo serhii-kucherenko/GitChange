@@ -32,7 +32,8 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
   const clearDownstreamFromEra = useDrillStore(
     (state) => state.clearDownstreamFromEra,
   );
-  const setSelectedEraId = useDrillStore((state) => state.setSelectedEraId);
+  const selectedEra = useDrillStore((state) => state.selectedEra);
+  const clearEra = useDrillStore((state) => state.clearEra);
 
   useEffect(() => {
     setAuthorInput(filters.author ?? "");
@@ -90,9 +91,14 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
     setQInput("");
     setDateFrom("");
     setDateTo("");
-    setSelectedEraId(null);
+    clearEra();
     clearDownstreamFromEra();
     onChange(EMPTY_FILTERS);
+  };
+
+  const clearEraOnly = () => {
+    clearEra();
+    clearDownstreamFromEra();
   };
 
   return (
@@ -106,7 +112,7 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
             </span>
           ) : null}
         </div>
-        {activeCount > 0 ? (
+        {activeCount > 0 || selectedEra ? (
           <button
             type="button"
             onClick={clearAll}
@@ -116,6 +122,21 @@ export function CommitFilterBar({ filters, onChange }: CommitFilterBarProps) {
           </button>
         ) : null}
       </div>
+
+      {selectedEra ? (
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-sky-800 bg-sky-950/50 px-3 py-1 text-xs text-sky-200">
+            Era: {selectedEra.name}
+          </span>
+          <button
+            type="button"
+            onClick={clearEraOnly}
+            className="text-xs text-slate-400 underline-offset-2 hover:text-slate-200 hover:underline"
+          >
+            Clear era
+          </button>
+        </div>
+      ) : null}
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <label className="block">

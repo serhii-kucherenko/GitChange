@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App.js";
 import "./index.css";
+import "vis-timeline/styles/vis-timeline-graph2d.min.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {

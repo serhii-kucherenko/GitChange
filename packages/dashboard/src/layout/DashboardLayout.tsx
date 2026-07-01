@@ -4,6 +4,7 @@ import type { SnapshotLoadState } from "../snapshot.js";
 interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
   sidebar: ReactNode;
+  timeline?: ReactNode;
   commitFilterBar?: ReactNode;
   main: ReactNode;
 }
@@ -11,6 +12,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({
   loadState,
   sidebar,
+  timeline,
   commitFilterBar,
   main,
 }: DashboardLayoutProps) {
@@ -57,6 +59,7 @@ export function DashboardLayout({
         </aside>
 
         <main className="min-h-[24rem] space-y-4">
+          {timeline}
           {commitFilterBar}
           {main}
         </main>

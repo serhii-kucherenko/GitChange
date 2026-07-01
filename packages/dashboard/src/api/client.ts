@@ -19,6 +19,27 @@ export interface CommitListFilters {
   before?: number;
 }
 
+export interface DashboardEra {
+  id: string;
+  name: string;
+  summary: string;
+  startCommitSha: string;
+  endCommitSha: string;
+  startAt: number;
+  endAt: number;
+  inflections: Array<{
+    type: string;
+    title: string;
+    description: string;
+    evidence: unknown[];
+  }>;
+  claims: Array<{
+    text: string;
+    evidence: unknown[];
+  }>;
+  commitCountInWindow: number;
+}
+
 export interface FetchCommitsParams extends CommitListFilters {
   limit?: number;
   cursor?: string;
@@ -104,4 +125,18 @@ export async function fetchCommitsPage(
   }
 
   return (await response.json()) as CommitsPage;
+}
+
+export async function fetchEras(): Promise<DashboardEra[]> {
+  const response = await fetch("/api/eras");
+
+  if (response.status === 404) {
+    return [];
+  }
+
+  if (!response.ok) {
+    throw new Error(`Eras request failed (${response.status})`);
+  }
+
+  return (await response.json()) as DashboardEra[];
 }

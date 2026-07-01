@@ -7,7 +7,7 @@ interface DrillBreadcrumbProps {
 export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
   const selectedFilePath = useDrillStore((state) => state.selectedFilePath);
-  const selectedEraId = useDrillStore((state) => state.selectedEraId);
+  const selectedEra = useDrillStore((state) => state.selectedEra);
   const clearDownstreamFromEra = useDrillStore(
     (state) => state.clearDownstreamFromEra,
   );
@@ -15,12 +15,12 @@ export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
     (state) => state.clearDownstreamFromCommit,
   );
 
-  if (!selectedEraId && !selectedCommitSha && !selectedFilePath) {
+  if (!selectedEra && !selectedCommitSha && !selectedFilePath) {
     return null;
   }
 
   const eraName =
-    eraLabel ?? (selectedEraId ? `Era ${selectedEraId.slice(0, 8)}` : null);
+    eraLabel ?? (selectedEra ? selectedEra.name : null);
 
   return (
     <nav

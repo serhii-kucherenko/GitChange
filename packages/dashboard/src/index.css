@@ -9,3 +9,24 @@ body {
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
+
+.era-timeline .vis-timeline {
+  border: none;
+  background: transparent;
+}
+
+.era-timeline .vis-item {
+  border-color: rgb(56 189 248 / 0.5);
+  background: rgb(14 116 144 / 0.35);
+  color: rgb(224 242 254);
+}
+
+.era-timeline .vis-item.vis-selected {
+  border-color: rgb(125 211 252);
+  background: rgb(8 145 178 / 0.55);
+  color: rgb(240 249 255);
+}
+
+.era-timeline .vis-time-axis .vis-text {
+  color: rgb(148 163 184);
+}

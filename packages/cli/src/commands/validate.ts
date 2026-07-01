@@ -1,8 +1,11 @@
 import { join, resolve } from "node:path";
 import {
+  checkDecisionsIntegrity,
   checkIntelligenceIntegrity,
   checkSemanticIntegrity,
+  readDecisionsArtifact,
   readErasArtifact,
+  readManifest,
 } from "@gitchange/core";
 import { resolveRepoPath } from "../repo-path.js";
 
@@ -36,6 +39,21 @@ export function runValidateCommand(options: ValidateCommandOptions): void {
     if (!semanticReport.ok) {
       errors.push(...semanticReport.errors);
     }
+  }
+
+  const manifest = readManifest(gitchangeDir);
+  const decisions = readDecisionsArtifact(gitchangeDir);
+
+  if (decisions) {
+    const decisionsReport = checkDecisionsIntegrity(gitchangeDir);
+    if (!decisionsReport.ok) {
+      errors.push(...decisionsReport.errors);
+    }
+  } else if (
+    manifest?.decisionsComputedAt ||
+    manifest?.decisionsSchemaVersion
+  ) {
+    errors.push("decisions artifacts missing: decisions.json not found");
   }
 
   if (errors.length > 0) {

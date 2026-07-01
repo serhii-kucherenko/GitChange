@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1",
+  "computedAt": "2026-07-01T12:00:00.000Z",
+  "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "decisions": [
+    {
+      "id": "decision:01HSQLITE",
+      "title": "SQLite index store",
+      "summary": "Persist the derived index in .gitchange/index.sqlite for drill-down.",
+      "status": "accepted",
+      "confidence": 0.82,
+      "evidence": [{ "type": "commit", "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }],
+      "reviewStatus": "pending",
+      "miningSource": "deterministic",
+      "relatedPaths": ["src/main.ts"],
+      "attribution": {
+        "authorId": 1,
+        "name": "Alice Original",
+        "email": "alice@fixture.test",
+        "rationale": "Authored the initial scaffold commits touching core modules.",
+        "evidence": [{ "type": "commit", "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }]
+      }
+    },
+    {
+      "id": "decision:01HAPI",
+      "title": "Feature API module",
+      "summary": "Expose feature wiring through src/feature.ts on the feature branch.",
+      "status": "in_flight",
+      "confidence": 0.58,
+      "evidence": [
+        {
+          "type": "file",
+          "path": "src/feature.ts",
+          "commitSha": "cccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "reviewStatus": "pending",
+      "miningSource": "agent",
+      "relatedPaths": ["src/feature.ts"]
+    },
+    {
+      "id": "decision:01HLOW",
+      "title": "Uncertain pivot",
+      "summary": "Insufficient evidence to affirm this decision.",
+      "status": "proposed",
+      "confidence": 0.2,
+      "evidence": [{ "type": "commit", "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }],
+      "reviewStatus": "pending",
+      "miningSource": "agent"
+    }
+  ]
+}

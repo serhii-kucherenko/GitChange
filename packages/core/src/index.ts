@@ -204,6 +204,15 @@ export {
   type IntelligenceIntegrityReport,
 } from "./verify/intelligence-integrity.js";
 export {
+  checkDecisionsIntegrity,
+  type DecisionsIntegrityReport,
+} from "./verify/decisions-integrity.js";
+export {
+  BASIC_SCENARIO_DECISIONS_SNAPSHOT,
+  collectDecisionsSnapshot,
+  type DecisionsSnapshot,
+} from "./verify/decisions-snapshot.js";
+export {
   checkSemanticIntegrity,
   type SemanticIntegrityReport,
 } from "./verify/semantic-integrity.js";

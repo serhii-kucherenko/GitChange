@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1",
+  "computedAt": "2026-07-01T12:00:00.000Z",
+  "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "threads": [
+    {
+      "id": "thread:01HMIG",
+      "kind": "migration",
+      "status": "in_progress",
+      "title": "Feature API module",
+      "summary": "Open work on src/feature.ts from the feature API decision.",
+      "confidence": 0.58,
+      "relatedPaths": ["src/feature.ts"],
+      "events": [
+        {
+          "commitSha": "cccccccccccccccccccccccccccccccccccccccc",
+          "committedAt": 1700000150000,
+          "summary": "feat(api): wire endpoint",
+          "paths": ["src/feature.ts"]
+        }
+      ],
+      "evidence": [
+        {
+          "type": "file",
+          "path": "src/feature.ts",
+          "commitSha": "cccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "linkedDecisionId": "decision:01HAPI"
+    }
+  ]
+}

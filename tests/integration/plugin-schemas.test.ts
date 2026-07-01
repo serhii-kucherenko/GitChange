@@ -34,6 +34,7 @@ function createValidator(): Ajv {
   ajv.addSchema(readSchema("era-synthesis-context.schema.json"));
   ajv.addSchema(readSchema("eras.schema.json"));
   ajv.addSchema(readSchema("eras-summary.schema.json"));
+  ajv.addSchema(readSchema("status-query-response.schema.json"));
   return ajv;
 }
 
@@ -156,6 +157,44 @@ describe("integration: plugin host-AI schemas", () => {
     );
     expect(validate).toBeDefined();
     expect(validate?.(summary)).toBe(true);
+  });
+
+  it("validates status query response against status-query-response.schema.json", () => {
+    const body = {
+      query: "What migrations are still in flight?",
+      answer: "API migration is in progress on src/feature.ts.",
+      confidence: 0.6,
+      evidence: [
+        {
+          type: "commit",
+          sha: "a".repeat(40),
+        },
+      ],
+      relatedThreads: ["thread:01MIG"],
+      relatedDecisions: ["decision:01HIGH"],
+    };
+
+    const validate = ajv.getSchema(
+      "https://gitchange.dev/schemas/status-query-response.schema.json",
+    );
+    expect(validate).toBeDefined();
+    expect(validate?.(body)).toBe(true);
+  });
+
+  it("validates gap-only status query response with EVD03 message", () => {
+    const body = {
+      query: "What is the status of the auth rewrite?",
+      gap: "No recorded decision found",
+      confidence: 0,
+      evidence: [],
+      relatedThreads: [],
+      relatedDecisions: [],
+    };
+
+    const validate = ajv.getSchema(
+      "https://gitchange.dev/schemas/status-query-response.schema.json",
+    );
+    expect(validate?.(body)).toBe(true);
   });
 });
 

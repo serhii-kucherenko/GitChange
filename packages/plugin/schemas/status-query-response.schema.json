@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/status-query-response.schema.json",
+  "title": "GitChangeStatusQueryResponse",
+  "description": "Host-AI response shape for migration progress and in-flight status queries (STAT-04).",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "minLength": 1
+    },
+    "answer": {
+      "type": "string"
+    },
+    "gap": {
+      "type": "string",
+      "const": "No recorded decision found"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "commit"
+              },
+              "sha": {
+                "type": "string",
+                "minLength": 40,
+                "maxLength": 40
+              }
+            },
+            "required": [
+              "type",
+              "sha"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "file"
+              },
+              "path": {
+                "type": "string"
+              },
+              "commitSha": {
+                "type": "string",
+                "minLength": 40,
+                "maxLength": 40
+              }
+            },
+            "required": [
+              "type",
+              "path",
+              "commitSha"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "doc"
+              },
+              "path": {
+                "type": "string"
+              },
+              "commitSha": {
+                "type": "string",
+                "minLength": 40,
+                "maxLength": 40
+              },
+              "excerpt": {
+                "type": "string",
+                "maxLength": 500
+              }
+            },
+            "required": [
+              "type",
+              "path",
+              "commitSha",
+              "excerpt"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "hunk"
+              },
+              "path": {
+                "type": "string"
+              },
+              "commitSha": {
+                "type": "string",
+                "minLength": 40,
+                "maxLength": 40
+              },
+              "startLine": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "endLine": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "type",
+              "path",
+              "commitSha",
+              "startLine",
+              "endLine"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "interview"
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recordedAt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "excerpt": {
+                "type": "string",
+                "maxLength": 500
+              }
+            },
+            "required": [
+              "type",
+              "path",
+              "recordedAt",
+              "excerpt"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "relatedThreads": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^thread:.*"
+      }
+    },
+    "relatedDecisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^decision:.*"
+      }
+    }
+  },
+  "required": [
+    "query",
+    "confidence",
+    "evidence",
+    "relatedThreads",
+    "relatedDecisions"
+  ],
+  "additionalProperties": false
+}

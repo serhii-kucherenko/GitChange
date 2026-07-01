@@ -9,6 +9,7 @@ schemas:
   - packages/plugin/schemas/eras.schema.json
   - packages/plugin/schemas/decision-mining-context.schema.json
   - packages/plugin/schemas/decisions.schema.json
+  - packages/plugin/schemas/status-query-response.schema.json
 ---
 
 # /gitchange — First analysis
@@ -142,6 +143,32 @@ Otherwise (missing decisions, stale `headSha`, or user asks to refresh), run dec
 6. **Present to user (DEC-02)** — list decision titles, status, and confidence. Note `reviewStatus: pending` on agent-mined rows until maintainer confirms via interview loop (DEC-03). When any decision has `reviewStatus: pending`, offer `/gitchange-interview` to confirm or reject with durable writeback (DEC-04). Explain `supersededBy` / `supersedes` links when present.
 
 When `decisions.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
+
+### Phase 4 — Status queries (STAT-04)
+
+When the user asks about **migration progress**, **what is in flight**, **open work**, or **current status** on ongoing refactors:
+
+1. **Read artifacts** (no live git):
+   - `<repo>/.gitchange/open-work.json` — active threads, events, related paths
+   - `<repo>/.gitchange/decisions.json` — linked decisions and evidence
+
+2. **Apply EVD-03 floor** — for each related decision, treat as below threshold when `confidence < 0.35` OR `evidence.length < 1`. Use the exact gap string: **`No recorded decision found`** (never paraphrase).
+
+3. **Build a `StatusQueryResponse`** JSON object and validate against `packages/plugin/schemas/status-query-response.schema.json`:
+
+   | Field | Rule |
+   |-------|------|
+   | `query` | User's question (verbatim or concise restatement) |
+   | `answer` | Plain-language status summary **only** when at least one qualifying decision or non-completed thread supports it |
+   | `gap` | Set to `No recorded decision found` when no qualifying decision/thread exists — omit `answer` |
+   | `confidence` | Lowest confidence among cited decisions/threads, or `0` when gap |
+   | `evidence` | Union of commit/file/doc evidence from qualifying artifacts only — never invent SHAs |
+   | `relatedThreads` | `thread:` ids for incomplete threads (`open`, `in_progress`, `stale`) |
+   | `relatedDecisions` | `decision:` ids that pass the evidence floor |
+
+4. **Cite evidence** — every claim in `answer` must trace to an entry in `evidence[]` (commit SHA, file path + SHA, or doc excerpt).
+
+5. **Never fabricate** when below threshold or when artifacts are missing. Say what is unknown and point to `gitchange index` / decision synthesis if artifacts are stale.
 
 ### 6. Follow-up questions
 

@@ -5,6 +5,7 @@ import { z } from "zod";
 import {
   DecisionsArtifact,
   ErasArtifact,
+  EVD03_GAP_MESSAGE,
   Evidence,
   IntelligenceArtifact,
   InterviewRecord,
@@ -279,6 +280,22 @@ writeSchema("interview-record.schema.json", InterviewRecord, {
   title: "GitChangeInterviewRecord",
   description:
     "Maintainer interview answer persisted under .gitchange/interviews/ for DEC-03/DEC-04.",
+});
+
+const StatusQueryResponseSchema = z.object({
+  query: z.string().min(1),
+  answer: z.string().optional(),
+  gap: z.literal(EVD03_GAP_MESSAGE).optional(),
+  confidence: z.number().min(0).max(1),
+  evidence: z.array(Evidence),
+  relatedThreads: z.array(z.string().startsWith("thread:")),
+  relatedDecisions: z.array(z.string().startsWith("decision:")),
+});
+
+writeSchema("status-query-response.schema.json", StatusQueryResponseSchema, {
+  title: "GitChangeStatusQueryResponse",
+  description:
+    "Host-AI response shape for migration progress and in-flight status queries (STAT-04).",
 });
 
 // Sanity: generated schemas round-trip through fromJSONSchema for manifest.

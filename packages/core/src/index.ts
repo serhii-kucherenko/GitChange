@@ -99,6 +99,12 @@ export {
   type OpenWorkThreadSummary,
 } from "./read/open-work.js";
 export {
+  getTourById,
+  listTours,
+  type TourListResult,
+  type TourSummary,
+} from "./read/tours.js";
+export {
   decodeFileHistoryCursor,
   encodeFileHistoryCursor,
   type FileHistoryEvent,

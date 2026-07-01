@@ -81,6 +81,7 @@ completed: 2026-07-01
 
 1. **Task 1: tour-builder agent + JSON schemas + merge gate** - `80b66aa` (test), `7c84fa6` (feat)
 2. **Task 2: Scripts, pipeline, orchestrator + skill** - `045a594`, `7e9a24e` (feat)
+3. **Fixture path fixes (post-close)** - `68396ea`, `7b3275c`, `219c86e` (fix)
 
 ## Files Created/Modified
 
@@ -97,11 +98,19 @@ completed: 2026-07-01
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+### Auto-fixed Issues
+
+**1. [Rule 1 - Bug] Consolidated tours fixture to `basic-scenario-tours.json`**
+- **Found during:** Post-close verification (pipeline.test.ts parse error + ENOENT)
+- **Issue:** `7e9a24e` deleted `tours-basic-scenario.json` while bind helper and golden fixture referenced mismatched paths; duplicate import in pipeline test
+- **Fix:** Point `loadBasicScenarioToursTemplate` and `tours-fixture.ts` at `basic-scenario-tours.json`; import `applyBasicScenarioToursFixture` from `bind-basic-scenario-tours.js`
+- **Files modified:** `bind-basic-scenario-tours.ts`, `pipeline.test.ts`, `tests/golden/tours-fixture.ts`
+- **Commits:** `68396ea`, `7b3275c`, `219c86e`
 
 ## Issues Encountered
 
 - `better-sqlite3` native module required Node 22.x for vitest (NODE_MODULE_VERSION mismatch on Node 24).
+- Verified 2026-07-01 on Node 22.22.0: merge + pipeline tests pass (5/5).
 
 ## User Setup Required
 
@@ -123,6 +132,9 @@ None - no external service configuration required.
 - FOUND: 7c84fa6
 - FOUND: 045a594
 - FOUND: 7e9a24e
+- FOUND: 68396ea
+- FOUND: 7b3275c
+- FOUND: 219c86e
 
 ---
 *Phase: 07-guided-tours-onboarding-ux*

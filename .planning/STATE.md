@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: verifying
 stopped_at: Completed 07-03-PLAN.md — tour read API and dashboard client
-last_updated: "2026-07-01T12:23:41.956Z"
+last_updated: "2026-07-01T12:25:32.793Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
@@ -130,6 +130,8 @@ Recent decisions affecting current work:
 - tourId path param rejects .. and / before artifact lookup (T-07-06)
 - tours.list / tours.detail(tourId) react-query key helpers exported from dashboard client
 
+- Tours golden fixture canonical path is `basic-scenario-tours.json`; `applyBasicScenarioToursFixture` exported from core bind helper
+
 ### Pending Todos
 
 None yet.
@@ -148,6 +150,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:23:41.943Z
+Last session: 2026-07-01T12:25:32.783Z
 Stopped at: Completed 07-03-PLAN.md — tour read API and dashboard client
 Resume file: None

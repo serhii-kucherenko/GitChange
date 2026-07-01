@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 05-05-PLAN.md — file-centric history scrubber + drill jump
-last_updated: "2026-07-01T11:12:00.000Z"
+stopped_at: Completed 05-06-PLAN.md — Phase 5 complete; confidence UI + privacy gate
+last_updated: "2026-07-01T11:30:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 30
-  completed_plans: 29
-  percent: 50
+  completed_plans: 30
+  percent: 63
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 5 — Dashboard & Evidence Drill-Down
+**Current focus:** Phase 6 — Decisions, Status & Open Work
 
 ## Current Position
 
-Phase: 5 of 8 in progress (Dashboard & Evidence Drill-Down)
-Plan: 5 of 6 complete in Phase 5 (05-01, 05-02, 05-03, 05-04, 05-05)
-Status: Ready for 05-06
+Phase: 5 of 8 complete (Dashboard & Evidence Drill-Down)
+Plan: 6 of 6 complete in Phase 5 (05-01 through 05-06)
+Status: Ready for Phase 6 planning
 Last activity: 2026-07-01
-Stopped at: Completed 05-05-PLAN.md — file-centric history scrubber + drill jump
+Stopped at: Completed 05-06-PLAN.md — Phase 5 complete; confidence UI + privacy gate
 
-Progress: [██████████] 97%
+Progress: [██████░░░░] 63%
 
 ## Performance Metrics
 
@@ -105,6 +105,10 @@ Recent decisions affecting current work:
 - File history API uses Hono :path{.+} for slash-containing repo paths
 - File history ordered newest-first; cursor includes fileChangeId tiebreaker
 
+- Phase 5 confidence UI uses evidence-count heuristic; full decision model deferred to Phase 6
+- Attribution badge downgrades to Degraded when manifest.warnings is non-empty
+- PRIV-04 tests assert 127.0.0.1 default bind and 0.0.0.0 stderr warning
+
 ### Pending Todos
 
 None yet.
@@ -123,6 +127,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:12:00.000Z
-Stopped at: Completed 05-05-PLAN.md — file-centric history scrubber + drill jump
+Last session: 2026-07-01T11:30:00.000Z
+Stopped at: Completed 05-06-PLAN.md — Phase 5 complete; confidence UI + privacy gate
 Resume file: None

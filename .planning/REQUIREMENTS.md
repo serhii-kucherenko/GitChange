@@ -17,7 +17,7 @@
 ### Evidence & Trust (EVD)
 
 - [x] **EVD-01**: Every narrative claim (era label, decision summary, status) links to evidence (commit SHA, file path, or doc excerpt)
-- [ ] **EVD-02**: System assigns confidence scores to inferred claims and shows them in UI and agent responses
+- [x] **EVD-02**: System assigns confidence scores to inferred claims and shows them in UI and agent responses
 - [ ] **EVD-03**: System shows "no recorded decision found" when evidence is below threshold instead of fabricating rationale
 - [x] **EVD-04**: Golden fixture tests validate evidence link integrity for generated artifacts
 
@@ -66,7 +66,7 @@
 
 - [x] **DASH-01**: User can open a local web dashboard served on localhost from indexed artifacts
 - [ ] **DASH-02**: Dashboard includes timeline, temporal knowledge graph, and tour player views
-- [ ] **DASH-03**: Dashboard shows index freshness and schema version
+- [x] **DASH-03**: Dashboard shows index freshness and schema version
 - [x] **DASH-04**: Dashboard virtualizes large commit lists for responsive navigation
 
 ### Plugin & CLI (PLUG)
@@ -89,7 +89,7 @@
 - [x] **PRIV-01**: System runs local-only with no telemetry
 - [x] **PRIV-02**: System redacts secrets from generated artifacts at ingest
 - [x] **PRIV-03**: User can configure `.gitchangeignore` for sensitive paths, authors, or commits
-- [ ] **PRIV-04**: Local server binds to localhost by default
+- [x] **PRIV-04**: Local server binds to localhost by default
 
 ### Scale & Performance (SCALE)
 
@@ -167,7 +167,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | INGX-05 | Phase 1 | Complete |
 | INGX-06 | Phase 5 | Complete |
 | EVD-01 | Phase 1 | Complete |
-| EVD-02 | Phase 5 | Pending |
+| EVD-02 | Phase 5 | Complete |
 | EVD-03 | Phase 6 | Pending |
 | EVD-04 | Phase 1 | Complete |
 | TIME-01 | Phase 5 | Complete |
@@ -195,7 +195,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | STAT-04 | Phase 6 | Pending |
 | DASH-01 | Phase 5 | Complete |
 | DASH-02 | Phase 8 | Pending |
-| DASH-03 | Phase 5 | Pending |
+| DASH-03 | Phase 5 | Complete |
 | DASH-04 | Phase 5 | Complete |
 | PLUG-01 | Phase 3 | Complete |
 | PLUG-02 | Phase 3 | Complete |
@@ -209,7 +209,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | PRIV-01 | Phase 1 | Complete |
 | PRIV-02 | Phase 1 | Complete |
 | PRIV-03 | Phase 1 | Complete |
-| PRIV-04 | Phase 5 | Pending |
+| PRIV-04 | Phase 5 | Complete |
 | SCALE-01 | Phase 8 | Pending |
 | SCALE-02 | Phase 5 | Complete |
 | SCALE-03 | Phase 1 | Complete |

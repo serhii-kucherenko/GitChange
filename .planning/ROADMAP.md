@@ -15,7 +15,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - [x] **Phase 2: Repository Intelligence & Ownership** - Churn, co-change, and line-survival ownership profiles (completed 2026-07-01)
 - [x] **Phase 3: CLI & Plugin Scaffold** - Install/first-run UX (UA pattern), CLI, `/gitchange`, minimal `/gitchange-dashboard` (completed 2026-07-01)
 - [x] **Phase 4: Era Detection & Semantic Pipeline** - Named eras, inflection points, and temporal graph artifacts (completed 2026-07-01)
-- [ ] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI
+- [x] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI (completed 2026-07-01)
 - [ ] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop
 - [ ] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops
 - [ ] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story
@@ -209,7 +209,7 @@ Plans:
 
 **Wave 5** *(blocked on Waves 1–4)*
 
-- [ ] 05-06-PLAN.md — Confidence badges, PRIV-04 gate, SCALE-02 E2E (EVD-02, DASH-03)
+- [x] 05-06-PLAN.md — Confidence badges, PRIV-04 gate, SCALE-02 E2E (EVD-02, DASH-03)
 **UI hint**: yes
 
 ### Phase 6: Decisions, Status & Open Work
@@ -273,7 +273,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
-| 5. Dashboard & Evidence Drill-Down | 5/6 | In Progress|  |
+| 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |

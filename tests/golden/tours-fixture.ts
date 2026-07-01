@@ -5,7 +5,7 @@ import { applyBasicScenarioToursTemplate } from "../../packages/core/src/tours/b
 
 const FIXTURE_PATH = join(
   import.meta.dirname,
-  "../fixtures/tours/tours-basic-scenario.json",
+  "../fixtures/tours/basic-scenario-tours.json",
 );
 
 export function applyBasicScenarioToursFixture(gitchangeDir: string): void {

@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { createCommitDetailRoutes } from "./routes/commit-detail.js";
 import { createCommitsRoutes } from "./routes/commits.js";
 import { createErasRoutes } from "./routes/eras.js";
+import { createFileHistoryRoutes } from "./routes/file-history.js";
 import { createSnapshotRoutes } from "./routes/snapshot.js";
 import { wireStatic } from "./static.js";
 
@@ -18,6 +19,7 @@ export function createApp(options: CreateAppOptions): Hono {
   app.route("/api", createCommitsRoutes(options));
   app.route("/api", createErasRoutes(options));
   app.route("/api", createCommitDetailRoutes(options));
+  app.route("/api", createFileHistoryRoutes(options));
 
   if (options.dashboardDistPath) {
     wireStatic(app, options.dashboardDistPath);

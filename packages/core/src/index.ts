@@ -29,6 +29,18 @@ export {
   type CommitDetailFile,
 } from "./read/commit-detail.js";
 export {
+  decodeFileHistoryCursor,
+  encodeFileHistoryCursor,
+  getFileHistory,
+  InvalidFileHistoryCursorError,
+  InvalidFilePathError,
+  MAX_FILE_PATH_LENGTH,
+  validateFilePath,
+  type FileHistoryEvent,
+  type FileHistoryPage,
+  type GetFileHistoryOptions,
+} from "./read/file-history.js";
+export {
   listErasForDashboard,
   type DashboardEra,
   type DashboardErasResult,

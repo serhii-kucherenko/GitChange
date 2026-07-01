@@ -22,6 +22,9 @@ export function CommitDetailPanel() {
   const setSelectedFilePath = useDrillStore(
     (state) => state.setSelectedFilePath,
   );
+  const setSelectedCommitSha = useDrillStore(
+    (state) => state.setSelectedCommitSha,
+  );
 
   const query = useQuery({
     queryKey: ["commit-detail", selectedCommitSha, selectedRepoId],
@@ -45,6 +48,13 @@ export function CommitDetailPanel() {
   return (
     <section className="flex h-[min(70vh,40rem)] flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
       <header className="space-y-2 border-b border-slate-800 px-4 py-3">
+        <button
+          type="button"
+          onClick={() => setSelectedCommitSha(null)}
+          className="text-xs text-slate-400 hover:text-slate-200"
+        >
+          Clear selection
+        </button>
         <DrillBreadcrumb />
         {query.isLoading ? (
           <p className="text-sm text-slate-400">Loading commit detail…</p>

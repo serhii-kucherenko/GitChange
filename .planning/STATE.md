@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-04-PLAN.md — hunk capture + commit/file drill-down
-last_updated: "2026-07-01T10:54:46.734Z"
+status: ready
+stopped_at: Completed 05-02-PLAN.md — commit search and filter
+last_updated: "2026-07-01T11:00:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
@@ -26,10 +26,10 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 5 of 8 in progress (Dashboard & Evidence Drill-Down)
-Plan: 3 of 6 complete in Phase 5 (05-01, 05-04)
-Status: Ready to execute
+Plan: 3 of 6 complete in Phase 5 (05-01, 05-02, 05-04)
+Status: Ready for 05-03
 Last activity: 2026-07-01
-Stopped at: Completed 05-04-PLAN.md — hunk capture + commit/file drill-down
+Stopped at: Completed 05-02-PLAN.md — commit search and filter
 
 Progress: [█████████░] 90%
 
@@ -98,6 +98,8 @@ Recent decisions affecting current work:
 - Per-file hunk capture via es-git pathspecs + print(Patch) at index time; 20 hunks / 32KB cap per file
 - Commit detail API reads hunks_json from SQLite only — no es-git in server (SCALE-02)
 - Existing .gitchange directories need re-index for hunks_json data
+- after/before API params are unix seconds; core multiplies by 1000 to match indexed committedAt ms
+- Path filter uses Drizzle exists subquery on file_changes.path with prefix LIKE
 
 ### Pending Todos
 
@@ -117,6 +119,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T10:54:46.720Z
-Stopped at: Completed 05-04-PLAN.md — hunk capture + commit/file drill-down
+Last session: 2026-07-01T11:00:00.000Z
+Stopped at: Completed 05-02-PLAN.md — commit search and filter
 Resume file: None

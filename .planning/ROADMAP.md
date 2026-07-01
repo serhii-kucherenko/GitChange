@@ -205,7 +205,7 @@ Plans:
 
 **Wave 4** *(blocked on hunk capture)*
 
-- [ ] 05-05-PLAN.md — File-centric history scrubber (TIME-03)
+- [x] 05-05-PLAN.md — File-centric history scrubber (TIME-03)
 
 **Wave 5** *(blocked on Waves 1–4)*
 
@@ -273,7 +273,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
-| 5. Dashboard & Evidence Drill-Down | 4/6 | In Progress|  |
+| 5. Dashboard & Evidence Drill-Down | 5/6 | In Progress|  |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |

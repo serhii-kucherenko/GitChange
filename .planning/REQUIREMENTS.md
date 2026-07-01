@@ -25,7 +25,7 @@
 
 - [x] **TIME-01**: User can view an interactive timeline of project history with era markers
 - [x] **TIME-02**: User can drill down era → commit → file → diff hunk from the dashboard
-- [ ] **TIME-03**: User can view file-centric history scrubber for any indexed file
+- [x] **TIME-03**: User can view file-centric history scrubber for any indexed file
 - [ ] **TIME-04**: User can navigate migration-centric threads showing progress across commits and files
 
 ### Evolution & Eras (ERA)
@@ -172,7 +172,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | EVD-04 | Phase 1 | Complete |
 | TIME-01 | Phase 5 | Complete |
 | TIME-02 | Phase 5 | Complete |
-| TIME-03 | Phase 5 | Pending |
+| TIME-03 | Phase 5 | Complete |
 | TIME-04 | Phase 6 | Pending |
 | ERA-01 | Phase 4 | Complete |
 | ERA-02 | Phase 4 | Complete |

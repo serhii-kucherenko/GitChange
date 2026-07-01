@@ -163,7 +163,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1; parallel)*
 
 - [x] 04-02-PLAN.md — era-synthesizer agent + `/gitchange` semantic orchestration + JSON schemas
-- [ ] 04-03-PLAN.md — Deterministic temporal graph assembler → temporal-graph.json
+- [x] 04-03-PLAN.md — Deterministic temporal graph assembler → temporal-graph.json
 
 **Wave 3** *(blocked on Wave 2 completion of 04-03)*
 
@@ -250,7 +250,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
-| 4. Era Detection & Semantic Pipeline | 2/5 | In Progress|  |
+| 4. Era Detection & Semantic Pipeline | 3/5 | In Progress|  |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |

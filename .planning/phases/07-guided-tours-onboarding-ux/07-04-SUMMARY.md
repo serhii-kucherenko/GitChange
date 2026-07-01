@@ -2,24 +2,28 @@
 phase: 07-guided-tours-onboarding-ux
 plan: 04
 subsystem: ui
-tags: [react, zustand, tours, vitest, drill-down, localStorage]
+tags: [react, zustand, react-query, tours, localStorage, vitest]
 
 requires:
   - phase: 07-guided-tours-onboarding-ux
-    provides: Tour read API and dashboard fetchTours/fetchTour client
+    provides: fetchTours/fetchTour API client and TourDetail types from 07-03
+  - phase: 06-open-work
+    provides: matchOpenWorkToSurface and OpenWorkBadge
+  - phase: 05-dashboard
+    provides: useDrillStore drill-down actions and CommitDetailPanel
 provides:
-  - useTourStore with headSha-scoped localStorage progress
-  - TourPicker grouped by default, role, and topic kinds
-  - TourPlayer with chapter/stop navigation and evidence drill-down
+  - useTourStore with headSha-scoped localStorage progress persistence
+  - TourPicker grouped by default/role/topic tour kinds
+  - TourPlayer with chapter nav, stop navigation, and evidence drill-down
   - Tours intelligence tab in dashboard layout
-affects: [07-05 onboarding UX polish]
+affects: [07-05 golden E2E, onboarding UX verification]
 
 tech-stack:
   added: []
   patterns:
-    - "Tour progress in separate zustand store from drillStore (P7-D-07)"
-    - "See evidence maps drillTarget to drillStore setters without dangerouslySetInnerHTML"
-    - "Tours tab keeps active while commit drill shows CommitDetailPanel in main"
+    - "Tour progress separate from drillStore; keyed gitchange-tour-progress:${headSha}"
+    - "Tour stop drill maps drillTarget to drillStore; commit drill keeps tours tab with CommitDetailPanel overlay"
+    - "Narrative rendered as React text nodes only (T-07-09 XSS mitigation)"
 
 key-files:
   created:
@@ -35,38 +39,43 @@ key-files:
     - packages/dashboard/src/index.ts
 
 key-decisions:
-  - "Tour drill for commit/file stays on tours tab; era/decision switch intelligence tab"
-  - "TourPlayer uses retreatStop/advanceStop on full chapter objects for bounds"
+  - "Tour progress persists via zustand subscribe on headSha from snapshot manifest"
+  - "Era/decision drills switch intelligence tab; commit/file drills stay on tours tab with CommitDetailPanel"
 
 patterns-established:
-  - "matchOpenWorkToSurface on tour stop drillTarget for OpenWorkBadge rendering"
+  - "TourPicker groups tours by kind with defaultTourId highlight badge"
+  - "TourStopCard evidence chips and See evidence CTA share drillFromTarget handler"
 
 requirements-completed: [TOUR-02, TOUR-03, TOUR-04]
 
-duration: 18min
+duration: 25min
 completed: 2026-07-01
 ---
 
 # Phase 7 Plan 04: Tour Player UX Summary
 
-**Fourth dashboard tab with tour picker, chapter player, evidence drill-down into timeline/commits/decisions, open-work badges, and per-HEAD local progress.**
+**Tours dashboard tab with role/topic picker, chapter/stop player, evidence drill-down into timeline/decisions/commits, open-work badges, and headSha-scoped localStorage progress.**
 
 ## Performance
 
-- **Duration:** 18 min
-- **Started:** 2026-07-01T05:22:00Z
-- **Completed:** 2026-07-01T05:40:00Z
+- **Duration:** 25 min
+- **Started:** 2026-07-01T05:00:00Z
+- **Completed:** 2026-07-01T05:27:00Z
 - **Tasks:** 3
 - **Files modified:** 9
 
 ## Accomplishments
 
-- `useTourStore` persists chapter/stop position and completed stops to `gitchange-tour-progress:<headSha>`
-- TourPicker groups onboarding, role, and topic tours with default highlight and synthesis empty state
-- TourPlayer + TourStopCard wire See evidence to drillStore; OpenWorkBadge on matching incomplete threads
-- Dashboard Tours tab with picker/chapter sidebar and commit detail overlay when drilling
+- `useTourStore` persists active tour, chapter/stop indices, and completed stops per HEAD sha
+- TourPicker renders Onboarding, Role variants, and Topic threads groups from `/api/tours`
+- TourPlayer navigates prev/next stops and chapter jumps via TourChapterNav
+- TourStopCard maps drillTarget to drillStore (era → timeline, decision → decisions, commit/file → CommitDetailPanel)
+- `matchOpenWorkToSurface` drives OpenWorkBadge on stops with linked incomplete threads
+- Dashboard fourth tab "Tours" wires picker + chapter nav in sidebar and player in main
 
 ## Task Commits
+
+Each task was committed atomically:
 
 1. **Task 1: useTourStore + TourPicker** - `d6fe7ea` (feat)
 2. **Task 2: TourPlayer + TourStopCard with drill-down** - `cd6ec0a` (feat)
@@ -74,16 +83,21 @@ completed: 2026-07-01
 
 ## Files Created/Modified
 
-- `packages/dashboard/src/store/tour.ts` - Tour progress zustand store with localStorage hydrate/persist
-- `packages/dashboard/src/components/TourPicker.tsx` - Grouped tour selection from `/api/tours`
-- `packages/dashboard/src/components/TourPlayer.tsx` - Chapter/stop navigation with keyboard arrows
-- `packages/dashboard/src/components/TourStopCard.tsx` - Narrative, evidence chips, See evidence CTA
-- `packages/dashboard/src/App.tsx` - Tours tab layout, progress hydration, commit drill overlay
+- `packages/dashboard/src/store/tour.ts` - zustand tour progress store with hydrate/persist
+- `packages/dashboard/src/store/tour.test.ts` - persistence round-trip and navigation unit tests
+- `packages/dashboard/src/components/TourPicker.tsx` - grouped tour selection UI with empty states
+- `packages/dashboard/src/components/TourPlayer.tsx` - stop player with prev/next navigation
+- `packages/dashboard/src/components/TourStopCard.tsx` - narrative, evidence chips, See evidence CTA, OpenWorkBadge
+- `packages/dashboard/src/components/TourChapterNav.tsx` - chapter list with keyboard-accessible buttons
+- `packages/dashboard/src/App.tsx` - tours tab layout, localStorage sync, drill panel overlay
+- `packages/dashboard/src/layout/DashboardLayout.tsx` - IntelligenceTab union extended with tours
+- `packages/dashboard/src/index.ts` - re-exports useTourStore and PersistedTourProgress
 
 ## Decisions Made
 
-- Commit/file drills keep tours tab active; era/decision drills switch intelligence tab per P7-D-06
-- Narratives and excerpts render as React text nodes only (T-07-09 XSS mitigation)
+- Tour progress auto-persists on any store change via subscribe effect keyed to manifest head sha
+- Commit/file drill from tour keeps tours tab active; CommitDetailPanel renders when selectedCommitSha is set (mirrors decisions tab pattern)
+- Era and decision drills switch intelligence tab to timeline or decisions respectively
 
 ## Deviations from Plan
 
@@ -91,26 +105,23 @@ None - plan executed exactly as written.
 
 ## Issues Encountered
 
-None.
+None
 
 ## User Setup Required
 
-None - requires existing `tours.json` from tour synthesis; empty state directs user to `/gitchange` tour synthesis.
+None - no external service configuration required.
 
 ## Next Phase Readiness
 
-- 07-05 can polish onboarding flows and first-run tour prompts
-- Tour player ready for E2E verification with basic-scenario fixture
+- Tour player UX complete for 07-05 golden E2E verification
+- Requires tours.json artifact from tour synthesis pipeline (07-02) for live dashboard testing
 
 ## Self-Check: PASSED
 
-- FOUND: packages/dashboard/src/store/tour.ts
-- FOUND: packages/dashboard/src/components/TourPicker.tsx
-- FOUND: packages/dashboard/src/components/TourPlayer.tsx
-- FOUND: packages/dashboard/src/components/TourStopCard.tsx
-- FOUND: d6fe7ea
-- FOUND: cd6ec0a
-- FOUND: ae45dc3
+- All 9 key files FOUND
+- Task commits d6fe7ea, cd6ec0a, ae45dc3 FOUND
+- `pnpm exec vitest run packages/dashboard/src/store/tour.test.ts` — 4 passed
+- `pnpm --filter @gitchange/dashboard exec tsc --noEmit` — passed
 
 ---
 *Phase: 07-guided-tours-onboarding-ux*

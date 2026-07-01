@@ -399,7 +399,9 @@ export const graph = {
   all: ["graph"] as const,
 };
 
-export async function fetchGraph(repoId?: string | null): Promise<GraphResponse> {
+export async function fetchGraph(
+  repoId?: string | null,
+): Promise<GraphResponse> {
   const search = new URLSearchParams();
   if (repoId?.trim()) {
     search.set("repoId", repoId.trim());

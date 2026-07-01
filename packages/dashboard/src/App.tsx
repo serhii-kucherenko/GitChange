@@ -1,7 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import type { CommitListFilters } from "./api/client.js";
-import { fetchEras, fetchGraph, fetchTour, fetchWorkspace, graph, tours } from "./api/client.js";
+import {
+  fetchEras,
+  fetchGraph,
+  fetchTour,
+  fetchWorkspace,
+  graph,
+  tours,
+} from "./api/client.js";
 import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
@@ -13,10 +20,10 @@ import { IndexStatusCard } from "./components/IndexStatusCard.js";
 import { MigrationThreadPanel } from "./components/MigrationThreadPanel.js";
 import { OpenThreadsPanel } from "./components/OpenThreadsPanel.js";
 import { RepoFilterBar } from "./components/RepoFilterBar.js";
+import { TemporalGraphView } from "./components/TemporalGraphView.js";
 import { TourChapterNav } from "./components/TourChapterNav.js";
 import { TourPicker } from "./components/TourPicker.js";
 import { TourPlayer } from "./components/TourPlayer.js";
-import { TemporalGraphView } from "./components/TemporalGraphView.js";
 import {
   DashboardLayout,
   type IntelligenceTab,
@@ -46,7 +53,9 @@ export function App() {
     loadState.status === "ready" ? loadState.data.manifest.repo.head : null;
 
   const tourDetailQuery = useQuery({
-    queryKey: activeTourId ? tours.detail(activeTourId) : ["tours", "detail", "none"],
+    queryKey: activeTourId
+      ? tours.detail(activeTourId)
+      : ["tours", "detail", "none"],
     queryFn: () => {
       if (!activeTourId) {
         throw new Error("no_active_tour");

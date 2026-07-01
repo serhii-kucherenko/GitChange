@@ -27,11 +27,33 @@ Guide the user through evidence-backed repository analysis using GitChange CLI a
    - Warnings from manifest
    - Top expertise topics and churn highlights
 
-### Phase 3 — Optional follow-up
+### Phase 3 — Semantic era synthesis
+
+Delegate to `packages/plugin/agents/era-synthesizer.md` after index when intelligence is available.
+
+1. Confirm `<repo>/.gitchange/intelligence.json` exists.
+2. Skip if valid `eras.json` exists and `eras.headSha` matches `intelligence.headSha`; otherwise proceed (or when user requests refresh).
+3. Build context:
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/build-era-context.ts "<repo>/.gitchange"
+   ```
+
+4. Host AI synthesizes `ErasArtifact` per era-synthesizer spec (3–8 named eras, claims with evidence, typed inflections).
+5. Validate against `eras.schema.json`; persist:
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/write-eras.ts "<repo>/.gitchange" /path/to/eras-output.json
+   ```
+
+6. Present era names and inflection count to the user.
+
+### Phase 4 — Optional follow-up
 
 Answer questions using **schemas and artifacts only**:
 
 - Ownership and expertise → `intelligence.json` (trimmed via `intelligence-summary.schema.json`)
+- Era evolution → `eras.json` (validated via `eras.schema.json`)
 - Repo snapshot cards → `snapshot.schema.json` fields
 - Never invent commit SHAs or file paths not present in evidence arrays
 
@@ -43,6 +65,8 @@ Do not invoke OpenAI, Anthropic, LangChain, or Vercel AI SDK from GitChange pack
 |----------|------|--------|
 | Manifest | `.gitchange/manifest.json` | `manifest.schema.json` |
 | Intelligence (trimmed) | `.gitchange/intelligence.json` | `intelligence-summary.schema.json` |
+| Era synthesis input | `buildEraSynthesisContext()` stdout | `era-synthesis-context.schema.json` |
+| Named eras | `.gitchange/eras.json` | `eras.schema.json` |
 | API snapshot | `GET /api/snapshot` | `snapshot.schema.json` |
 
 ## Dashboard handoff

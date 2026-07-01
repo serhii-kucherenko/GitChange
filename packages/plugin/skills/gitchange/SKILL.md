@@ -5,6 +5,8 @@ schemas:
   - packages/plugin/schemas/manifest.schema.json
   - packages/plugin/schemas/snapshot.schema.json
   - packages/plugin/schemas/intelligence-summary.schema.json
+  - packages/plugin/schemas/era-synthesis-context.schema.json
+  - packages/plugin/schemas/eras.schema.json
 ---
 
 # /gitchange — First analysis
@@ -64,7 +66,7 @@ Optionally read JSON directly (validate against plugin schemas before injecting 
 - `<repo>/.gitchange/intelligence.json` — trim to churn + expertise; see `packages/plugin/schemas/intelligence-summary.schema.json`
 - Full API-shaped snapshot — `packages/plugin/schemas/snapshot.schema.json` (matches `GET /api/snapshot` after serve is running)
 
-### 4. Present to the user
+### 4. Present index summary to the user
 
 Summarize in plain language:
 
@@ -73,7 +75,42 @@ Summarize in plain language:
 - Top expertise topics from `intelligence.json` (`expertise.topics`, first 3)
 - Top churn files if useful (`churn.files`, highest `changeCount`)
 
-Offer follow-up questions grounded in the artifacts (ownership, migrations, open threads) — still **no** embedded model calls from GitChange code.
+### 5. Phase 2 — Semantic era synthesis
+
+Run **after** index when `intelligence.json` exists. Skip automatic re-synthesis when:
+
+- `.gitchange/eras.json` already validates against `eras.schema.json`, **and**
+- `eras.json` `headSha` matches `intelligence.json` `headSha`
+
+Otherwise (missing eras, stale `headSha`, or user asks to refresh), run semantic synthesis:
+
+1. **Verify prerequisites** — `intelligence.json` must exist under `<repo>/.gitchange/`. If missing, stop and ask the user to re-run index.
+
+2. **Build bounded context** — load synthesis input (no live git):
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/build-era-context.ts "<absolute-path-to-.gitchange>"
+   ```
+
+   Validate stdout JSON against `packages/plugin/schemas/era-synthesis-context.schema.json`.
+
+3. **Synthesize eras** — follow `packages/plugin/agents/era-synthesizer.md`. Host AI outputs a single `ErasArtifact` JSON object only.
+
+4. **Validate output** — check against `packages/plugin/schemas/eras.schema.json` before persisting.
+
+5. **Persist** — write via core gate:
+
+   ```bash
+   pnpm exec tsx packages/plugin/scripts/write-eras.ts "<absolute-path-to-.gitchange>" /path/to/eras-output.json
+   ```
+
+6. **Present to user (ERA-02)** — list era names, era count, and total inflection count from the saved artifact. Offer to drill into claims/evidence on request.
+
+When manifest HEAD is unchanged but intelligence was recomputed, offer re-synthesis if `eras.json` `headSha` differs from current `intelligence.json` `headSha`.
+
+### 6. Follow-up questions
+
+Answer questions using **schemas and artifacts only** (ownership, migrations, era claims) — still **no** embedded model calls from GitChange code.
 
 ## Security
 
@@ -85,3 +122,4 @@ Offer follow-up questions grounded in the artifacts (ownership, migrations, open
 - **CLI not found**: installation steps above.
 - **Not a git repo**: ask the user to open a folder containing `.git`.
 - **Index errors**: show CLI stderr; suggest `gitchange status` after fixing the repo state.
+- **Semantic errors**: show `build-era-context` or `write-eras` stderr; verify `intelligence.json` exists and output matches `eras.schema.json`.

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-06-PLAN.md
-last_updated: "2026-07-01T08:12:00.000Z"
+stopped_at: Completed 01-07-PLAN.md
+last_updated: "2026-07-01T08:31:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 1 of 8 (Index Foundation)
-Plan: 6 of 8 complete (Freshness done; next: 01-07)
-Status: Ready to execute 01-07
+Plan: 7 of 8 complete (Doc snapshots done; next: 01-08)
+Status: Ready to execute 01-08
 Last activity: 2026-07-01
-Stopped at: Completed 01-06-PLAN.md
+Stopped at: Completed 01-07-PLAN.md
 
-Progress: [████████░░] 75%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
@@ -62,6 +62,8 @@ Progress: [████████░░] 75%
 - Shared processCommit step used by both indexFull and indexIncremental
 - Out-of-order inversion counts when older revwalk commit has newer committer timestamp than descendant
 - Force-push detection walks HEAD ancestry; revparse existence alone is insufficient
+- Ignored doc paths store content null but contentHash from raw blob bytes
+- Gray-matter body trimmed before storage and hashing
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -88,6 +90,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T08:12:00.000Z
-Stopped at: Completed 01-06-PLAN.md
+Last session: 2026-07-01T08:31:00.000Z
+Stopped at: Completed 01-07-PLAN.md
 Resume file: None

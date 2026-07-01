@@ -61,7 +61,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 01-07-PLAN.md — Doc snapshot ingestion (README/CHANGELOG/docs/ADR) content-addressed with evidence
+- [x] 01-07-PLAN.md — Doc snapshot ingestion (README/CHANGELOG/docs/ADR) content-addressed with evidence
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
@@ -189,7 +189,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Index Foundation | 6/8 | In Progress|  |
+| 1. Index Foundation | 7/8 | In Progress|  |
 | 2. Repository Intelligence & Ownership | 0/TBD | Not started | - |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |

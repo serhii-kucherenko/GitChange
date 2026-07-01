@@ -112,13 +112,15 @@ export async function indexFull(options: IndexOptions): Promise<IndexResult> {
     );
   }
 
+  const maxBlobBytes = options.maxBlobBytes ?? DEFAULT_MAX_BLOB_BYTES;
+
   let commitsIndexed = 0;
   const committerTimestamps: number[] = [];
 
   for (const sha of walkFromHead(repo)) {
     const commit = repo.getCommit(sha);
     committerTimestamps.push(signatureToEpochMs(commit.committer()));
-    processCommit({ repo, sha, writer, matcher });
+    processCommit({ repo, sha, writer, matcher, maxBlobBytes });
     commitsIndexed += 1;
   }
 

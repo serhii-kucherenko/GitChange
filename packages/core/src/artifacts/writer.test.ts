@@ -7,6 +7,7 @@ import { openDb } from "./db.js";
 import { createWriter } from "./writer.js";
 import * as schema from "../schema/drizzle/schema.js";
 import type { CommitRecord } from "../schema/zod/commit.js";
+import type { DocSnapshot } from "../schema/zod/doc-snapshot.js";
 import type { FileChangeRecord } from "../schema/zod/file-change.js";
 
 const SAMPLE_COMMIT: CommitRecord = {
@@ -32,6 +33,14 @@ const SAMPLE_FILE_CHANGE: FileChangeRecord = {
   isBinary: false,
   contentIgnored: false,
   contentRedacted: false,
+  evidence: [{ type: "file", path: "README.md", commitSha: SAMPLE_COMMIT.sha }],
+};
+
+const SAMPLE_DOC_SNAPSHOT: DocSnapshot = {
+  commitSha: SAMPLE_COMMIT.sha,
+  path: "README.md",
+  contentHash: "abc123",
+  content: "# Hello",
   evidence: [{ type: "file", path: "README.md", commitSha: SAMPLE_COMMIT.sha }],
 };
 
@@ -95,6 +104,19 @@ describe("createWriter", () => {
     expect(() =>
       writer.addFileChange({
         ...SAMPLE_FILE_CHANGE,
+        evidence: [],
+      }),
+    ).toThrow();
+  });
+
+  it("rejects doc snapshots without evidence before buffering", () => {
+    gitchangeDir = mkdtempSync(join(tmpdir(), "gitchange-writer-"));
+    const db = openDb(gitchangeDir);
+    const writer = createWriter(db, 100);
+
+    expect(() =>
+      writer.addDocSnapshot({
+        ...SAMPLE_DOC_SNAPSHOT,
         evidence: [],
       }),
     ).toThrow();

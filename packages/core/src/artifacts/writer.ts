@@ -3,6 +3,10 @@ import type { DrizzleDb } from "./db.js";
 import * as schema from "../schema/drizzle/schema.js";
 import { CommitRecord, type CommitRecord as CommitRecordType } from "../schema/zod/commit.js";
 import {
+  DocSnapshot,
+  type DocSnapshot as DocSnapshotType,
+} from "../schema/zod/doc-snapshot.js";
+import {
   FileChangeRecord,
   type FileChangeRecord as FileChangeRecordType,
 } from "../schema/zod/file-change.js";
@@ -17,6 +21,7 @@ export interface SecretFindingInput {
 export interface IndexWriter {
   addCommit(record: CommitRecordType): void;
   addFileChange(record: FileChangeRecordType): void;
+  addDocSnapshot(record: DocSnapshotType): void;
   addSecretFinding(finding: SecretFindingInput): void;
   flush(): void;
 }
@@ -26,6 +31,7 @@ const DEFAULT_BATCH_SIZE = 750;
 export function createWriter(db: DrizzleDb, batchSize = DEFAULT_BATCH_SIZE): IndexWriter {
   const commitBuffer: CommitRecordType[] = [];
   const fileChangeBuffer: FileChangeRecordType[] = [];
+  const docSnapshotBuffer: DocSnapshotType[] = [];
   const secretFindingBuffer: SecretFindingInput[] = [];
   let pendingRows = 0;
 
@@ -36,6 +42,7 @@ export function createWriter(db: DrizzleDb, batchSize = DEFAULT_BATCH_SIZE): Ind
 
     const commits = commitBuffer.splice(0, commitBuffer.length);
     const fileChanges = fileChangeBuffer.splice(0, fileChangeBuffer.length);
+    const docSnapshots = docSnapshotBuffer.splice(0, docSnapshotBuffer.length);
     const secretFindings = secretFindingBuffer.splice(0, secretFindingBuffer.length);
     pendingRows = 0;
 
@@ -110,6 +117,19 @@ export function createWriter(db: DrizzleDb, batchSize = DEFAULT_BATCH_SIZE): Ind
           .run();
       }
 
+      for (const record of docSnapshots) {
+        tx.insert(schema.docSnapshots)
+          .values({
+            commitSha: record.commitSha,
+            path: record.path,
+            contentHash: record.contentHash,
+            content: record.content,
+            frontmatterJson: record.frontmatter ? JSON.stringify(record.frontmatter) : null,
+            evidenceJson: JSON.stringify(record.evidence),
+          })
+          .run();
+      }
+
       for (const finding of secretFindings) {
         tx.insert(schema.secretFindings)
           .values({
@@ -140,6 +160,13 @@ export function createWriter(db: DrizzleDb, batchSize = DEFAULT_BATCH_SIZE): Ind
     addFileChange(record) {
       FileChangeRecord.parse(record);
       fileChangeBuffer.push(record);
+      pendingRows += 1;
+      maybeFlush();
+    },
+
+    addDocSnapshot(record) {
+      DocSnapshot.parse(record);
+      docSnapshotBuffer.push(record);
       pendingRows += 1;
       maybeFlush();
     },

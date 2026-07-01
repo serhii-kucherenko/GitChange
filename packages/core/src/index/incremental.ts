@@ -8,7 +8,7 @@ import * as schema from "../schema/drizzle/schema.js";
 import { readManifest, writeManifest, type Manifest } from "../schema/manifest.js";
 import { checkCursorReachable, ForcePushHaltError } from "./freshness.js";
 import { ensureGitignored } from "./gitignore-guard.js";
-import { CORE_SCHEMA_VERSION, indexFull } from "./full.js";
+import { CORE_SCHEMA_VERSION, DEFAULT_MAX_BLOB_BYTES, indexFull } from "./full.js";
 import { processCommit } from "./process-commit.js";
 import { resolveBranchName, resolveHeadSha } from "./repo-head.js";
 import type { IndexOptions, IndexResult } from "./types.js";
@@ -74,12 +74,13 @@ export async function indexIncremental(options: IndexOptions): Promise<IndexResu
   const commitsBefore = countCommits(db);
   const writer = createWriter(db, options.batchSize);
   const matcher = loadIgnore(options.repoPath);
+  const maxBlobBytes = options.maxBlobBytes ?? DEFAULT_MAX_BLOB_BYTES;
 
   let commitsIndexed = 0;
   let fileChanges = 0;
 
   for (const sha of walkRange(repo, existingManifest.lastIndexedCommit)) {
-    const result = processCommit({ repo, sha, writer, matcher });
+    const result = processCommit({ repo, sha, writer, matcher, maxBlobBytes });
     commitsIndexed += 1;
     fileChanges += result.fileChanges;
   }

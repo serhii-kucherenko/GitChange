@@ -1,10 +1,12 @@
 import type { Repository } from "es-git";
 import type { IndexWriter } from "../artifacts/writer.js";
+import { captureDocSnapshots } from "../ingestion/doc-snapshot.js";
 import { diffCommit } from "../ingestion/diff.js";
 import { parseCommit } from "../ingestion/commit-parse.js";
 import type { IgnoreMatcher } from "../privacy/gitchangeignore.js";
 import { applyPrivacy } from "../privacy/redaction.js";
 import { CommitRecord } from "../schema/zod/commit.js";
+import type { DocSnapshot } from "../schema/zod/doc-snapshot.js";
 import type { FileChangeRecord } from "../schema/zod/file-change.js";
 
 export interface ProcessCommitOptions {
@@ -12,6 +14,7 @@ export interface ProcessCommitOptions {
   sha: string;
   writer: IndexWriter;
   matcher: IgnoreMatcher;
+  maxBlobBytes: number;
 }
 
 export interface ProcessCommitResult {
@@ -19,7 +22,7 @@ export interface ProcessCommitResult {
 }
 
 export function processCommit(options: ProcessCommitOptions): ProcessCommitResult {
-  const { repo, sha, writer, matcher } = options;
+  const { repo, sha, writer, matcher, maxBlobBytes } = options;
   const parsed = parseCommit(repo, sha);
 
   const messagePrivacy = applyPrivacy({
@@ -46,8 +49,10 @@ export function processCommit(options: ProcessCommitOptions): ProcessCommitResul
 
   writer.addCommit(sanitizedCommit);
 
+  const rawChanges = diffCommit(repo, sha);
   let fileChanges = 0;
-  for (const raw of diffCommit(repo, sha)) {
+
+  for (const raw of rawChanges) {
     const pathPrivacy = applyPrivacy({
       path: raw.path,
       content: null,
@@ -67,6 +72,39 @@ export function processCommit(options: ProcessCommitOptions): ProcessCommitResul
 
     writer.addFileChange(record);
     fileChanges += 1;
+  }
+
+  const capturedDocs = captureDocSnapshots(repo, sha, rawChanges, {
+    matcher,
+    maxBlobBytes,
+  });
+
+  for (const captured of capturedDocs) {
+    const docPrivacy = applyPrivacy({
+      path: captured.path,
+      content: captured.content,
+      matcher,
+    });
+
+    for (const finding of docPrivacy.findings) {
+      writer.addSecretFinding({
+        commitSha: sha,
+        filePath: captured.path,
+        ruleId: finding.ruleId,
+        location: "doc",
+      });
+    }
+
+    const docRecord: DocSnapshot = {
+      path: captured.path,
+      commitSha: sha,
+      contentHash: captured.contentHash,
+      content: docPrivacy.content,
+      frontmatter: captured.frontmatter,
+      evidence: [{ type: "file", path: captured.path, commitSha: sha }],
+    };
+
+    writer.addDocSnapshot(docRecord);
   }
 
   return { fileChanges };

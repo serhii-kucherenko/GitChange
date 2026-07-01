@@ -42,10 +42,29 @@ describe("indexFull", () => {
     const authorCount = db.select({ value: count() }).from(schema.authors).get()?.value ?? 0;
     const fileChangeCount =
       db.select({ value: count() }).from(schema.fileChanges).get()?.value ?? 0;
+    const docSnapshotCount =
+      db.select({ value: count() }).from(schema.docSnapshots).get()?.value ?? 0;
 
     expect(commitCount).toBe(repo.commitShas.length);
     expect(authorCount).toBeGreaterThan(0);
     expect(fileChangeCount).toBeGreaterThan(0);
+    expect(docSnapshotCount).toBeGreaterThan(0);
+
+    const docRows = db.select().from(schema.docSnapshots).all();
+    for (const row of docRows) {
+      const evidence = JSON.parse(row.evidenceJson) as Array<{
+        type: string;
+        path?: string;
+        commitSha?: string;
+      }>;
+      expect(evidence.length).toBeGreaterThan(0);
+      for (const ref of evidence) {
+        if (ref.type === "file") {
+          expect(repo.commitShas).toContain(ref.commitSha);
+          expect(row.path).toBe(ref.path);
+        }
+      }
+    }
 
     const evidenceRows = db.select().from(schema.fileChanges).all();
     for (const row of evidenceRows) {

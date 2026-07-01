@@ -1,16 +1,21 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useMemo, useRef } from "react";
-import { fetchCommitsPage, type CommitSummary } from "../api/client.js";
+import {
+  fetchCommitsPage,
+  hasActiveFilters,
+  type CommitListFilters,
+  type CommitSummary,
+} from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
 
 const PAGE_SIZE = 50;
 const ROW_HEIGHT = 44;
 
-function formatCommittedAt(timestamp: number): string {
-  const date = new Date(timestamp * 1000);
+function formatCommittedAt(timestampMs: number): string {
+  const date = new Date(timestampMs);
   if (Number.isNaN(date.getTime())) {
-    return String(timestamp);
+    return String(timestampMs);
   }
   return date.toLocaleString();
 }
@@ -49,19 +54,26 @@ function CommitRow({
   );
 }
 
-export function CommitList() {
+interface CommitListProps {
+  filters: CommitListFilters;
+}
+
+export function CommitList({ filters }: CommitListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
   const setSelectedCommitSha = useDrillStore(
     (state) => state.setSelectedCommitSha,
   );
 
+  const filtersActive = hasActiveFilters(filters);
+
   const query = useInfiniteQuery({
-    queryKey: ["commits"],
+    queryKey: ["commits", filters],
     queryFn: ({ pageParam }) =>
       fetchCommitsPage({
         limit: PAGE_SIZE,
         cursor: pageParam,
+        ...filters,
       }),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
@@ -129,7 +141,11 @@ export function CommitList() {
   if (commits.length === 0) {
     return (
       <section className="rounded-lg border border-slate-700 bg-slate-900 p-5">
-        <p className="text-slate-400">No commits indexed yet.</p>
+        <p className="text-slate-400">
+          {filtersActive
+            ? "No commits match filters."
+            : "No commits indexed yet."}
+        </p>
       </section>
     );
   }
@@ -141,6 +157,7 @@ export function CommitList() {
         <p className="text-xs text-slate-500">
           {commits.length}
           {query.hasNextPage ? "+" : ""} loaded from index
+          {filtersActive ? " (filtered)" : ""}
         </p>
       </header>
 

@@ -4,12 +4,14 @@ import type { SnapshotLoadState } from "../snapshot.js";
 interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
   sidebar: ReactNode;
+  commitFilterBar?: ReactNode;
   main: ReactNode;
 }
 
 export function DashboardLayout({
   loadState,
   sidebar,
+  commitFilterBar,
   main,
 }: DashboardLayoutProps) {
   const headSha =
@@ -54,7 +56,10 @@ export function DashboardLayout({
           {loadState.status === "ready" ? sidebar : null}
         </aside>
 
-        <main className="min-h-[24rem]">{main}</main>
+        <main className="min-h-[24rem] space-y-4">
+          {commitFilterBar}
+          {main}
+        </main>
       </div>
     </div>
   );

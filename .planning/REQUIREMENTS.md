@@ -37,8 +37,8 @@
 ### Guided Tours (TOUR)
 
 - [x] **TOUR-01**: System generates a default guided onboarding tour (4–6 chapters) ordered by dependency and chronology
-- [ ] **TOUR-02**: User can take role-based tour variants (e.g., backend vs frontend emphasis)
-- [ ] **TOUR-03**: User can follow topic-thread tours (e.g., auth, database, named migration) across eras
+- [x] **TOUR-02**: User can take role-based tour variants (e.g., backend vs frontend emphasis)
+- [x] **TOUR-03**: User can follow topic-thread tours (e.g., auth, database, named migration) across eras
 - [x] **TOUR-04**: Tour player shows evidence on every stop with drill-down to commits and files
 
 ### Contributors & Ownership (CONT)
@@ -178,8 +178,8 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | ERA-02 | Phase 4 | Complete |
 | ERA-03 | Phase 4 | Complete |
 | TOUR-01 | Phase 7 | Complete |
-| TOUR-02 | Phase 7 | Pending |
-| TOUR-03 | Phase 7 | Pending |
+| TOUR-02 | Phase 7 | Complete |
+| TOUR-03 | Phase 7 | Complete |
 | TOUR-04 | Phase 7 | Complete |
 | CONT-01 | Phase 2 | Complete |
 | CONT-02 | Phase 6 | Complete |

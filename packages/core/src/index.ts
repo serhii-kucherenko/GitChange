@@ -32,6 +32,14 @@ export {
   EVD03_GAP_MESSAGE,
   isBelowEvidenceThreshold,
 } from "./decisions/threshold.js";
+export {
+  mergeInterviewIntoDecisions,
+  type MergeInterviewOptions,
+} from "./interviews/merge.js";
+export {
+  readInterviewRecord,
+  writeInterviewRecord,
+} from "./interviews/store.js";
 export { CORE_SCHEMA_VERSION, indexFull } from "./index/full.js";
 export { indexIncremental } from "./index/incremental.js";
 export type { IndexOptions, IndexResult } from "./index/types.js";
@@ -137,6 +145,11 @@ export {
   InflectionType,
   IntelligenceArtifact,
   type IntelligenceArtifact as IntelligenceArtifactType,
+  INTERVIEW_RECORD_SCHEMA_VERSION,
+  InterviewRecord,
+  type InterviewRecord as InterviewRecordType,
+  InterviewVerdict,
+  type InterviewVerdict as InterviewVerdictType,
   NamedEra,
   type NamedEra as NamedEraType,
   OPEN_WORK_SCHEMA_VERSION,

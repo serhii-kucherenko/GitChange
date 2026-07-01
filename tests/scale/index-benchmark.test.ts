@@ -108,6 +108,28 @@ describe.sequential("scale index benchmark", () => {
     INCREMENTAL_TEST_TIMEOUT_MS,
   );
 
+  it(
+    "emits progress every 500 commits during full index",
+    async () => {
+      const repo = buildScaleRepo({ commitCount: 600 });
+      repos.push(repo);
+
+      const progressIndexed: number[] = [];
+      await indexFull({
+        repoPath: repo.dir,
+        gitchangeDir: join(repo.dir, ".gitchange-progress"),
+        useWorkers: true,
+        rebuildIntelligence: false,
+        onProgress: (progress) => {
+          progressIndexed.push(progress.indexed);
+        },
+      });
+
+      expect(progressIndexed).toContain(500);
+    },
+    INCREMENTAL_TEST_TIMEOUT_MS,
+  );
+
   it.skipIf(!SCALE_100K_ENABLED)(
     "full index of 100k commits completes with workers (GITCHANGE_SCALE_100K=1)",
     async () => {

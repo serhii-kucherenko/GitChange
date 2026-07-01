@@ -57,7 +57,7 @@ export function validateRepoPath(repoPath: string): void {
   }
 }
 
-function buildCommitRecordsFromRepo(
+export function buildCommitRecordsFromRepo(
   repo: Repository,
   sha: string,
   matcher: IgnoreMatcher,

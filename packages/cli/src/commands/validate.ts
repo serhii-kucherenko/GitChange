@@ -3,9 +3,11 @@ import {
   checkDecisionsIntegrity,
   checkIntelligenceIntegrity,
   checkSemanticIntegrity,
+  checkToursIntegrity,
   readDecisionsArtifact,
   readErasArtifact,
   readManifest,
+  readToursArtifact,
 } from "@gitchange/core";
 import { resolveRepoPath } from "../repo-path.js";
 
@@ -54,6 +56,17 @@ export function runValidateCommand(options: ValidateCommandOptions): void {
     manifest?.decisionsSchemaVersion
   ) {
     errors.push("decisions artifacts missing: decisions.json not found");
+  }
+
+  const tours = readToursArtifact(gitchangeDir);
+
+  if (tours) {
+    const toursReport = checkToursIntegrity(gitchangeDir);
+    if (!toursReport.ok) {
+      errors.push(...toursReport.errors);
+    }
+  } else if (manifest?.toursComputedAt || manifest?.toursSchemaVersion) {
+    errors.push("tours artifacts missing: tours.json not found");
   }
 
   if (errors.length > 0) {

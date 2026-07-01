@@ -46,6 +46,7 @@ export const fileChanges = sqliteTable(
     evidenceJson: text("evidence_json").notNull(),
     hunkStart: integer("hunk_start"),
     hunkEnd: integer("hunk_end"),
+    hunksJson: text("hunks_json"),
   },
   (table) => [
     index("file_changes_commit_sha_idx").on(table.commitSha),

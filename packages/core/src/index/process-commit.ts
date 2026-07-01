@@ -2,6 +2,7 @@ import type { Repository } from "es-git";
 import type { IndexWriter } from "../artifacts/writer.js";
 import { captureDocSnapshots } from "../ingestion/doc-snapshot.js";
 import { diffCommit } from "../ingestion/diff.js";
+import { captureDiffHunks } from "../ingestion/hunks.js";
 import { parseCommit } from "../ingestion/commit-parse.js";
 import type { IgnoreMatcher } from "../privacy/gitchangeignore.js";
 import { applyPrivacy } from "../privacy/redaction.js";
@@ -59,6 +60,36 @@ export function processCommit(options: ProcessCommitOptions): ProcessCommitResul
       matcher,
     });
 
+    const hunkCapture = captureDiffHunks({
+      repo,
+      sha,
+      path: raw.path,
+      changeType: raw.changeType,
+      isBinary: raw.isBinary,
+      contentIgnored: pathPrivacy.contentIgnored,
+      matcher,
+    });
+
+    for (const finding of hunkCapture.secretFindings) {
+      writer.addSecretFinding({
+        commitSha: sha,
+        filePath: raw.path,
+        ruleId: finding.ruleId,
+        location: "hunk",
+      });
+    }
+
+    const evidence = [
+      { type: "file" as const, path: raw.path, commitSha: raw.commitSha },
+      ...hunkCapture.hunks.map((hunk) => ({
+        type: "hunk" as const,
+        path: raw.path,
+        commitSha: raw.commitSha,
+        startLine: hunk.startLine,
+        endLine: hunk.endLine,
+      })),
+    ];
+
     const record: FileChangeRecord = {
       commitSha: raw.commitSha,
       path: raw.path,
@@ -66,8 +97,10 @@ export function processCommit(options: ProcessCommitOptions): ProcessCommitResul
       changeType: raw.changeType,
       isBinary: raw.isBinary,
       contentIgnored: pathPrivacy.contentIgnored,
-      contentRedacted: pathPrivacy.contentRedacted,
-      evidence: [{ type: "file", path: raw.path, commitSha: raw.commitSha }],
+      contentRedacted:
+        pathPrivacy.contentRedacted || hunkCapture.contentRedacted,
+      evidence,
+      hunks: hunkCapture.hunks.length > 0 ? hunkCapture.hunks : undefined,
     };
 
     writer.addFileChange(record);

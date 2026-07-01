@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Evidence } from "./evidence.js";
+import { HunkRecord } from "./hunk.js";
 
 export const ChangeType = z.enum([
   "added",
@@ -21,6 +22,7 @@ export const FileChangeRecord = z.object({
   contentIgnored: z.boolean(),
   contentRedacted: z.boolean(),
   evidence: z.array(Evidence).min(1),
+  hunks: z.array(HunkRecord).optional(),
 });
 
 export type FileChangeRecord = z.infer<typeof FileChangeRecord>;

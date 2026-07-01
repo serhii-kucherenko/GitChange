@@ -15,6 +15,13 @@
       "when": 1782895130959,
       "tag": "0001_intelligence",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1782897130959,
+      "tag": "0002_hunks_json",
+      "breakpoints": true
     }
   ]
 }

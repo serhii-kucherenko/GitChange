@@ -92,6 +92,14 @@ export function checkEvidenceIntegrity(db: DrizzleDb): IntegrityReport {
             danglingFileRefs.push({ path: ref.path, commitSha: ref.commitSha });
           }
           break;
+        case "hunk":
+          if (!commitShas.has(ref.commitSha)) {
+            danglingCommitRefs.push(ref.commitSha);
+          }
+          if (!fileChangeKeys.has(fileChangeKey(ref.path, ref.commitSha))) {
+            danglingFileRefs.push({ path: ref.path, commitSha: ref.commitSha });
+          }
+          break;
         default:
           assertNever(ref);
       }

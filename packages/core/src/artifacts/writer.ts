@@ -113,6 +113,9 @@ export function createWriter(db: DrizzleDb, batchSize = DEFAULT_BATCH_SIZE): Ind
             evidenceJson: JSON.stringify(record.evidence),
             hunkStart: null,
             hunkEnd: null,
+            hunksJson: record.hunks?.length
+              ? JSON.stringify(record.hunks)
+              : null,
           })
           .run();
       }

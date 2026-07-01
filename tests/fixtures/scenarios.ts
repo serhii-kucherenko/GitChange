@@ -1,8 +1,8 @@
 import type { CommitSpec } from "./builder.js";
 
-const MESSAGE_SECRET = "ghp_abcdefghijklmnopqrstuvwxyz123456";
-const DOC_SECRET = "AKIAABCDEFGHIJKLMN";
-const IGNORED_SECRET = "ghp_ignoredpathsecretabcdefghijklmnopqrst";
+const MESSAGE_SECRET = `ghp_${"a".repeat(36)}`;
+const DOC_SECRET = `AKIA${"A".repeat(16)}`;
+const IGNORED_SECRET = `ghp_${"b".repeat(36)}`;
 
 /** Canonical synthetic repo for golden tests (Plans 03–08). */
 export const BASIC_SCENARIO: CommitSpec[] = [

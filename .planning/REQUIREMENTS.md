@@ -18,7 +18,7 @@
 
 - [x] **EVD-01**: Every narrative claim (era label, decision summary, status) links to evidence (commit SHA, file path, or doc excerpt)
 - [x] **EVD-02**: System assigns confidence scores to inferred claims and shows them in UI and agent responses
-- [ ] **EVD-03**: System shows "no recorded decision found" when evidence is below threshold instead of fabricating rationale
+- [x] **EVD-03**: System shows "no recorded decision found" when evidence is below threshold instead of fabricating rationale
 - [x] **EVD-04**: Golden fixture tests validate evidence link integrity for generated artifacts
 
 ### Timeline & Drill-Down (TIME)
@@ -50,7 +50,7 @@
 
 ### Decisions & Migrations (DEC)
 
-- [ ] **DEC-01**: System auto-mines decisions and migrations from commits, messages, trailers, and doc deltas
+- [x] **DEC-01**: System auto-mines decisions and migrations from commits, messages, trailers, and doc deltas
 - [ ] **DEC-02**: User can browse decisions with status, evidence, and supersession relationships
 - [ ] **DEC-03**: Maintainer can confirm or reject auto-mined decisions via in-chat interview loop
 - [ ] **DEC-04**: Interview answers flow back into project docs or `.gitchange/` index as durable lore
@@ -168,7 +168,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | INGX-06 | Phase 5 | Complete |
 | EVD-01 | Phase 1 | Complete |
 | EVD-02 | Phase 5 | Complete |
-| EVD-03 | Phase 6 | Pending |
+| EVD-03 | Phase 6 | Complete |
 | EVD-04 | Phase 1 | Complete |
 | TIME-01 | Phase 5 | Complete |
 | TIME-02 | Phase 5 | Complete |
@@ -185,7 +185,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | CONT-02 | Phase 6 | Pending |
 | CONT-03 | Phase 2 | Complete |
 | CONT-04 | Phase 2 | Complete |
-| DEC-01 | Phase 6 | Pending |
+| DEC-01 | Phase 6 | Complete |
 | DEC-02 | Phase 6 | Pending |
 | DEC-03 | Phase 6 | Pending |
 | DEC-04 | Phase 6 | Pending |

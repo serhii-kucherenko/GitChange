@@ -231,7 +231,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 06-01-PLAN.md — Schemas + deterministic mining + EVD-03 threshold + artifact I/O
+- [x] 06-01-PLAN.md — Schemas + deterministic mining + EVD-03 threshold + artifact I/O
 
 **Wave 2** *(blocked on Wave 1; parallel)*
 
@@ -296,7 +296,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
-| 6. Decisions, Status & Open Work | 0/6 | Not started | - |
+| 6. Decisions, Status & Open Work | 1/6 | In Progress|  |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |
 

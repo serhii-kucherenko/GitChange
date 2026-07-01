@@ -101,6 +101,17 @@ export function checkIntelligenceIntegrity(
       .map((row) => fileChangeKey(row.path, row.commitSha)),
   );
 
+  const docSnapshotKeys = new Set(
+    db
+      .select({
+        path: schema.docSnapshots.path,
+        commitSha: schema.docSnapshots.commitSha,
+      })
+      .from(schema.docSnapshots)
+      .all()
+      .map((row) => fileChangeKey(row.path, row.commitSha)),
+  );
+
   const danglingCommitRefs: string[] = [];
   const danglingFileRefs: Array<{ path: string; commitSha: string }> = [];
 
@@ -113,6 +124,11 @@ export function checkIntelligenceIntegrity(
         break;
       case "file":
         if (!fileChangeKeys.has(fileChangeKey(ref.path, ref.commitSha))) {
+          danglingFileRefs.push({ path: ref.path, commitSha: ref.commitSha });
+        }
+        break;
+      case "doc":
+        if (!docSnapshotKeys.has(fileChangeKey(ref.path, ref.commitSha))) {
           danglingFileRefs.push({ path: ref.path, commitSha: ref.commitSha });
         }
         break;

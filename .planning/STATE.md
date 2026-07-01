@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
-last_updated: "2026-07-01T08:53:45.219Z"
+stopped_at: Completed 02-04-PLAN.md — era ownership timelines and contributor expertise
+last_updated: "2026-07-01T09:05:16.284Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 13
-  completed_plans: 11
+  completed_plans: 12
   percent: 13
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 2 of 8 in progress (Repository Intelligence & Ownership)
-Plan: 3 of 5 complete in Phase 2 (02-02 done; next: 02-04)
+Plan: 4 of 5 complete in Phase 2 (next: 02-05)
 Status: Ready to execute
 Last activity: 2026-07-01
-Stopped at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
+Stopped at: Completed 02-04-PLAN.md — era ownership timelines and contributor expertise
 
-Progress: [█████████░] 85%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -70,6 +70,8 @@ Progress: [█████████░] 85%
 - All intelligence Drizzle tables in single migration 0001_intelligence
 - computeIntelligence separate pass after indexFull; attributionConfidence degraded on partial index
 - es-git blame hot path; simple-git when .git-blame-ignore-revs present
+- Era ownership uses commit-touch proxy per era_boundaries window; full per-era blame deferred to Phase 8
+- Expertise export uses topics[] with suggestedContributors and evidence min 1
 - Merge commits remapped to origCommitId before ownership aggregation
 
 Decisions are logged in PROJECT.md Key Decisions table.
@@ -97,6 +99,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T08:53:45.208Z
+Last session: 2026-07-01T09:05:16.276Z
 Stopped at: Completed 02-02-PLAN.md — line-survival ownership at HEAD
 Resume file: None

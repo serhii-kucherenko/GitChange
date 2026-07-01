@@ -94,7 +94,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 02-04-PLAN.md — Per-era ownership timelines + contributor expertise profiles (CONT-01, CONT-03)
+- [x] 02-04-PLAN.md — Per-era ownership timelines + contributor expertise profiles (CONT-01, CONT-03)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -208,7 +208,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
-| 2. Repository Intelligence & Ownership | 3/5 | In Progress|  |
+| 2. Repository Intelligence & Ownership | 4/5 | In Progress|  |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |

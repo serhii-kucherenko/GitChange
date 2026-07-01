@@ -84,7 +84,8 @@ describe("computeChurn", () => {
       coChange: { edges: [] },
       ownership: { files: [] },
       eraSignals: { boundaries: [] },
-      expertise: { profiles: [] },
+      eraOwnership: { eras: [] },
+      expertise: { topics: [] },
     });
 
     expect(sample.churn.files).toHaveLength(1);

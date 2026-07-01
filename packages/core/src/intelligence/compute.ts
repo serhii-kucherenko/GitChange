@@ -6,7 +6,9 @@ import { readManifest } from "../schema/manifest.js";
 import type { AttributionConfidence } from "../schema/zod/intelligence.js";
 import { computeChurn, getChurnFileCount } from "./churn.js";
 import { computeCoChange } from "./cochange.js";
+import { computeEraOwnership } from "./era-ownership.js";
 import { computeEraSignals } from "./era-signals.js";
+import { computeExpertise } from "./expertise.js";
 import { exportIntelligence } from "./export.js";
 import { computeOwnership } from "./ownership/index.js";
 
@@ -66,6 +68,8 @@ export async function computeIntelligence(
   await computeOwnership(db, options.repoPath, manifest.repo.head);
   computeCoChange(db);
   computeEraSignals(db);
+  computeEraOwnership(db);
+  computeExpertise(db);
 
   exportIntelligence(db, {
     gitchangeDir,

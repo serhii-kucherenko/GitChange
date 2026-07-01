@@ -57,6 +57,39 @@ export const EraBoundarySignal = z.object({
 
 export type EraBoundarySignal = z.infer<typeof EraBoundarySignal>;
 
+export const EraOwnershipAuthor = z.object({
+  authorId: z.number().int(),
+  name: z.string(),
+  email: z.string(),
+  touchCount: z.number().int().nonnegative(),
+  percentage: z.number().nonnegative(),
+});
+
+export const EraOwnershipFile = z.object({
+  path: z.string(),
+  authors: z.array(EraOwnershipAuthor),
+});
+
+export const EraOwnershipEra = z.object({
+  eraId: z.number().int(),
+  label: z.string(),
+  files: z.array(EraOwnershipFile),
+});
+
+export const ExpertiseContributor = z.object({
+  authorId: z.number().int(),
+  name: z.string(),
+  email: z.string(),
+  score: z.number(),
+  rationale: z.string(),
+  evidence: z.array(Evidence).min(1),
+});
+
+export const ExpertiseTopic = z.object({
+  topic: z.string(),
+  suggestedContributors: z.array(ExpertiseContributor).min(1),
+});
+
 export const ExpertiseProfile = z.object({
   authorId: z.number().int(),
   name: z.string(),
@@ -83,8 +116,11 @@ export const IntelligenceArtifact = z.object({
   eraSignals: z.object({
     boundaries: z.array(EraBoundarySignal),
   }),
+  eraOwnership: z.object({
+    eras: z.array(EraOwnershipEra),
+  }),
   expertise: z.object({
-    profiles: z.array(ExpertiseProfile),
+    topics: z.array(ExpertiseTopic),
   }),
 });
 

@@ -10,6 +10,8 @@ import {
 import { getFileChurnRows } from "./churn.js";
 import { getCoChangeEdges } from "./cochange.js";
 import { getEraBoundarySignals } from "./era-signals.js";
+import { getEraOwnershipExport } from "./era-ownership.js";
+import { getExpertiseExport } from "./expertise.js";
 import { getFileOwnershipRows } from "./ownership/index.js";
 
 const INTELLIGENCE_FILENAME = "intelligence.json";
@@ -86,7 +88,8 @@ export function buildIntelligenceArtifact(
     coChange: { edges: getCoChangeEdges(db) },
     ownership: { files: ownershipFiles },
     eraSignals: { boundaries: getEraBoundarySignals(db) },
-    expertise: { profiles: [] },
+    eraOwnership: getEraOwnershipExport(db),
+    expertise: getExpertiseExport(db),
   });
 }
 

@@ -97,6 +97,14 @@ export type DecisionEvidence =
       excerpt: string;
     };
 
+export interface DecisionAttribution {
+  authorId: number;
+  name: string;
+  email: string;
+  rationale: string;
+  evidence: DecisionEvidence[];
+}
+
 export interface DecisionRecord {
   id: string;
   title: string;
@@ -109,6 +117,7 @@ export interface DecisionRecord {
   relatedPaths?: string[];
   supersededBy?: string;
   supersedes?: string[];
+  attribution?: DecisionAttribution;
 }
 
 export interface DecisionGapResponse {

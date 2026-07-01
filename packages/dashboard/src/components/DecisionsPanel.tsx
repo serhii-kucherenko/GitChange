@@ -14,7 +14,10 @@ import {
   type DecisionStatus,
   type DecisionSummary,
 } from "../types.js";
-import { evidenceCountToLevel } from "../utils/confidence.js";
+import {
+  decisionConfidenceToLevel,
+  evidenceCountToLevel,
+} from "../utils/confidence.js";
 import { ConfidenceBadge } from "./ConfidenceBadge.js";
 
 const PAGE_SIZE = 50;
@@ -178,7 +181,11 @@ function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
         <div className="flex flex-wrap items-center gap-2">
           <h3 className="text-base font-medium text-slate-100">{detail.title}</h3>
           <ConfidenceBadge
-            level={evidenceCountToLevel(detail.evidence.length)}
+            level={decisionConfidenceToLevel(
+              detail.confidence,
+              detail.reviewStatus,
+              detail.evidence.length,
+            )}
           />
         </div>
         <p className="text-sm text-slate-400">{detail.summary}</p>
@@ -198,6 +205,34 @@ function DecisionDetailDrawer({ decisionId }: { decisionId: string }) {
           </span>
         </div>
       </header>
+
+      {detail.attribution ? (
+        <section className="mb-4 rounded-md border border-slate-800 bg-slate-950/60 px-3 py-3">
+          <h4 className="mb-1 text-xs font-medium uppercase tracking-wide text-slate-500">
+            Attribution
+          </h4>
+          <p className="text-sm font-medium text-slate-200">
+            {detail.attribution.name}
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            {detail.attribution.rationale}
+          </p>
+          {(() => {
+            const commitSha = detail.attribution.evidence
+              .map((item) => evidenceCommitSha(item))
+              .find((sha): sha is string => sha !== null);
+            return commitSha ? (
+              <button
+                type="button"
+                onClick={() => setSelectedCommitSha(commitSha)}
+                className="mt-2 font-mono text-xs text-sky-300 hover:text-sky-200"
+              >
+                {commitSha.slice(0, 7)}
+              </button>
+            ) : null;
+          })()}
+        </section>
+      ) : null}
 
       <h4 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
         Evidence

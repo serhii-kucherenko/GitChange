@@ -30,3 +30,32 @@ code {
 .era-timeline .vis-time-axis .vis-text {
   color: rgb(148 163 184);
 }
+
+.era-timeline .open-work-badge {
+  display: inline-flex;
+  margin-left: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid;
+  padding: 0 0.35rem;
+  font-size: 10px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.era-timeline .open-work-badge--in-progress {
+  border-color: rgb(180 83 9 / 0.6);
+  background: rgb(69 26 3 / 0.5);
+  color: rgb(253 230 138);
+}
+
+.era-timeline .open-work-badge--open {
+  border-color: rgb(3 105 161 / 0.6);
+  background: rgb(8 47 73 / 0.5);
+  color: rgb(186 230 253);
+}
+
+.era-timeline .open-work-badge--stale {
+  border-color: rgb(71 85 105 / 0.6);
+  background: rgb(30 41 59 / 0.5);
+  color: rgb(203 213 225);
+}

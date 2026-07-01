@@ -1,13 +1,17 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useMemo, useRef } from "react";
 import {
   fetchCommitsPage,
+  fetchOpenWorkMatchableThreads,
   hasActiveFilters,
   type CommitListFilters,
   type CommitSummary,
 } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
+import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
+import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
+import { OpenWorkBadge } from "./OpenWorkBadge.js";
 
 const PAGE_SIZE = 50;
 const ROW_HEIGHT = 44;
@@ -24,11 +28,18 @@ function CommitRow({
   commit,
   isSelected,
   onSelect,
+  openWorkThreads,
 }: {
   commit: CommitSummary;
   isSelected: boolean;
   onSelect: (sha: string) => void;
+  openWorkThreads: MatchableOpenWorkThread[];
 }) {
+  const matched = matchOpenWorkToSurface(openWorkThreads, {
+    commitSha: commit.sha,
+  });
+  const threadBadge = matched[0];
+
   return (
     <button
       type="button"
@@ -44,6 +55,9 @@ function CommitRow({
       <span className="min-w-0 flex-1 truncate text-slate-100">
         {commit.summary}
       </span>
+      {threadBadge ? (
+        <OpenWorkBadge status={threadBadge.status} compact />
+      ) : null}
       <span className="hidden shrink-0 text-xs text-slate-500 sm:inline">
         {commit.authorName}
       </span>
@@ -78,6 +92,14 @@ export function CommitList({ filters }: CommitListProps) {
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
+
+  const openWorkQuery = useQuery({
+    queryKey: ["open-work-matchable"],
+    queryFn: fetchOpenWorkMatchableThreads,
+    staleTime: 60_000,
+  });
+
+  const openWorkThreads = openWorkQuery.data ?? [];
 
   const commits = useMemo(
     () => query.data?.pages.flatMap((page) => page.commits) ?? [],
@@ -197,6 +219,7 @@ export function CommitList({ filters }: CommitListProps) {
                     commit={commit}
                     isSelected={selectedCommitSha === commit.sha}
                     onSelect={setSelectedCommitSha}
+                    openWorkThreads={openWorkThreads}
                   />
                 )}
               </div>

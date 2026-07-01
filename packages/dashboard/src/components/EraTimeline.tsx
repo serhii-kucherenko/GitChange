@@ -3,8 +3,11 @@ import { useEffect, useRef } from "react";
 import { DataSet } from "vis-data";
 import { Timeline } from "vis-timeline/standalone";
 import type { DashboardEra } from "../api/client.js";
-import { fetchEras } from "../api/client.js";
+import { fetchEras, fetchOpenWorkMatchableThreads } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
+import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
+import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
+import { openWorkBadgeHtml } from "../utils/open-work-badge-html.js";
 
 interface TimelineItem {
   id: string;
@@ -14,10 +17,29 @@ interface TimelineItem {
   type: "range";
 }
 
-function toTimelineItems(eras: DashboardEra[]): TimelineItem[] {
+function formatEraLabel(
+  era: DashboardEra,
+  threads: MatchableOpenWorkThread[],
+): string {
+  const matched = matchOpenWorkToSurface(threads, {
+    eraId: era.id,
+    eraWindow: { startAt: era.startAt, endAt: era.endAt },
+  });
+  if (matched.length === 0) {
+    return era.name;
+  }
+
+  const badge = openWorkBadgeHtml(matched[0]!.status);
+  return `${era.name} ${badge}`;
+}
+
+function toTimelineItems(
+  eras: DashboardEra[],
+  threads: MatchableOpenWorkThread[],
+): TimelineItem[] {
   return eras.map((era) => ({
     id: era.id,
-    content: era.name,
+    content: formatEraLabel(era, threads),
     start: new Date(era.startAt),
     end: new Date(era.endAt),
     type: "range",
@@ -44,7 +66,14 @@ export function EraTimeline() {
     staleTime: 60_000,
   });
 
+  const openWorkQuery = useQuery({
+    queryKey: ["open-work-matchable"],
+    queryFn: fetchOpenWorkMatchableThreads,
+    staleTime: 60_000,
+  });
+
   const eras = query.data ?? [];
+  const matchableThreads = openWorkQuery.data ?? [];
   erasRef.current = eras;
 
   useEffect(() => {
@@ -53,7 +82,7 @@ export function EraTimeline() {
       return;
     }
 
-    const items = new DataSet<TimelineItem>(toTimelineItems(eras));
+    const items = new DataSet<TimelineItem>(toTimelineItems(eras, matchableThreads));
     itemsRef.current = items;
 
     const timeline = new Timeline(container, items, {
@@ -94,7 +123,7 @@ export function EraTimeline() {
       timelineRef.current = null;
       itemsRef.current = null;
     };
-  }, [clearEra, eras.length, setSelectedEraId]);
+  }, [clearEra, eras.length, matchableThreads, setSelectedEraId]);
 
   useEffect(() => {
     const items = itemsRef.current;
@@ -103,7 +132,7 @@ export function EraTimeline() {
       return;
     }
 
-    const nextItems = toTimelineItems(eras);
+    const nextItems = toTimelineItems(eras, matchableThreads);
     const existingIds = items.getIds();
     const nextIds = nextItems.map((item) => item.id);
 
@@ -121,7 +150,7 @@ export function EraTimeline() {
         items.add(item);
       }
     }
-  }, [eras]);
+  }, [eras, matchableThreads]);
 
   useEffect(() => {
     const timeline = timelineRef.current;

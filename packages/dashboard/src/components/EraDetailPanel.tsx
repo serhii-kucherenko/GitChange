@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchEras } from "../api/client.js";
+import { fetchEras, fetchOpenWorkMatchableThreads } from "../api/client.js";
 import { useDrillStore } from "../store/drill.js";
 import { evidenceCountToLevel } from "../utils/confidence.js";
+import { matchOpenWorkToSurface } from "../utils/open-work-match.js";
 import { ConfidenceBadge } from "./ConfidenceBadge.js";
+import { OpenWorkBadge } from "./OpenWorkBadge.js";
 
 function formatInflectionType(type: string): string {
   return type.replaceAll("_", " ");
@@ -14,6 +16,12 @@ export function EraDetailPanel() {
   const query = useQuery({
     queryKey: ["eras"],
     queryFn: fetchEras,
+    staleTime: 60_000,
+  });
+
+  const openWorkQuery = useQuery({
+    queryKey: ["open-work-matchable"],
+    queryFn: fetchOpenWorkMatchableThreads,
     staleTime: 60_000,
   });
 
@@ -40,10 +48,20 @@ export function EraDetailPanel() {
     );
   }
 
+  const linkedThreads = matchOpenWorkToSurface(openWorkQuery.data ?? [], {
+    eraId: era.id,
+    eraWindow: { startAt: era.startAt, endAt: era.endAt },
+  });
+
   return (
     <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
       <header className="mb-3 border-b border-slate-800 pb-3">
-        <h2 className="text-lg font-medium text-slate-100">{era.name}</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-lg font-medium text-slate-100">{era.name}</h2>
+          {linkedThreads.map((thread) => (
+            <OpenWorkBadge key={thread.id} status={thread.status} />
+          ))}
+        </div>
         <p className="mt-1 text-sm text-slate-400">{era.summary}</p>
         <p className="mt-2 text-xs text-slate-500">
           {era.commitCountInWindow} commit

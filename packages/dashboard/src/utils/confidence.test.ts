@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   attributionLabel,
+  classifyDecisionConfidence,
+  decisionConfidenceToLevel,
   evidenceCountToLevel,
   evidenceLevelLabel,
   resolveDisplayedAttribution,
@@ -36,6 +38,28 @@ describe("resolveDisplayedAttribution", () => {
 
   it("defaults to degraded when attribution is missing", () => {
     expect(resolveDisplayedAttribution(undefined, false)).toBe("degraded");
+  });
+});
+
+describe("decisionConfidenceToLevel", () => {
+  it("maps confirmed high-confidence decisions to high (verified)", () => {
+    expect(decisionConfidenceToLevel(0.85, "confirmed", 2)).toBe("high");
+    expect(classifyDecisionConfidence(0.85, "confirmed", 2)).toBe("verified");
+  });
+
+  it("maps pending high-confidence decisions to high (inferred_high)", () => {
+    expect(decisionConfidenceToLevel(0.75, "pending", 2)).toBe("high");
+    expect(classifyDecisionConfidence(0.75, "pending", 2)).toBe("inferred_high");
+  });
+
+  it("maps medium confidence to medium", () => {
+    expect(decisionConfidenceToLevel(0.55, "pending", 2)).toBe("medium");
+    expect(classifyDecisionConfidence(0.55, "pending", 2)).toBe("medium");
+  });
+
+  it("maps below-threshold evidence to low", () => {
+    expect(decisionConfidenceToLevel(0.8, "confirmed", 0)).toBe("low");
+    expect(decisionConfidenceToLevel(0.2, "pending", 1)).toBe("low");
   });
 });
 

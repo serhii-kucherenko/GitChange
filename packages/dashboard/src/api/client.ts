@@ -4,6 +4,7 @@ import type {
   OpenWorkListPage,
   OpenWorkThreadDetail,
 } from "../types.js";
+import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
 
 export interface CommitSummary {
   sha: string;
@@ -269,4 +270,33 @@ export async function fetchOpenWorkThread(
   }
 
   return (await response.json()) as OpenWorkThreadDetail;
+}
+
+function toMatchableThread(detail: OpenWorkThreadDetail): MatchableOpenWorkThread {
+  const lastEvent = detail.events.at(-1);
+  return {
+    id: detail.id,
+    kind: detail.kind,
+    status: detail.status,
+    title: detail.title,
+    confidence: detail.confidence,
+    lastEventAt: lastEvent?.committedAt ?? null,
+    linkedDecisionId: detail.linkedDecisionId,
+    relatedPaths: detail.relatedPaths,
+    events: detail.events,
+  };
+}
+
+export async function fetchOpenWorkMatchableThreads(): Promise<
+  MatchableOpenWorkThread[]
+> {
+  const list = await fetchOpenWorkThreads();
+  if (list.threads.length === 0) {
+    return [];
+  }
+
+  const details = await Promise.all(
+    list.threads.map((thread) => fetchOpenWorkThread(thread.id)),
+  );
+  return details.map(toMatchableThread);
 }

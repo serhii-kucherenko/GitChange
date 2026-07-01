@@ -38,9 +38,7 @@ export interface SnapshotRouteOptions {
   gitchangeDir: string;
 }
 
-export function createSnapshotRoutes(
-  options: SnapshotRouteOptions,
-): Hono {
+export function createSnapshotRoutes(options: SnapshotRouteOptions): Hono {
   const app = new Hono();
 
   app.get("/snapshot", (context) => {

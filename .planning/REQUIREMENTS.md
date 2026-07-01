@@ -77,6 +77,13 @@
 - [ ] **PLUG-04**: Plugin follows Understand-Anything packaging pattern (skills, agents, multi-platform install)
 - [ ] **PLUG-05**: Host AI is the LLM — GitChange supplies tools, schemas, and artifacts only
 
+### Install & First Run (INST)
+
+- [ ] **INST-01**: User can install via plugin marketplace or one-line installer following the Understand-Anything pattern
+- [ ] **INST-02**: User completes first analysis with a single `/gitchange` slash command after install — no manual config required
+- [ ] **INST-03**: User opens dashboard with `/gitchange-dashboard` and sees initial value (index status, basic repo snapshot) without manual configuration
+- [ ] **INST-04**: Quickstart docs cover install → `/gitchange` → `/gitchange-dashboard` in under 5 steps
+
 ### Privacy (PRIV)
 
 - [ ] **PRIV-01**: System runs local-only with no telemetry
@@ -153,13 +160,67 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (Populated during roadmap creation) | | |
+| INGX-01 | Phase 1 | Pending |
+| INGX-02 | Phase 1 | Pending |
+| INGX-03 | Phase 1 | Pending |
+| INGX-04 | Phase 1 | Pending |
+| INGX-05 | Phase 1 | Pending |
+| INGX-06 | Phase 5 | Pending |
+| EVD-01 | Phase 1 | Pending |
+| EVD-02 | Phase 5 | Pending |
+| EVD-03 | Phase 6 | Pending |
+| EVD-04 | Phase 1 | Pending |
+| TIME-01 | Phase 5 | Pending |
+| TIME-02 | Phase 5 | Pending |
+| TIME-03 | Phase 5 | Pending |
+| TIME-04 | Phase 6 | Pending |
+| ERA-01 | Phase 4 | Pending |
+| ERA-02 | Phase 4 | Pending |
+| ERA-03 | Phase 4 | Pending |
+| TOUR-01 | Phase 7 | Pending |
+| TOUR-02 | Phase 7 | Pending |
+| TOUR-03 | Phase 7 | Pending |
+| TOUR-04 | Phase 7 | Pending |
+| CONT-01 | Phase 2 | Pending |
+| CONT-02 | Phase 6 | Pending |
+| CONT-03 | Phase 2 | Pending |
+| CONT-04 | Phase 2 | Pending |
+| DEC-01 | Phase 6 | Pending |
+| DEC-02 | Phase 6 | Pending |
+| DEC-03 | Phase 6 | Pending |
+| DEC-04 | Phase 6 | Pending |
+| STAT-01 | Phase 6 | Pending |
+| STAT-02 | Phase 6 | Pending |
+| STAT-03 | Phase 6 | Pending |
+| STAT-04 | Phase 6 | Pending |
+| DASH-01 | Phase 5 | Pending |
+| DASH-02 | Phase 8 | Pending |
+| DASH-03 | Phase 5 | Pending |
+| DASH-04 | Phase 5 | Pending |
+| PLUG-01 | Phase 3 | Pending |
+| PLUG-02 | Phase 3 | Pending |
+| PLUG-03 | Phase 3 | Pending |
+| PLUG-04 | Phase 3 | Pending |
+| PLUG-05 | Phase 3 | Pending |
+| INST-01 | Phase 3 | Pending |
+| INST-02 | Phase 3 | Pending |
+| INST-03 | Phase 3 | Pending |
+| INST-04 | Phase 3 | Pending |
+| PRIV-01 | Phase 1 | Pending |
+| PRIV-02 | Phase 1 | Pending |
+| PRIV-03 | Phase 1 | Pending |
+| PRIV-04 | Phase 5 | Pending |
+| SCALE-01 | Phase 8 | Pending |
+| SCALE-02 | Phase 5 | Pending |
+| SCALE-03 | Phase 1 | Pending |
+| MULTI-01 | Phase 8 | Pending |
+| MULTI-02 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 52 total
-- Mapped to phases: 0
-- Unmapped: 52 ⚠️
+- v1 requirements: 55 total
+- Mapped to phases: 55
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-30*
-*Last updated: 2026-06-30 after initial definition*
+*Last updated: 2026-06-30 after First Run / Install UX revision (INST-01–04, PLUG-02 → Phase 3)*

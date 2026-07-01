@@ -109,6 +109,35 @@
           ]
         }
       ]
+    },
+    {
+      "id": "tour:01HAUTH",
+      "kind": "topic",
+      "topicKey": "auth",
+      "title": "Auth topic tour",
+      "description": "Authentication and access-control changes across the repo history.",
+      "chapters": [
+        {
+          "order": 1,
+          "title": "Auth wiring",
+          "summary": "Feature module commits that introduced endpoint wiring.",
+          "eraIds": ["era:01HGROWTH"],
+          "stops": [
+            {
+              "id": "stop:01HTOPIC",
+              "narrative": "Feature module commit shows auth-related endpoint wiring.",
+              "evidence": [
+                {
+                  "type": "file",
+                  "path": "src/feature.ts",
+                  "commitSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              ],
+              "drillTarget": { "filePath": "src/feature.ts", "commitSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

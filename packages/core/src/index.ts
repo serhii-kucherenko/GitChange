@@ -258,6 +258,13 @@ export {
   type ToursIntegrityReport,
 } from "./verify/tours-integrity.js";
 export {
+  BASIC_SCENARIO_TOURS_SNAPSHOT,
+  collectToursEvidenceSnapshot,
+  verifyToursEvidenceIntegrity,
+  type ToursEvidenceIntegrityReport,
+  type ToursEvidenceSnapshot,
+} from "./verify/tours-snapshot.js";
+export {
   checkSemanticIntegrity,
   type SemanticIntegrityReport,
 } from "./verify/semantic-integrity.js";

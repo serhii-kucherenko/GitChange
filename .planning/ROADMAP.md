@@ -90,7 +90,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1; parallel)*
 
 - [ ] 02-02-PLAN.md — Line-survival ownership at HEAD via es-git blame + simple-git ignore-revs (CONT-04)
-- [ ] 02-03-PLAN.md — Co-change graph with path filters + era boundary signals (pre-LLM)
+- [x] 02-03-PLAN.md — Co-change graph with path filters + era boundary signals (pre-LLM)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -208,7 +208,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
-| 2. Repository Intelligence & Ownership | 1/5 | In Progress|  |
+| 2. Repository Intelligence & Ownership | 2/5 | In Progress|  |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |

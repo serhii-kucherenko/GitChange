@@ -43,7 +43,7 @@
 
 ### Contributors & Ownership (CONT)
 
-- [ ] **CONT-01**: User can see who changed what with per-file and per-era ownership timelines
+- [x] **CONT-01**: User can see who changed what with per-file and per-era ownership timelines
 - [ ] **CONT-02**: User can see decision attribution — who drove pivots with linked commits
 - [ ] **CONT-03**: User can view contributor expertise profiles inferred from history ("ask Alice about auth")
 - [ ] **CONT-04**: System computes ownership from line survival at HEAD with rename tracking and ignore-revs support
@@ -181,7 +181,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | TOUR-02 | Phase 7 | Pending |
 | TOUR-03 | Phase 7 | Pending |
 | TOUR-04 | Phase 7 | Pending |
-| CONT-01 | Phase 2 | Pending |
+| CONT-01 | Phase 2 | Complete |
 | CONT-02 | Phase 6 | Pending |
 | CONT-03 | Phase 2 | Pending |
 | CONT-04 | Phase 2 | Pending |

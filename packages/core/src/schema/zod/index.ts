@@ -86,6 +86,25 @@ export {
   type NamedEra as NamedEraType,
 } from "./eras.js";
 export {
+  DrillTarget,
+  RoleTag,
+  TOURS_CAPS,
+  TOURS_SCHEMA_VERSION,
+  Tour,
+  TourChapter,
+  TourKind,
+  TourStop,
+  ToursArtifact,
+  assertTourKind,
+  type DrillTarget as DrillTargetType,
+  type RoleTag as RoleTagType,
+  type Tour as TourType,
+  type TourChapter as TourChapterType,
+  type TourKind as TourKindType,
+  type TourStop as TourStopType,
+  type ToursArtifact as ToursArtifactType,
+} from "./tours.js";
+export {
   TemporalGraphArtifact,
   TemporalGraphEdge,
   TemporalGraphEdgeType,

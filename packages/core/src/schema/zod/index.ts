@@ -116,3 +116,15 @@ export {
   type TemporalGraphNode as TemporalGraphNodeRecord,
   type TemporalGraphNodeType as TemporalGraphNodeTypeValue,
 } from "./temporal-graph.js";
+export {
+  CrossRepoLink,
+  CrossRepoLinkKind,
+  RepoEntry,
+  WORKSPACE_SCHEMA_VERSION,
+  WorkspaceArtifact,
+  assertCrossRepoLinkKind,
+  type CrossRepoLink as CrossRepoLinkType,
+  type CrossRepoLinkKind as CrossRepoLinkKindType,
+  type RepoEntry as RepoEntryType,
+  type WorkspaceArtifact as WorkspaceArtifactType,
+} from "./workspace.js";

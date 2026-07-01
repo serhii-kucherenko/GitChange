@@ -16,6 +16,7 @@ export type IndexCompleteness = z.infer<typeof IndexCompleteness>;
 
 export const ManifestSchema = z.object({
   schemaVersion: z.string(),
+  repoId: z.string().min(1).optional(),
   lastIndexedCommit: z.string(),
   indexedAt: z.string(),
   repo: z.object({
@@ -42,6 +43,7 @@ export const ManifestSchema = z.object({
   toursComputedAt: z.string().optional(),
   toursHeadSha: z.string().optional(),
   toursSchemaVersion: z.string().optional(),
+  lastIndexDurationMs: z.number().int().nonnegative().optional(),
 });
 
 export type Manifest = z.infer<typeof ManifestSchema>;

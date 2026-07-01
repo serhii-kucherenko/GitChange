@@ -273,3 +273,32 @@ export {
   collectSemanticSnapshot,
   type SemanticSnapshot,
 } from "./verify/semantic-snapshot.js";
+export {
+  CrossRepoLink,
+  CrossRepoLinkKind,
+  RepoEntry,
+  WORKSPACE_SCHEMA_VERSION,
+  WorkspaceArtifact,
+  assertCrossRepoLinkKind,
+  type CrossRepoLink as CrossRepoLinkType,
+  type CrossRepoLinkKind as CrossRepoLinkKindType,
+  type RepoEntry as RepoEntryType,
+  type WorkspaceArtifact as WorkspaceArtifactType,
+} from "./schema/zod/workspace.js";
+export {
+  WORKSPACE_FILENAME,
+  addRepo,
+  findRepoRoot,
+  findWorkspaceGitchangeDir,
+  getWorkspacePath,
+  loadWorkspaceContext,
+  readWorkspace,
+  removeRepo,
+  resolveWorkspaceGitchangeDir,
+  resolveWorkspaceGitchangeDirForNew,
+  slugifyLabel,
+  validateRepoPath,
+  writeWorkspace,
+  type AddRepoContext,
+  type AddRepoOptions,
+} from "./workspace/workspace-io.js";

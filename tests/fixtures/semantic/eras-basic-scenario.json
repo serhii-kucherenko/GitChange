@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1",
+  "computedAt": "2026-07-01T12:00:00.000Z",
+  "headSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sourceSignalCount": 1,
+  "eras": [
+    {
+      "id": "era:01HABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "name": "Bootstrap era",
+      "summary": "Initial project setup and core scaffolding.",
+      "startCommitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "endCommitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "startAt": 1700000000000,
+      "endAt": 1700000100000,
+      "signalIds": [1],
+      "inflections": [
+        {
+          "type": "tech_pivot",
+          "title": "Monorepo adoption",
+          "description": "Project structure shifted to a TypeScript monorepo layout.",
+          "evidence": [
+            {
+              "type": "file",
+              "path": "packages/core/src/index.ts",
+              "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ]
+        }
+      ],
+      "claims": [
+        {
+          "text": "Core modules were established in the first indexed commits.",
+          "evidence": [
+            {
+              "type": "commit",
+              "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "type": "doc",
+          "path": "README.md",
+          "commitSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "excerpt": "# GitChange fixture"
+        }
+      ]
+    }
+  ]
+}

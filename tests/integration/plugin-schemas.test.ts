@@ -31,6 +31,8 @@ function createValidator(): Ajv {
   ajv.addSchema(readSchema("intelligence-summary.schema.json"));
   ajv.addSchema(readSchema("intelligence-full.schema.json"));
   ajv.addSchema(readSchema("snapshot.schema.json"));
+  ajv.addSchema(readSchema("era-synthesis-context.schema.json"));
+  ajv.addSchema(readSchema("eras.schema.json"));
   return ajv;
 }
 
@@ -106,6 +108,19 @@ describe("integration: plugin host-AI schemas", () => {
     expect(validate?.(body)).toBe(true);
   });
 
+  it("validates golden era artifact against eras.schema.json", () => {
+    const eras = JSON.parse(
+      readFileSync(
+        join(REPO_ROOT, "tests/fixtures/semantic/eras-basic-scenario.json"),
+        "utf8",
+      ),
+    );
+
+    const validate = ajv.getSchema("https://gitchange.dev/schemas/eras.schema.json");
+    expect(validate).toBeDefined();
+    expect(validate?.(eras)).toBe(true);
+  });
+
   it("validates trimmed intelligence against intelligence-summary.schema.json", async () => {
     const fixture = await indexBasicScenario();
     cleanups.push(fixture.cleanup);
@@ -129,6 +144,7 @@ describe("integration: PLUG-05 no embedded LLM SDK", () => {
     "packages/plugin",
     "packages/cli",
     "packages/server",
+    "packages/core/src/semantic",
   ];
 
   it("has no LLM SDK imports in plugin, cli, or server packages", () => {

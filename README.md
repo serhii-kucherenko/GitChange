@@ -2,6 +2,8 @@
 
 GitChange analyzes git history from a local clone and helps new teammates and maintainers understand how a project evolved — with evidence you can drill into from a local dashboard.
 
+**New here?** Follow the [Quickstart](docs/QUICKSTART.md) — install, run `/gitchange`, open `/gitchange-dashboard` in five steps.
+
 ## Prerequisites
 
 - **Node.js** 22.x LTS

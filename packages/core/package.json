@@ -1,0 +1,33 @@
+{
+  "name": "@gitchange/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "pnpm --dir ../.. exec vitest run packages/core/src",
+    "lint": "biome check src",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "12.11.1",
+    "conventional-commits-parser": "7.0.0",
+    "drizzle-orm": "0.45.2",
+    "es-git": "0.7.0",
+    "gray-matter": "4.0.3",
+    "minimatch": "10.2.5",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "drizzle-kit": "0.31.10"
+  }
+}

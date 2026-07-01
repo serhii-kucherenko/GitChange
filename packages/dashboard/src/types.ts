@@ -180,3 +180,79 @@ export interface OpenWorkThreadDetail {
 }
 
 export type SidebarTab = "eras" | "decisions" | "open-work";
+
+export type TourKind = "default" | "role" | "topic";
+
+export type TourRoleTag = "backend" | "frontend" | "fullstack" | "maintainer";
+
+export type TourEvidence =
+  | { type: "commit"; sha: string }
+  | { type: "file"; path: string; commitSha: string }
+  | {
+      type: "doc";
+      path: string;
+      commitSha: string;
+      excerpt: string;
+    }
+  | {
+      type: "hunk";
+      path: string;
+      commitSha: string;
+      startLine: number;
+      endLine: number;
+      excerpt: string;
+    }
+  | {
+      type: "interview";
+      path: string;
+      recordedAt: string;
+      excerpt: string;
+    };
+
+export interface TourDrillTarget {
+  eraId?: string;
+  commitSha?: string;
+  filePath?: string;
+  decisionId?: string;
+}
+
+export interface TourStop {
+  id: string;
+  narrative: string;
+  evidence: TourEvidence[];
+  drillTarget: TourDrillTarget;
+}
+
+export interface TourChapter {
+  order: number;
+  title: string;
+  summary: string;
+  eraIds: string[];
+  stops: TourStop[];
+}
+
+export interface TourSummary {
+  id: string;
+  kind: TourKind;
+  title: string;
+  description: string;
+  roleTag?: TourRoleTag;
+  topicKey?: string;
+  chapterCount: number;
+  stopCount: number;
+}
+
+export interface TourListPage {
+  tours: TourSummary[];
+  defaultTourId: string;
+}
+
+export interface TourDetail {
+  id: string;
+  kind: TourKind;
+  title: string;
+  description: string;
+  chapters: TourChapter[];
+  roleTag?: TourRoleTag;
+  topicKey?: string;
+}

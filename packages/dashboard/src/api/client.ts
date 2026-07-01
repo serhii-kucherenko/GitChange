@@ -3,6 +3,8 @@ import type {
   DecisionListPage,
   OpenWorkListPage,
   OpenWorkThreadDetail,
+  TourDetail,
+  TourListPage,
 } from "../types.js";
 import type { MatchableOpenWorkThread } from "../utils/open-work-match.js";
 
@@ -272,7 +274,9 @@ export async function fetchOpenWorkThread(
   return (await response.json()) as OpenWorkThreadDetail;
 }
 
-function toMatchableThread(detail: OpenWorkThreadDetail): MatchableOpenWorkThread {
+function toMatchableThread(
+  detail: OpenWorkThreadDetail,
+): MatchableOpenWorkThread {
   const lastEvent = detail.events.at(-1);
   return {
     id: detail.id,
@@ -299,4 +303,37 @@ export async function fetchOpenWorkMatchableThreads(): Promise<
     list.threads.map((thread) => fetchOpenWorkThread(thread.id)),
   );
   return details.map(toMatchableThread);
+}
+
+export const tours = {
+  list: ["tours", "list"] as const,
+  detail: (tourId: string) => ["tours", "detail", tourId] as const,
+};
+
+export async function fetchTours(): Promise<TourListPage> {
+  const response = await fetch("/api/tours");
+
+  if (response.status === 404) {
+    throw new Error("tours_not_found");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Tours request failed (${response.status})`);
+  }
+
+  return (await response.json()) as TourListPage;
+}
+
+export async function fetchTour(tourId: string): Promise<TourDetail> {
+  const response = await fetch(`/api/tours/${encodeURIComponent(tourId)}`);
+
+  if (response.status === 404) {
+    throw new Error("tour_not_found");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Tour detail request failed (${response.status})`);
+  }
+
+  return (await response.json()) as TourDetail;
 }

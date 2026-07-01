@@ -71,10 +71,7 @@ export function listTours(gitchangeDir: string): TourListResult | null {
   };
 }
 
-export function getTourById(
-  gitchangeDir: string,
-  tourId: string,
-): Tour | null {
+export function getTourById(gitchangeDir: string, tourId: string): Tour | null {
   if (!isIndexed(gitchangeDir)) {
     return null;
   }

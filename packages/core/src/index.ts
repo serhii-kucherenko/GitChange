@@ -8,6 +8,17 @@ export type {
 } from "./intelligence/compute.js";
 export { computeIntelligence } from "./intelligence/compute.js";
 export {
+  getRepoSnapshot,
+  type RepoSnapshot,
+  type RepoSnapshotStats,
+} from "./read/snapshot.js";
+export {
+  readManifest,
+  type Manifest,
+  type ManifestWarningCode,
+  type IndexCompleteness,
+} from "./schema/manifest.js";
+export {
   type AttributionConfidence,
   INTELLIGENCE_SCHEMA_VERSION,
   IntelligenceArtifact,

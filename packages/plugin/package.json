@@ -1,0 +1,12 @@
+{
+  "name": "@gitchange/plugin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo \"plugin packaging lands in Plan 03-04\"",
+    "test": "echo \"no plugin tests yet\"",
+    "lint": "echo \"no plugin sources yet\"",
+    "typecheck": "echo \"plugin typecheck lands in Plan 03-04\""
+  }
+}

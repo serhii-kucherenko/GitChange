@@ -24,6 +24,19 @@ importers:
         specifier: 4.1.9
         version: 4.1.9(@types/node@26.0.1)(vite@8.1.2(@types/node@26.0.1)(esbuild@0.28.1)(tsx@4.22.4))
 
+  packages/cli:
+    dependencies:
+      '@gitchange/core':
+        specifier: workspace:*
+        version: link:../core
+      commander:
+        specifier: 15.0.0
+        version: 15.0.0
+    devDependencies:
+      '@types/node':
+        specifier: 22.15.32
+        version: 22.15.32
+
   packages/core:
     dependencies:
       better-sqlite3:
@@ -60,6 +73,20 @@ importers:
       drizzle-kit:
         specifier: 0.31.10
         version: 0.31.10
+
+  packages/dashboard: {}
+
+  packages/plugin: {}
+
+  packages/server:
+    dependencies:
+      '@gitchange/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      '@types/node':
+        specifier: 22.15.32
+        version: 22.15.32
 
 packages:
 
@@ -823,6 +850,10 @@ packages:
 
   chownr@1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
+
+  commander@15.0.0:
+    resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
+    engines: {node: '>=22.12.0'}
 
   conventional-commits-parser@7.0.0:
     resolution: {integrity: sha512-dZe/p+FgGQLNJFqaCgNdl8j6a7gI8xuaN30Wy5g7nvyK3jqOpNUEUZ3pGJ5D68h89uRh038FtkeOk/bnGmYkmg==}
@@ -1950,6 +1981,8 @@ snapshots:
   chai@6.2.2: {}
 
   chownr@1.1.4: {}
+
+  commander@15.0.0: {}
 
   conventional-commits-parser@7.0.0:
     dependencies:

@@ -1,0 +1,12 @@
+{
+  "name": "@gitchange/dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo \"dashboard build lands in Plan 03-03\"",
+    "test": "echo \"no dashboard tests yet\"",
+    "lint": "echo \"no dashboard sources yet\"",
+    "typecheck": "echo \"dashboard typecheck lands in Plan 03-03\""
+  }
+}

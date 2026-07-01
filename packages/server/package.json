@@ -1,20 +1,24 @@
 {
-  "name": "@gitchange/cli",
+  "name": "@gitchange/server",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": {
-    "gitchange": "./dist/bin.js"
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "pnpm --dir ../.. exec vitest run tests/integration/cli-index.test.ts",
+    "test": "echo \"no server tests yet\"",
     "lint": "biome check src",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@gitchange/core": "workspace:*",
-    "commander": "15.0.0"
+    "@gitchange/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "22.15.32"

@@ -45,15 +45,19 @@ export function createIgnoreMatcher(patterns: readonly string[]): IgnoreMatcher 
   };
 }
 
-export function loadIgnore(repoRoot: string): IgnoreMatcher {
+export function loadIgnorePatterns(repoRoot: string): string[] {
   const ignorePath = join(repoRoot, ".gitchangeignore");
 
   if (existsSync(ignorePath)) {
     const content = readFileSync(ignorePath, "utf8");
-    return createIgnoreMatcher(parseIgnoreFile(content));
+    return parseIgnoreFile(content);
   }
 
-  return createIgnoreMatcher(DEFAULT_GITCHANGEIGNORE);
+  return [...DEFAULT_GITCHANGEIGNORE];
+}
+
+export function loadIgnore(repoRoot: string): IgnoreMatcher {
+  return createIgnoreMatcher(loadIgnorePatterns(repoRoot));
 }
 
 export { DEFAULT_GITCHANGEIGNORE } from "./default-gitchangeignore.js";

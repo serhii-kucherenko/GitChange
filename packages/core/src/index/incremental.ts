@@ -10,7 +10,7 @@ import { readManifest, writeManifest, type Manifest } from "../schema/manifest.j
 import { checkCursorReachable, ForcePushHaltError } from "./freshness.js";
 import { ensureGitignored } from "./gitignore-guard.js";
 import { CORE_SCHEMA_VERSION, DEFAULT_MAX_BLOB_BYTES, indexFull } from "./full.js";
-import { processCommit } from "./process-commit.js";
+import { indexCommitStream } from "./commit-stream.js";
 import { resolveBranchName, resolveHeadSha } from "./repo-head.js";
 import type { IndexOptions, IndexResult } from "./types.js";
 
@@ -26,6 +26,7 @@ function countCommits(db: ReturnType<typeof openDb>): number {
 function refreshManifest(
   repo: Awaited<ReturnType<typeof openRepo>>,
   previous: Manifest | null,
+  lastIndexDurationMs?: number,
 ): Manifest {
   const headSha = resolveHeadSha(repo);
   return {
@@ -41,10 +42,12 @@ function refreshManifest(
     intelligenceComputedAt: previous?.intelligenceComputedAt,
     intelligenceHeadSha: previous?.intelligenceHeadSha,
     intelligenceSchemaVersion: previous?.intelligenceSchemaVersion,
+    ...(lastIndexDurationMs !== undefined ? { lastIndexDurationMs } : {}),
   };
 }
 
 export async function indexIncremental(options: IndexOptions): Promise<IndexResult> {
+  const startedAt = Date.now();
   const gitchangeDir = resolveGitchangedir(options.repoPath, options.gitchangeDir);
   const existingManifest = readManifest(gitchangeDir);
 
@@ -88,19 +91,23 @@ export async function indexIncremental(options: IndexOptions): Promise<IndexResu
   const writer = createWriter(db, options.batchSize);
   const matcher = loadIgnore(options.repoPath);
   const maxBlobBytes = options.maxBlobBytes ?? DEFAULT_MAX_BLOB_BYTES;
+  const useWorkers = options.useWorkers !== false;
 
-  let commitsIndexed = 0;
-  let fileChanges = 0;
-
-  for (const sha of walkRange(repo, existingManifest.lastIndexedCommit)) {
-    const result = processCommit({ repo, sha, writer, matcher, maxBlobBytes });
-    commitsIndexed += 1;
-    fileChanges += result.fileChanges;
-  }
+  const streamResult = await indexCommitStream({
+    repo,
+    repoPath: options.repoPath,
+    shas: walkRange(repo, existingManifest.lastIndexedCommit),
+    writer,
+    matcher,
+    maxBlobBytes,
+    useWorkers,
+    onProgress: options.onProgress,
+  });
 
   writer.flush();
 
-  let manifest = refreshManifest(repo, existingManifest);
+  const lastIndexDurationMs = Date.now() - startedAt;
+  let manifest = refreshManifest(repo, existingManifest, lastIndexDurationMs);
   writeManifest(gitchangeDir, manifest);
 
   if (options.rebuildIntelligence) {
@@ -111,22 +118,22 @@ export async function indexIncremental(options: IndexOptions): Promise<IndexResu
     manifest = intelligence.manifest;
   }
 
-  if (commitsIndexed > 0) {
+  if (streamResult.commitsIndexed > 0) {
     console.log(
-      `GitChange incremental index complete: ${commitsIndexed} new commits (HEAD ${manifest.repo.head.slice(0, 7)})`,
+      `GitChange incremental index complete: ${streamResult.commitsIndexed} new commits (HEAD ${manifest.repo.head.slice(0, 7)})`,
     );
   }
 
   const commitsAfter = countCommits(db);
-  if (commitsIndexed > 0 && commitsAfter !== commitsBefore + commitsIndexed) {
+  if (streamResult.commitsIndexed > 0 && commitsAfter !== commitsBefore + streamResult.commitsIndexed) {
     throw new Error(
-      `Incremental commit count mismatch: expected ${commitsBefore + commitsIndexed}, got ${commitsAfter}`,
+      `Incremental commit count mismatch: expected ${commitsBefore + streamResult.commitsIndexed}, got ${commitsAfter}`,
     );
   }
 
   return {
-    commitsIndexed,
-    fileChanges,
+    commitsIndexed: streamResult.commitsIndexed,
+    fileChanges: streamResult.fileChanges,
     manifest,
   };
 }

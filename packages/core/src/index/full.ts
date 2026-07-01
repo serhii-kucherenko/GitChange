@@ -20,7 +20,7 @@ import {
   isShallow,
 } from "./freshness.js";
 import { ensureGitignored } from "./gitignore-guard.js";
-import { processCommit } from "./process-commit.js";
+import { indexCommitStream } from "./commit-stream.js";
 import { resolveBranchName, resolveHeadSha } from "./repo-head.js";
 import type { IndexOptions, IndexResult } from "./types.js";
 
@@ -49,15 +49,12 @@ function countFileChanges(db: ReturnType<typeof openDb>): number {
   return row?.value ?? 0;
 }
 
-function signatureToEpochMs(signature: { timestamp: number }): number {
-  return signature.timestamp * 1000;
-}
-
 function buildManifest(
   repo: Awaited<ReturnType<typeof openRepo>>,
   options: {
     indexCompleteness: IndexCompleteness;
     warnings: Manifest["warnings"];
+    lastIndexDurationMs?: number;
   },
 ): Manifest {
   const headSha = resolveHeadSha(repo);
@@ -71,6 +68,9 @@ function buildManifest(
     },
     indexCompleteness: options.indexCompleteness,
     warnings: options.warnings,
+    ...(options.lastIndexDurationMs !== undefined
+      ? { lastIndexDurationMs: options.lastIndexDurationMs }
+      : {}),
   };
 }
 
@@ -91,6 +91,7 @@ function createWarning(
 }
 
 export async function indexFull(options: IndexOptions): Promise<IndexResult> {
+  const startedAt = Date.now();
   const gitchangeDir = resolveGitchangedir(options.repoPath, options.gitchangeDir);
   ensureGitignored(options.repoPath);
   resetIndexStore(gitchangeDir);
@@ -114,20 +115,22 @@ export async function indexFull(options: IndexOptions): Promise<IndexResult> {
   }
 
   const maxBlobBytes = options.maxBlobBytes ?? DEFAULT_MAX_BLOB_BYTES;
+  const useWorkers = options.useWorkers !== false;
 
-  let commitsIndexed = 0;
-  const committerTimestamps: number[] = [];
-
-  for (const sha of walkFromHead(repo)) {
-    const commit = repo.getCommit(sha);
-    committerTimestamps.push(signatureToEpochMs(commit.committer()));
-    processCommit({ repo, sha, writer, matcher, maxBlobBytes });
-    commitsIndexed += 1;
-  }
+  const streamResult = await indexCommitStream({
+    repo,
+    repoPath: options.repoPath,
+    shas: walkFromHead(repo),
+    writer,
+    matcher,
+    maxBlobBytes,
+    useWorkers,
+    onProgress: options.onProgress,
+  });
 
   writer.flush();
 
-  const outOfOrderCount = countOutOfOrder(committerTimestamps);
+  const outOfOrderCount = countOutOfOrder(streamResult.committerTimestamps);
   if (outOfOrderCount > 0) {
     warnings.push(
       createWarning(
@@ -140,7 +143,12 @@ export async function indexFull(options: IndexOptions): Promise<IndexResult> {
     );
   }
 
-  let manifest = buildManifest(repo, { indexCompleteness, warnings });
+  const lastIndexDurationMs = Date.now() - startedAt;
+  let manifest = buildManifest(repo, {
+    indexCompleteness,
+    warnings,
+    lastIndexDurationMs,
+  });
   writeManifest(gitchangeDir, manifest);
 
   if (options.rebuildIntelligence) {
@@ -154,11 +162,11 @@ export async function indexFull(options: IndexOptions): Promise<IndexResult> {
   echoWarnings(manifest.warnings);
 
   console.log(
-    `GitChange index complete: ${commitsIndexed} commits indexed (HEAD ${manifest.repo.head.slice(0, 7)})`,
+    `GitChange index complete: ${streamResult.commitsIndexed} commits indexed (HEAD ${manifest.repo.head.slice(0, 7)})`,
   );
 
   return {
-    commitsIndexed,
+    commitsIndexed: streamResult.commitsIndexed,
     fileChanges: countFileChanges(db),
     manifest,
   };

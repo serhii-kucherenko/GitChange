@@ -24,6 +24,7 @@
     "es-git": "0.7.0",
     "gray-matter": "4.0.3",
     "minimatch": "10.2.5",
+    "piscina": "5.2.0",
     "simple-git": "3.36.0",
     "ulid": "2.3.0",
     "zod": "4.4.3"

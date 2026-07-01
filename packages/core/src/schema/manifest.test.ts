@@ -124,6 +124,11 @@ describe("ManifestSchema", () => {
 
     expect(ManifestSchema.parse(manifest)).toEqual(manifest);
   });
+
+  it("round-trips optional lastIndexDurationMs", () => {
+    const manifest = sampleManifest({ lastIndexDurationMs: 12_345 });
+    expect(ManifestSchema.parse(manifest)).toEqual(manifest);
+  });
 });
 
 describe("exhaustive narrowing helpers", () => {

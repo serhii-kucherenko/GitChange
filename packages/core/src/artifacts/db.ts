@@ -22,6 +22,8 @@ export function openDb(gitchangeDir: string): DrizzleDb {
   const client = new Database(dbPath);
   client.pragma("journal_mode = WAL");
   client.pragma("synchronous = NORMAL");
+  client.pragma("cache_size = -64000");
+  client.pragma("mmap_size = 268435456");
 
   const db = drizzle({ client, schema });
   migrate(db, { migrationsFolder });

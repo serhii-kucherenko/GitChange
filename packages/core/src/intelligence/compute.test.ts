@@ -64,5 +64,15 @@ describe("computeIntelligence", () => {
       expect(boundary.startCommitSha).toHaveLength(40);
       expect(boundary.endCommitSha).toHaveLength(40);
     }
+
+    const srcOwnership = artifact.ownership.files.filter((file) =>
+      file.path.startsWith("src/"),
+    );
+    expect(srcOwnership.length).toBeGreaterThan(0);
+    for (const file of srcOwnership) {
+      expect(file.authors.length).toBeGreaterThan(0);
+      expect(file.evidence.length).toBeGreaterThan(0);
+      expect(file.evidence[0]?.commitSha).toBe(repo.headSha);
+    }
   });
 });

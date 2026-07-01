@@ -8,6 +8,7 @@ import {
   type IntelligenceArtifact as IntelligenceArtifactType,
 } from "../schema/zod/intelligence.js";
 import { getFileChurnRows } from "./churn.js";
+import { getFileOwnershipRows } from "./ownership/index.js";
 import { getCoChangeEdges } from "./cochange.js";
 import { getEraBoundarySignals } from "./era-signals.js";
 
@@ -24,6 +25,46 @@ export function buildIntelligenceArtifact(
   options: ExportIntelligenceOptions,
 ): IntelligenceArtifactType {
   const churnRows = getFileChurnRows(db);
+  const ownershipRows = getFileOwnershipRows(db);
+
+  const ownershipByPath = new Map<
+    string,
+    Array<{
+      authorId: number;
+      name: string;
+      email: string;
+      lineCount: number;
+      percentage: number;
+      evidence: ReturnType<typeof getFileOwnershipRows>[number]["evidence"];
+    }>
+  >();
+
+  for (const row of ownershipRows) {
+    const authors = ownershipByPath.get(row.path) ?? [];
+    authors.push({
+      authorId: row.authorId,
+      name: row.name,
+      email: row.email,
+      lineCount: row.lineCount,
+      percentage: row.percentage,
+      evidence: row.evidence,
+    });
+    ownershipByPath.set(row.path, authors);
+  }
+
+  const ownershipFiles = [...ownershipByPath.entries()].map(([path, authors]) => ({
+    path,
+    authors: authors.map((author) => ({
+      authorId: author.authorId,
+      name: author.name,
+      email: author.email,
+      lineCount: author.lineCount,
+      percentage: author.percentage,
+    })),
+    evidence: authors[0]?.evidence ?? [
+      { type: "file" as const, path, commitSha: options.headSha },
+    ],
+  }));
 
   return IntelligenceArtifact.parse({
     schemaVersion: INTELLIGENCE_SCHEMA_VERSION,
@@ -41,7 +82,7 @@ export function buildIntelligenceArtifact(
       })),
     },
     coChange: { edges: getCoChangeEdges(db) },
-    ownership: { files: [] },
+    ownership: { files: ownershipFiles },
     eraSignals: { boundaries: getEraBoundarySignals(db) },
     expertise: { profiles: [] },
   });

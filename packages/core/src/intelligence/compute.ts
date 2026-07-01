@@ -8,6 +8,7 @@ import { computeChurn, getChurnFileCount } from "./churn.js";
 import { computeCoChange } from "./cochange.js";
 import { computeEraSignals } from "./era-signals.js";
 import { exportIntelligence } from "./export.js";
+import { computeOwnership } from "./ownership/index.js";
 
 export interface ComputeIntelligenceOptions {
   repoPath: string;
@@ -62,6 +63,7 @@ export async function computeIntelligence(
 
   const db = openDb(gitchangeDir);
   computeChurn(db);
+  await computeOwnership(db, options.repoPath, manifest.repo.head);
   computeCoChange(db);
   computeEraSignals(db);
 

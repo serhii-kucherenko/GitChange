@@ -115,7 +115,29 @@ Plans:
   5. Quickstart docs walk install → `/gitchange` → `/gitchange-dashboard` in under 5 steps
   6. Host AI receives structured tools and schemas only — GitChange does not embed its own LLM runtime
 
-**Plans**: TBD (include explicit **First Run** plan for install UX, minimal dashboard shell, and quickstart docs; optional sub-plan for install/marketplace docs)
+**Plans**: 6 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 03-01-PLAN.md — Package scaffold + walking skeleton `gitchange index` (index + intelligence E2E)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 03-02-PLAN.md — Hono server + `gitchange serve` / `gitchange status` + `/api/snapshot`
+
+**Wave 3** *(blocked on Wave 2; 03-04 parallel with 03-02 after 03-01)*
+
+- [ ] 03-03-PLAN.md — Minimal React dashboard SPA (index status + repo snapshot)
+- [ ] 03-04-PLAN.md — Plugin slash commands (`/gitchange`, `/gitchange-dashboard`) + host-AI schemas
+
+**Wave 4** *(blocked on Wave 3 partial — 03-04)*
+
+- [ ] 03-05-PLAN.md — Install UX + plugin path resolver (UA pattern)
+
+**Wave 5** *(blocked on Waves 3–4)*
+
+- [ ] 03-06-PLAN.md — QUICKSTART (≤5 steps) + first-run integration test + validation matrix
 **UI hint**: yes
 
 ### Phase 4: Era Detection & Semantic Pipeline
@@ -209,7 +231,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
-| 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
+| 3. CLI & Plugin Scaffold | 0/6 | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |

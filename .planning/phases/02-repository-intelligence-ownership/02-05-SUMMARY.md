@@ -74,7 +74,7 @@ completed: 2026-07-01
 2. **Task 2: Golden intelligence tests** - `2a055ce` (feat)
 3. **Task 3: Manifest checkpoint + optional index hook + full suite gate** - `bf518bf` (feat)
 
-**Plan metadata:** `dc0be84` (docs)
+**Plan metadata:** `017d060` (docs)
 
 ## Files Created/Modified
 

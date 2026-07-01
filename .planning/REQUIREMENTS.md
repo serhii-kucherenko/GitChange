@@ -12,7 +12,7 @@
 - [x] **INGX-03**: System analyzes docs tracked in git (README, CHANGELOG, docs/, ADRs) as they changed over time
 - [x] **INGX-04**: System incrementally re-indexes only commits after `lastIndexedCommit` on subsequent runs
 - [x] **INGX-05**: System detects force-push or shallow-clone conditions and surfaces index freshness warnings
-- [ ] **INGX-06**: User can search and filter commits by author, path, message keyword, and date range
+- [x] **INGX-06**: User can search and filter commits by author, path, message keyword, and date range
 
 ### Evidence & Trust (EVD)
 
@@ -165,7 +165,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | INGX-03 | Phase 1 | Complete |
 | INGX-04 | Phase 1 | Complete |
 | INGX-05 | Phase 1 | Complete |
-| INGX-06 | Phase 5 | Pending |
+| INGX-06 | Phase 5 | Complete |
 | EVD-01 | Phase 1 | Complete |
 | EVD-02 | Phase 5 | Pending |
 | EVD-03 | Phase 6 | Pending |

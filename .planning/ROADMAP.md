@@ -196,7 +196,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1; parallel)*
 
-- [ ] 05-02-PLAN.md — Commit search/filter by author, path, message, date (INGX-06)
+- [x] 05-02-PLAN.md — Commit search/filter by author, path, message, date (INGX-06)
 - [x] 05-04-PLAN.md — Index-time hunk capture + commit→file→hunk drill panels (TIME-02)
 
 **Wave 3** *(blocked on Wave 2 filters)*
@@ -273,7 +273,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
-| 5. Dashboard & Evidence Drill-Down | 2/6 | In Progress|  |
+| 5. Dashboard & Evidence Drill-Down | 3/6 | In Progress|  |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |

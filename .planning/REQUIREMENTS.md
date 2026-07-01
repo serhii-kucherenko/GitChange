@@ -93,7 +93,7 @@
 
 ### Scale & Performance (SCALE)
 
-- [ ] **SCALE-01**: System indexes repositories with 100k+ commits using incremental two-phase architecture
+- [x] **SCALE-01**: System indexes repositories with 100k+ commits using incremental two-phase architecture
 - [x] **SCALE-02**: Dashboard and agent queries read pre-built index — no live full-repo git walks in UI hot path
 - [x] **SCALE-03**: Core ingestion and parsing covered by TDD with golden fixtures
 
@@ -210,7 +210,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | PRIV-02 | Phase 1 | Complete |
 | PRIV-03 | Phase 1 | Complete |
 | PRIV-04 | Phase 5 | Complete |
-| SCALE-01 | Phase 8 | Pending |
+| SCALE-01 | Phase 8 | Complete |
 | SCALE-02 | Phase 5 | Complete |
 | SCALE-03 | Phase 1 | Complete |
 | MULTI-01 | Phase 8 | Complete |

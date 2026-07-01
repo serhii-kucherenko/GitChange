@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 08-02-PLAN.md — workspace layer + CLI
-last_updated: "2026-07-01T12:57:23.388Z"
+stopped_at: Completed 08-01-PLAN.md — SCALE worker pool + benchmark
+last_updated: "2026-07-01T12:58:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 46
-  completed_plans: 43
-  percent: 88
+  completed_plans: 44
+  percent: 96
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 8 of 8 in progress (Hardening, Scale & Multi-Repo)
-Plan: 3 of 5 complete in Phase 8 (08-02)
-Status: Ready to execute
+Plan: 3 of 5 complete in Phase 8 (08-01, 08-02, 08-03)
+Status: Executing Phase 8
 Last activity: 2026-07-01
-Stopped at: Completed 08-02-PLAN.md — workspace layer + CLI
+Stopped at: Completed 08-01-PLAN.md — SCALE worker pool + benchmark
 
-Progress: [█████████░] 93%
+Progress: [██████████] 96%
 
 ## Performance Metrics
 
@@ -141,6 +141,10 @@ Recent decisions affecting current work:
 - Workspace file stored in primary repo gitchangeDir; discovered by walking up for workspace.json
 - indexWorkspace stamps manifest.repoId after each successful index
 
+- Piscina maxThreads defaults to max(1, cpus-1)
+- Scale fixture uses git fast-import for sub-second 10k history
+- CLI index emits progress every 500 commits on stderr
+
 ### Pending Todos
 
 None yet.
@@ -159,6 +163,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:57:23.379Z
-Stopped at: Completed 07-05-PLAN.md — tours golden gate + E2E
+Last session: 2026-07-01T12:58:00.000Z
+Stopped at: Completed 08-01-PLAN.md — SCALE worker pool + benchmark
 Resume file: None

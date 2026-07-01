@@ -113,27 +113,29 @@ export function MigrationThreadPanel() {
   const thread = query.data;
 
   return (
-    <section className="flex h-[min(70vh,40rem)] flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
+    <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
       <header className="space-y-2 border-b border-slate-800 px-4 py-3">
         <button
           type="button"
           onClick={() => setSelectedThreadId(null)}
-          className="text-xs text-slate-500 hover:text-slate-300"
+          className="text-xs text-slate-400 hover:text-slate-200"
         >
           ← Back to threads
         </button>
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-lg font-medium text-slate-100">{thread.title}</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+            {thread.title}
+          </h2>
           <OpenWorkBadge status={thread.status} />
         </div>
         <p className="text-sm text-slate-400">{thread.summary}</p>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-400">
           {thread.relatedPaths.join(", ")} · {thread.events.length} event
           {thread.events.length === 1 ? "" : "s"}
         </p>
       </header>
 
-      <div ref={parentRef} className="min-h-0 flex-1 overflow-y-auto">
+      <div ref={parentRef} className="min-h-[24rem] flex-1 overflow-y-auto">
         <div
           style={{
             height: `${virtualizer.getTotalSize()}px`,

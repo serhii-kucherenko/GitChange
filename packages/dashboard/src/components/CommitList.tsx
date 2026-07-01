@@ -183,17 +183,19 @@ export function CommitList({ filters }: CommitListProps) {
   }
 
   return (
-    <section className="flex h-[min(70vh,40rem)] flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
+    <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
       <header className="border-b border-slate-800 px-4 py-3">
-        <h2 className="text-lg font-medium text-slate-100">Commits</h2>
-        <p className="text-xs text-slate-500">
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Commits
+        </h2>
+        <p className="text-xs text-slate-400">
           {commits.length}
           {query.hasNextPage ? "+" : ""} loaded from index
           {filtersActive ? " (filtered)" : ""}
         </p>
       </header>
 
-      <div ref={parentRef} className="flex-1 overflow-auto">
+      <div ref={parentRef} className="min-h-[24rem] flex-1 overflow-auto">
         <div
           style={{
             height: virtualizer.getTotalSize(),

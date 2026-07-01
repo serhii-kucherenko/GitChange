@@ -57,7 +57,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 01-06-PLAN.md — Freshness: shallow-clone (partial) + force-push halt + out-of-order warnings
+- [x] 01-06-PLAN.md — Freshness: shallow-clone (partial) + force-push halt + out-of-order warnings
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
@@ -189,7 +189,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Index Foundation | 5/8 | In Progress|  |
+| 1. Index Foundation | 6/8 | In Progress|  |
 | 2. Repository Intelligence & Ownership | 0/TBD | Not started | - |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |

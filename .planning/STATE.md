@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-05-PLAN.md
-last_updated: "2026-07-01T08:06:00.000Z"
+stopped_at: Completed 01-06-PLAN.md
+last_updated: "2026-07-01T08:12:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
   percent: 0
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 1 of 8 (Index Foundation)
-Plan: 5 of 8 complete (Walking Skeleton done; next: 01-06)
-Status: Ready to execute 01-06
+Plan: 6 of 8 complete (Freshness done; next: 01-07)
+Status: Ready to execute 01-07
 Last activity: 2026-07-01
-Stopped at: Completed 01-05-PLAN.md
+Stopped at: Completed 01-06-PLAN.md
 
-Progress: [██████░░░░] 63%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -60,6 +60,8 @@ Progress: [██████░░░░] 63%
 
 - Generated drizzle migration applied via migrate() in openDb for fresh .gitchange dirs
 - Shared processCommit step used by both indexFull and indexIncremental
+- Out-of-order inversion counts when older revwalk commit has newer committer timestamp than descendant
+- Force-push detection walks HEAD ancestry; revparse existence alone is insufficient
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -86,6 +88,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T08:06:00.000Z
-Stopped at: Completed 01-05-PLAN.md
+Last session: 2026-07-01T08:12:00.000Z
+Stopped at: Completed 01-06-PLAN.md
 Resume file: None

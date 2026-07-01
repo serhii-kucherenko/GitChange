@@ -19,7 +19,8 @@ export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
     return null;
   }
 
-  const eraName = eraLabel ?? (selectedEraId ? `Era ${selectedEraId.slice(0, 8)}` : null);
+  const eraName =
+    eraLabel ?? (selectedEraId ? `Era ${selectedEraId.slice(0, 8)}` : null);
 
   return (
     <nav
@@ -55,7 +56,9 @@ export function DrillBreadcrumb({ eraLabel }: DrillBreadcrumbProps) {
       ) : null}
 
       {selectedFilePath ? (
-        <span className="truncate font-mono text-slate-100">{selectedFilePath}</span>
+        <span className="truncate font-mono text-slate-100">
+          {selectedFilePath}
+        </span>
       ) : null}
     </nav>
   );

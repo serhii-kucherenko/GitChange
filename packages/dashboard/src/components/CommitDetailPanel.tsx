@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { useDrillStore } from "../store/drill.js";
 import {
-  fetchCommitDetail,
   type CommitDetailFile,
+  fetchCommitDetail,
 } from "../api/commit-detail.js";
+import { useDrillStore } from "../store/drill.js";
 import { DrillBreadcrumb } from "./DrillBreadcrumb.js";
 import { FileHunkView } from "./FileHunkView.js";
 
@@ -24,7 +24,12 @@ export function CommitDetailPanel() {
 
   const query = useQuery({
     queryKey: ["commit-detail", selectedCommitSha],
-    queryFn: () => fetchCommitDetail(selectedCommitSha!),
+    queryFn: () => {
+      if (!selectedCommitSha) {
+        throw new Error("No commit selected");
+      }
+      return fetchCommitDetail(selectedCommitSha);
+    },
     enabled: Boolean(selectedCommitSha),
   });
 

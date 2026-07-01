@@ -153,7 +153,25 @@ Plans:
   3. User identifies inflection types — tech pivots, scope steering, process shifts, team/ownership changes — with linked proof
   4. Temporal graph artifact passes referential integrity validation before downstream consumption
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 04-01-PLAN.md — Semantic schemas (eras, inflection, temporal graph) + context bundler + eras I/O
+
+**Wave 2** *(blocked on Wave 1; parallel)*
+
+- [ ] 04-02-PLAN.md — era-synthesizer agent + `/gitchange` semantic orchestration + JSON schemas
+- [ ] 04-03-PLAN.md — Deterministic temporal graph assembler → temporal-graph.json
+
+**Wave 3** *(blocked on Wave 2 completion of 04-03)*
+
+- [ ] 04-04-PLAN.md — Graph reviewer + semantic integrity + manifest checkpoint + runSemanticPipeline
+
+**Wave 4** *(blocked on Waves 2–3)*
+
+- [ ] 04-05-PLAN.md — Golden semantic fixtures + `gitchange validate` + snapshot era summary (ERA-02)
 
 ### Phase 5: Dashboard & Evidence Drill-Down
 
@@ -232,7 +250,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
 | 2. Repository Intelligence & Ownership | 5/5 | Complete   | 2026-07-01 |
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
-| 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
+| 4. Era Detection & Semantic Pipeline | 0/5 | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |
 | 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |

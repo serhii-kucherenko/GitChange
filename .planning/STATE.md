@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 06-05-PLAN.md — interview loop + durable writeback
-last_updated: "2026-07-01T11:50:00.000Z"
+status: ready
+stopped_at: Completed 06-06-PLAN.md — Phase 6 complete; ready for Phase 7
+last_updated: "2026-07-01T12:05:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 36
-  completed_plans: 35
-  percent: 97
+  completed_plans: 36
+  percent: 75
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 6 — Decisions, Status & Open Work
+**Current focus:** Phase 7 — Tour Player (next)
 
 ## Current Position
 
-Phase: 6 of 8 in progress (Decisions, Status & Open Work)
-Plan: 5 of 6 complete in Phase 6 (06-01 through 06-05)
-Status: Ready to execute 06-06
+Phase: 6 of 8 complete (Decisions, Status & Open Work)
+Plan: 6 of 6 complete in Phase 6 (06-01 through 06-06)
+Status: Phase 6 complete — ready for Phase 7
 Last activity: 2026-07-01
-Stopped at: Completed 06-05-PLAN.md — interview loop + durable writeback
+Stopped at: Completed 06-06-PLAN.md — timeline badges, status schema, golden/E2E gate
 
-Progress: [██████████] 97%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -119,9 +119,9 @@ Recent decisions affecting current work:
 - getDecisionById returns gap-only response when below evidence threshold — no summary leak
 - Thread event paths sanitized via validateFilePath at read boundary
 
-- Interview answers capped at 2000 chars; evidence excerpt truncated to 500 at merge
-- Confirmed interview sets reviewStatus confirmed, miningSource interview, confidence min 0.7
-- docs/interviews writeback requires writeToDocs opt-in; GitChange never auto-commits
+- matchOpenWorkToSurface exported for Phase 7 tour player integration
+- Decision surfaces use decisionConfidenceToLevel; era claims keep evidence-count heuristic
+- validate runs checkDecisionsIntegrity when decisions.json present
 
 ### Pending Todos
 
@@ -141,6 +141,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:50:00.000Z
+Last session: 2026-07-01T12:00:23.137Z
 Stopped at: Completed 06-05-PLAN.md — interview loop + durable writeback
 Resume file: None

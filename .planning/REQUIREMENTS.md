@@ -59,8 +59,8 @@
 
 - [x] **STAT-01**: System infers migration/task status using pattern-based, keyword/trailer, and docs-vs-code cross-reference methods
 - [x] **STAT-02**: User can see open threads panel listing in-flight migrations, WIP refactors, and stale work
-- [ ] **STAT-03**: Tour stops and timeline show inline badges when related work appears incomplete
-- [ ] **STAT-04**: Agent can answer status queries (e.g., migration progress) with evidence and confidence
+- [x] **STAT-03**: Tour stops and timeline show inline badges when related work appears incomplete
+- [x] **STAT-04**: Agent can answer status queries (e.g., migration progress) with evidence and confidence
 
 ### Dashboard & Visualization (DASH)
 
@@ -191,8 +191,8 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | DEC-04 | Phase 6 | Complete |
 | STAT-01 | Phase 6 | Complete |
 | STAT-02 | Phase 6 | Complete |
-| STAT-03 | Phase 6 | Pending |
-| STAT-04 | Phase 6 | Pending |
+| STAT-03 | Phase 6 | Complete |
+| STAT-04 | Phase 6 | Complete |
 | DASH-01 | Phase 5 | Complete |
 | DASH-02 | Phase 8 | Pending |
 | DASH-03 | Phase 5 | Complete |

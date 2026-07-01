@@ -16,7 +16,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - [x] **Phase 3: CLI & Plugin Scaffold** - Install/first-run UX (UA pattern), CLI, `/gitchange`, minimal `/gitchange-dashboard` (completed 2026-07-01)
 - [x] **Phase 4: Era Detection & Semantic Pipeline** - Named eras, inflection points, and temporal graph artifacts (completed 2026-07-01)
 - [x] **Phase 5: Dashboard & Evidence Drill-Down** - Full interactive dashboard expanding Phase 3 minimal first-run UI (completed 2026-07-01)
-- [ ] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop
+- [x] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop (completed 2026-07-01)
 - [ ] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops
 - [ ] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story
 
@@ -248,7 +248,7 @@ Plans:
 
 **Wave 5** *(blocked on Waves 3–4)*
 
-- [ ] 06-06-PLAN.md — Timeline badges + agent status schema + golden/E2E gate (STAT-03/04)
+- [x] 06-06-PLAN.md — Timeline badges + agent status schema + golden/E2E gate (STAT-03/04)
 **UI hint**: yes
 
 ### Phase 7: Guided Tours & Onboarding UX
@@ -296,7 +296,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
-| 6. Decisions, Status & Open Work | 5/6 | In Progress|  |
+| 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |
 

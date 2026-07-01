@@ -11,10 +11,14 @@ interface DrillState {
   selectedCommitSha: string | null;
   selectedFilePath: string | null;
   selectedEra: SelectedEra | null;
+  selectedDecisionId: string | null;
+  selectedThreadId: string | null;
   setSelectedCommitSha: (sha: string | null) => void;
   setSelectedFilePath: (path: string | null) => void;
   selectCommitAndFile: (sha: string, path: string) => void;
   setSelectedEraId: (era: SelectedEra | null) => void;
+  setSelectedDecisionId: (id: string | null) => void;
+  setSelectedThreadId: (id: string | null) => void;
   clearEra: () => void;
   clearDownstreamFromEra: () => void;
   clearDownstreamFromCommit: () => void;
@@ -24,6 +28,8 @@ export const useDrillStore = create<DrillState>((set) => ({
   selectedCommitSha: null,
   selectedFilePath: null,
   selectedEra: null,
+  selectedDecisionId: null,
+  selectedThreadId: null,
   setSelectedCommitSha: (sha) =>
     set({
       selectedCommitSha: sha,
@@ -40,6 +46,16 @@ export const useDrillStore = create<DrillState>((set) => ({
       selectedEra: era,
       selectedCommitSha: null,
       selectedFilePath: null,
+    }),
+  setSelectedDecisionId: (id) =>
+    set({
+      selectedDecisionId: id,
+      selectedThreadId: null,
+    }),
+  setSelectedThreadId: (id) =>
+    set({
+      selectedThreadId: id,
+      selectedDecisionId: null,
     }),
   clearEra: () => set({ selectedEra: null }),
   clearDownstreamFromEra: () =>

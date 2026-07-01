@@ -1,3 +1,10 @@
+import type {
+  DecisionDetail,
+  DecisionListPage,
+  OpenWorkListPage,
+  OpenWorkThreadDetail,
+} from "../types.js";
+
 export interface CommitSummary {
   sha: string;
   summary: string;
@@ -188,4 +195,78 @@ export async function fetchEras(): Promise<DashboardEra[]> {
   }
 
   return (await response.json()) as DashboardEra[];
+}
+
+export interface FetchDecisionsParams {
+  limit?: number;
+  cursor?: string;
+}
+
+export async function fetchDecisionsPage(
+  params: FetchDecisionsParams = {},
+): Promise<DecisionListPage> {
+  const search = new URLSearchParams();
+  if (params.limit !== undefined) {
+    search.set("limit", String(params.limit));
+  }
+  if (params.cursor) {
+    search.set("cursor", params.cursor);
+  }
+
+  const query = search.toString();
+  const response = await fetch(`/api/decisions${query ? `?${query}` : ""}`);
+
+  if (response.status === 404) {
+    return { decisions: [], nextCursor: null };
+  }
+
+  if (!response.ok) {
+    throw new Error(`Decisions request failed (${response.status})`);
+  }
+
+  return (await response.json()) as DecisionListPage;
+}
+
+export async function fetchDecisionDetail(id: string): Promise<DecisionDetail> {
+  const response = await fetch(`/api/decisions/${encodeURIComponent(id)}`);
+
+  if (response.status === 404) {
+    throw new Error("decision_not_found");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Decision detail request failed (${response.status})`);
+  }
+
+  return (await response.json()) as DecisionDetail;
+}
+
+export async function fetchOpenWorkThreads(): Promise<OpenWorkListPage> {
+  const response = await fetch("/api/open-work");
+
+  if (response.status === 404) {
+    return { threads: [] };
+  }
+
+  if (!response.ok) {
+    throw new Error(`Open work request failed (${response.status})`);
+  }
+
+  return (await response.json()) as OpenWorkListPage;
+}
+
+export async function fetchOpenWorkThread(
+  id: string,
+): Promise<OpenWorkThreadDetail> {
+  const response = await fetch(`/api/open-work/${encodeURIComponent(id)}`);
+
+  if (response.status === 404) {
+    throw new Error("thread_not_found");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Open work thread request failed (${response.status})`);
+  }
+
+  return (await response.json()) as OpenWorkThreadDetail;
 }

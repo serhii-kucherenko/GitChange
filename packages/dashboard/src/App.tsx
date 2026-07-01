@@ -3,11 +3,17 @@ import type { CommitListFilters } from "./api/client.js";
 import { CommitDetailPanel } from "./components/CommitDetailPanel.js";
 import { CommitFilterBar } from "./components/CommitFilterBar.js";
 import { CommitList } from "./components/CommitList.js";
+import { DecisionsPanel } from "./components/DecisionsPanel.js";
 import { EraDetailPanel } from "./components/EraDetailPanel.js";
 import { EraTimeline } from "./components/EraTimeline.js";
 import { FileHistoryScrubber } from "./components/FileHistoryScrubber.js";
 import { IndexStatusCard } from "./components/IndexStatusCard.js";
-import { DashboardLayout } from "./layout/DashboardLayout.js";
+import { MigrationThreadPanel } from "./components/MigrationThreadPanel.js";
+import { OpenThreadsPanel } from "./components/OpenThreadsPanel.js";
+import {
+  DashboardLayout,
+  type IntelligenceTab,
+} from "./layout/DashboardLayout.js";
 import { fetchSnapshot, type SnapshotLoadState } from "./snapshot.js";
 import { eraToCommitFilters, useDrillStore } from "./store/drill.js";
 
@@ -16,8 +22,11 @@ export function App() {
     status: "loading",
   });
   const [commitFilters, setCommitFilters] = useState<CommitListFilters>({});
+  const [intelligenceTab, setIntelligenceTab] =
+    useState<IntelligenceTab>("timeline");
   const selectedEra = useDrillStore((state) => state.selectedEra);
   const selectedCommitSha = useDrillStore((state) => state.selectedCommitSha);
+  const selectedThreadId = useDrillStore((state) => state.selectedThreadId);
 
   const mergedFilters = useMemo<CommitListFilters>(() => {
     if (!selectedEra) {
@@ -54,9 +63,42 @@ export function App() {
     };
   }, []);
 
+  const intelligencePanel =
+    intelligenceTab === "decisions" ? (
+      <DecisionsPanel />
+    ) : intelligenceTab === "open-work" ? (
+      <OpenThreadsPanel />
+    ) : null;
+
+  const mainContent =
+    loadState.status === "ready" ? (
+      <div className="space-y-4">
+        {selectedCommitSha ? (
+          <CommitDetailPanel />
+        ) : selectedThreadId && intelligenceTab === "open-work" ? (
+          <MigrationThreadPanel />
+        ) : intelligenceTab === "timeline" ? (
+          <CommitList filters={mergedFilters} />
+        ) : intelligenceTab === "open-work" ? (
+          <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
+            Select a thread to view its migration timeline and drill into
+            commits.
+          </p>
+        ) : (
+          <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
+            Select a decision to view evidence and drill into commits.
+          </p>
+        )}
+      </div>
+    ) : loadState.status === "loading" ? (
+      <p className="text-slate-400">Loading commit history…</p>
+    ) : null;
+
   return (
     <DashboardLayout
       loadState={loadState}
+      intelligenceTab={intelligenceTab}
+      onIntelligenceTabChange={setIntelligenceTab}
       sidebar={
         loadState.status === "ready" ? (
           <>
@@ -79,19 +121,8 @@ export function App() {
           />
         ) : null
       }
-      main={
-        loadState.status === "ready" ? (
-          <div className="space-y-4">
-            {selectedCommitSha ? (
-              <CommitDetailPanel />
-            ) : (
-              <CommitList filters={mergedFilters} />
-            )}
-          </div>
-        ) : loadState.status === "loading" ? (
-          <p className="text-slate-400">Loading commit history…</p>
-        ) : null
-      }
+      intelligencePanel={intelligencePanel}
+      main={mainContent}
     />
   );
 }

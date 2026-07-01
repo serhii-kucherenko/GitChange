@@ -3,22 +3,36 @@ import { AttributionBadge } from "../components/ConfidenceBadge.js";
 import type { SnapshotLoadState } from "../snapshot.js";
 import { resolveDisplayedAttribution } from "../utils/confidence.js";
 
+export type IntelligenceTab = "timeline" | "decisions" | "open-work";
+
 interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
+  intelligenceTab: IntelligenceTab;
+  onIntelligenceTabChange: (tab: IntelligenceTab) => void;
   sidebar: ReactNode;
   fileHistory?: ReactNode;
   timeline?: ReactNode;
   commitFilterBar?: ReactNode;
   main: ReactNode;
+  intelligencePanel?: ReactNode;
 }
+
+const TAB_LABELS: Record<IntelligenceTab, string> = {
+  timeline: "Timeline",
+  decisions: "Decisions",
+  "open-work": "Open work",
+};
 
 export function DashboardLayout({
   loadState,
+  intelligenceTab,
+  onIntelligenceTabChange,
   sidebar,
   fileHistory,
   timeline,
   commitFilterBar,
   main,
+  intelligencePanel,
 }: DashboardLayoutProps) {
   const headSha =
     loadState.status === "ready" ? loadState.data.manifest.repo.head : null;
@@ -73,15 +87,46 @@ export function DashboardLayout({
 
           {loadState.status === "ready" ? (
             <>
-              {sidebar}
-              {fileHistory}
+              <nav
+                aria-label="Intelligence views"
+                className="flex rounded-lg border border-slate-700 bg-slate-900 p-1"
+              >
+                {(Object.keys(TAB_LABELS) as IntelligenceTab[]).map((tab) => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => onIntelligenceTabChange(tab)}
+                    className={`flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${
+                      intelligenceTab === tab
+                        ? "bg-slate-700 text-slate-100"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                    aria-current={intelligenceTab === tab ? "page" : undefined}
+                  >
+                    {TAB_LABELS[tab]}
+                  </button>
+                ))}
+              </nav>
+
+              {intelligenceTab === "timeline" ? (
+                <>
+                  {sidebar}
+                  {fileHistory}
+                </>
+              ) : (
+                intelligencePanel
+              )}
             </>
           ) : null}
         </aside>
 
         <main className="min-h-[24rem] space-y-4">
-          {timeline}
-          {commitFilterBar}
+          {intelligenceTab === "timeline" ? (
+            <>
+              {timeline}
+              {commitFilterBar}
+            </>
+          ) : null}
           {main}
         </main>
       </div>

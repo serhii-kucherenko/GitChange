@@ -85,7 +85,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Intelligence walking skeleton: Zod + Drizzle tables, churn from index, `computeIntelligence`, `intelligence.json`
+- [x] 02-01-PLAN.md — Intelligence walking skeleton: Zod + Drizzle tables, churn from index, `computeIntelligence`, `intelligence.json`
 
 **Wave 2** *(blocked on Wave 1; parallel)*
 
@@ -208,7 +208,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Index Foundation | 8/8 | Complete   | 2026-07-01 |
-| 2. Repository Intelligence & Ownership | 0/5 | Not started | - |
+| 2. Repository Intelligence & Ownership | 1/5 | In Progress|  |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |
 | 5. Dashboard & Evidence Drill-Down | 0/TBD | Not started | - |

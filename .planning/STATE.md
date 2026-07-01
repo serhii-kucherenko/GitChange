@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready-for-phase-2
-stopped_at: Completed 01-08-PLAN.md — Phase 1 complete
-last_updated: "2026-07-01T01:31:00.000Z"
+status: ready-for-phase-2-plan-02
+stopped_at: Completed 02-01-PLAN.md — intelligence walking skeleton
+last_updated: "2026-07-01T08:41:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 1
-  total_plans: 8
-  completed_plans: 8
-  percent: 13
+  total_plans: 13
+  completed_plans: 9
+  percent: 69
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 1 of 8 complete (Index Foundation)
-Plan: 8 of 8 complete
-Status: Phase 1 complete — ready for Phase 2
+Phase: 2 of 8 in progress (Repository Intelligence & Ownership)
+Plan: 1 of 5 complete (02-01)
+Status: Walking skeleton complete — ready for 02-02 / 02-03
 Last activity: 2026-07-01
-Stopped at: Completed 01-08-PLAN.md — Phase 1 complete
+Stopped at: Completed 02-01-PLAN.md — intelligence walking skeleton
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 69%
 
 ## Performance Metrics
 
@@ -67,6 +67,8 @@ Progress: [██████████] 100%
 - Golden tests use verify helpers in packages/core to avoid drizzle-orm imports from tests/golden
 - BASIC_SCENARIO fixture secrets aligned to SECRET_RULES pattern lengths
 - Dogfood golden test gated behind GITCHANGE_DOGFOOD env flag
+- All intelligence Drizzle tables in single migration 0001_intelligence
+- computeIntelligence separate pass after indexFull; attributionConfidence degraded on partial index
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -93,6 +95,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T01:31:00.000Z
-Stopped at: Completed 01-08-PLAN.md — Phase 1 complete
+Last session: 2026-07-01T08:41:00.000Z
+Stopped at: Completed 02-01-PLAN.md — intelligence walking skeleton
 Resume file: None

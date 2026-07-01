@@ -130,16 +130,17 @@ export async function computeOwnership(
       if (aggregates.length > 0) {
         fileAggregates.set(path, aggregates);
       }
-    } catch {
-      continue;
-    }
+    } catch {}
   }
 
   db.transaction((tx) => {
     tx.delete(schema.fileOwnership).run();
 
     for (const [path, aggregates] of fileAggregates.entries()) {
-      const totalLines = aggregates.reduce((sum, row) => sum + row.lineCount, 0);
+      const totalLines = aggregates.reduce(
+        (sum, row) => sum + row.lineCount,
+        0,
+      );
       for (const aggregate of aggregates) {
         tx.insert(schema.fileOwnership)
           .values({
@@ -178,7 +179,10 @@ export function getFileOwnershipRows(db: DrizzleDb): Array<{
       email: schema.authors.email,
     })
     .from(schema.fileOwnership)
-    .innerJoin(schema.authors, eq(schema.fileOwnership.authorId, schema.authors.id))
+    .innerJoin(
+      schema.authors,
+      eq(schema.fileOwnership.authorId, schema.authors.id),
+    )
     .all();
 
   return rows.map((row) => ({

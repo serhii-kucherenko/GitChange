@@ -23,7 +23,9 @@ function normalizeAuthorEmail(mail: string): string {
   return mail.replace(/^<|>$/g, "");
 }
 
-function expandEsGitBlame(blame: Awaited<ReturnType<Repository["blameFile"]>>): BlameLineAttribution[] {
+function expandEsGitBlame(
+  blame: Awaited<ReturnType<Repository["blameFile"]>>,
+): BlameLineAttribution[] {
   const lines: BlameLineAttribution[] = [];
   let lineNumber = 1;
   const hunkCount = blame.getHunkCount();
@@ -88,7 +90,9 @@ export function parsePorcelainBlame(output: string): BlameLineAttribution[] {
     }
 
     if (line.startsWith("author-mail ")) {
-      pendingAuthorEmail = normalizeAuthorEmail(line.slice("author-mail ".length));
+      pendingAuthorEmail = normalizeAuthorEmail(
+        line.slice("author-mail ".length),
+      );
       rememberAuthorForCurrentSha();
       continue;
     }

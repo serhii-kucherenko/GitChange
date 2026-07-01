@@ -132,6 +132,17 @@ export {
   type MergedToursResult,
 } from "./read/unified/tours.js";
 export {
+  type GraphEdgeDto,
+  type GraphNodeDrillData,
+  type GraphNodeDto,
+  type GraphReadResult,
+  readGraph,
+} from "./read/graph.js";
+export {
+  type ReadGraphUnifiedOptions,
+  readGraphUnified,
+} from "./read/unified/graph.js";
+export {
   decodeFileHistoryCursor,
   encodeFileHistoryCursor,
   type FileHistoryEvent,

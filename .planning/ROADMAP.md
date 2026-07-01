@@ -299,7 +299,25 @@ Plans:
   3. Unified tours present cross-repo narrative with clear repo attribution on every stop
   4. Dashboard includes timeline, temporal knowledge graph, and tour player views — all reading pre-existing index only
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+**Wave 1** *(parallel)*
+
+- [ ] 08-01-PLAN.md — SCALE-01: piscina workers, SQLite tuning, progress CLI, 10k benchmark gate
+- [ ] 08-02-PLAN.md — MULTI-01: workspace.json + CLI add/list/index + per-repo sequential index
+
+**Wave 2** *(blocked on Wave 1 — 08-02)*
+
+- [ ] 08-03-PLAN.md — MULTI-02: federated commit/tour APIs, repoId on evidence, dashboard RepoBadge
+
+**Wave 3** *(blocked on Waves 1–2)*
+
+- [ ] 08-04-PLAN.md — DASH-02: @xyflow/react temporal graph tab + drill-down wiring
+
+**Wave 4** *(blocked on Waves 1–3)*
+
+- [ ] 08-05-PLAN.md — Golden multi-repo integrity + dashboard E2E + scale regression gate
 **UI hint**: yes
 
 ## Progress
@@ -316,7 +334,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 0/5 | Not started | - |
-| 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |
+| 8. Hardening, Scale & Multi-Repo | 0/5 | Not started | - |
 
 ---
 *Roadmap created: 2026-06-30*

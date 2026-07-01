@@ -104,46 +104,28 @@ export const OWNSHIP_SCENARIO: CommitSpec[] = [
 /** Adds a formatting-only commit for ignore-revs coverage (P2-D-02). */
 /** Era ownership: Alice-heavy early window, Bob gains share later (CONT-01). */
 export const ERA_OWNERSHIP_SCENARIO: CommitSpec[] = [
-  {
-    message: "feat(core): scaffold shared module",
+  ...Array.from({ length: 6 }, (_, index) => ({
+    message: `feat(core): shared update ${index + 1}`,
     ...OWNERSHIP_ALICE,
-    files: { "src/lib/shared.ts": "export const v = 1;\n" },
-  },
-  {
-    message: "feat(core): extend shared module",
-    ...OWNERSHIP_ALICE,
-    files: { "src/lib/shared.ts": "export const v = 2;\n" },
-  },
-  {
-    message: "feat(core): polish shared module",
-    ...OWNERSHIP_ALICE,
-    files: { "src/lib/shared.ts": "export const v = 3;\n" },
-  },
-  {
-    message: "feat(core): finalize alice era",
-    ...OWNERSHIP_ALICE,
-    files: { "src/lib/shared.ts": "export const v = 4;\n" },
-  },
+    files: {
+      "src/lib/shared.ts": `export const v = ${index + 1};\n`,
+    },
+  })),
   {
     message: "feat(auth): add token helper",
     ...OWNERSHIP_BOB,
     files: { "src/auth/token.ts": "export const token = true;\n" },
   },
-  {
-    message: "feat(core): bob refactors shared",
+  ...Array.from({ length: 5 }, (_, index) => ({
+    message: `feat(auth): bob shared update ${index + 1}`,
     ...OWNERSHIP_BOB,
-    files: { "src/lib/shared.ts": "export const v = 'bob-1';\n" },
-  },
-  {
-    message: "feat(core): bob extends shared",
-    ...OWNERSHIP_BOB,
-    files: { "src/lib/shared.ts": "export const v = 'bob-2';\n" },
-  },
-  {
-    message: "feat(core): bob finalizes shared",
-    ...OWNERSHIP_BOB,
-    files: { "src/lib/shared.ts": "export const v = 'bob-3';\n" },
-  },
+    files: {
+      "src/lib/shared.ts": `export const v = 'bob-${index + 1}';\n`,
+      ...(index === 0
+        ? { "src/auth/session.ts": "export const session = true;\n" }
+        : {}),
+    },
+  })),
 ];
 
 /** Path-prefix expertise: Alice dominates src/auth (CONT-03). */

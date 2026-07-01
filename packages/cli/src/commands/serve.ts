@@ -1,5 +1,5 @@
 import { join, resolve } from "node:path";
-import { startServer } from "@gitchange/server";
+import { resolveDashboardDist, startServer } from "@gitchange/server";
 import { resolveRepoPath } from "../repo-path.js";
 
 export interface ServeCommandOptions {
@@ -24,5 +24,10 @@ export function runServeCommand(options: ServeCommandOptions): void {
     options.port ??
     Number.parseInt(process.env.GITCHANGE_PORT ?? "9876", 10);
 
-  startServer({ gitchangeDir, host, port });
+  startServer({
+    gitchangeDir,
+    host,
+    port,
+    dashboardDistPath: resolveDashboardDist(),
+  });
 }

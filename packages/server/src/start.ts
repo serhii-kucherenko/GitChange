@@ -1,10 +1,11 @@
-import { serve, type ServerType } from "@hono/node-server";
+import { type ServerType, serve } from "@hono/node-server";
 import { createApp } from "./app.js";
 
 export interface StartServerOptions {
   gitchangeDir: string;
   host?: string;
   port?: number;
+  dashboardDistPath?: string;
 }
 
 export interface StartedServer {
@@ -25,7 +26,10 @@ export function startServer(options: StartServerOptions): StartedServer {
     );
   }
 
-  const app = createApp({ gitchangeDir: options.gitchangeDir });
+  const app = createApp({
+    gitchangeDir: options.gitchangeDir,
+    dashboardDistPath: options.dashboardDistPath,
+  });
   const url = `http://${host}:${port}`;
 
   const server = serve(
@@ -35,7 +39,9 @@ export function startServer(options: StartServerOptions): StartedServer {
       port,
     },
     (info) => {
-      console.log(`GitChange API listening at http://${info.address}:${info.port}`);
+      console.log(
+        `GitChange API listening at http://${info.address}:${info.port}`,
+      );
     },
   );
 

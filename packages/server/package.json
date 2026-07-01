@@ -24,6 +24,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@gitchange/dashboard": "workspace:*",
     "@types/node": "22.15.32"
   }
 }

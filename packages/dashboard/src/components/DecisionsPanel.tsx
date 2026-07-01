@@ -327,9 +327,11 @@ export function DecisionsPanel() {
   if (decisions.length === 0) {
     return (
       <section className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-        <h2 className="text-sm font-medium text-slate-200">Decisions</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Decisions
+        </h2>
         <p className="mt-2 text-sm text-slate-400">
-          No decisions indexed yet. Run the decisions pipeline after indexing.
+          No recorded decisions found for this repo.
         </p>
       </section>
     );
@@ -349,12 +351,14 @@ export function DecisionsPanel() {
   return (
     <section className="flex flex-col overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
       <header className="border-b border-slate-800 px-4 py-3">
-        <h2 className="text-sm font-medium text-slate-200">Decisions</h2>
-        <p className="mt-1 text-xs text-slate-500">
+        <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+          Decisions
+        </h2>
+        <p className="mt-1 text-xs text-slate-400">
           {decisions.length} decision{decisions.length === 1 ? "" : "s"}
         </p>
       </header>
-      <div ref={parentRef} className="max-h-[28rem] overflow-y-auto">
+      <div ref={parentRef} className="min-h-[24rem] flex-1 overflow-y-auto">
         <div
           style={{
             height: `${virtualizer.getTotalSize()}px`,

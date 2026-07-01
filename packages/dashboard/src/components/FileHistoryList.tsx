@@ -40,11 +40,11 @@ function FileHistoryRow({
         <span className="min-w-0 flex-1 truncate text-slate-100">
           {event.summary}
         </span>
-        <span className="shrink-0 text-xs uppercase text-slate-500">
+        <span className="shrink-0 text-xs uppercase text-slate-400">
           {event.changeType}
         </span>
       </div>
-      <div className="flex items-center gap-2 text-xs text-slate-500">
+      <div className="flex items-center gap-2 text-xs text-slate-400">
         <span>{formatCommittedAt(event.committedAt)}</span>
         {event.oldPath ? (
           <span className="truncate font-mono">
@@ -143,7 +143,7 @@ export function FileHistoryList({ path }: FileHistoryListProps) {
   return (
     <div
       ref={parentRef}
-      className="max-h-64 overflow-auto rounded border border-slate-800"
+      className="min-h-[24rem] flex-1 overflow-auto rounded border border-slate-800"
     >
       <div
         style={{

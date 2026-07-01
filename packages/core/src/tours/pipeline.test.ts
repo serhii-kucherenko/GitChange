@@ -1,20 +1,13 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { ToursArtifact } from "../schema/zod/tours.js";
 import { runDecisionsPipeline, runSemanticPipeline } from "../semantic/pipeline.js";
 import { applyBasicScenarioDecisionsFixture } from "../../../../tests/golden/decisions-fixture.js";
 import { applyBasicScenarioErasFixture } from "../../../../tests/golden/semantic-fixture.js";
+import { applyBasicScenarioToursFixture } from "../../../../tests/golden/tours-fixture.js";
 import { indexBasicScenario } from "../../../../tests/golden/helpers.js";
 import { readManifest } from "../schema/manifest.js";
-import { applyBasicScenarioToursTemplate } from "./bind-basic-scenario-tours.js";
+import { applyBasicScenarioToursFixture } from "../../../../tests/golden/tours-fixture.js";
 import { runToursPipeline } from "./pipeline.js";
 import { readToursArtifact } from "./tours-io.js";
-
-const TOURS_FIXTURE_PATH = join(
-  import.meta.dirname,
-  "../../../../tests/fixtures/tours/tours-basic-scenario.json",
-);
 
 describe("runToursPipeline", () => {
   const cleanups: Array<() => void> = [];
@@ -34,10 +27,7 @@ describe("runToursPipeline", () => {
     applyBasicScenarioDecisionsFixture(fixture.gitchangeDir);
     runDecisionsPipeline(fixture.gitchangeDir);
 
-    const template = ToursArtifact.parse(
-      JSON.parse(readFileSync(TOURS_FIXTURE_PATH, "utf-8")),
-    );
-    applyBasicScenarioToursTemplate(fixture.gitchangeDir, template);
+    applyBasicScenarioToursFixture(fixture.gitchangeDir);
 
     return fixture;
   }

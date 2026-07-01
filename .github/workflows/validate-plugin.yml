@@ -19,7 +19,7 @@ on:
       - ".github/workflows/validate-plugin.yml"
 
 jobs:
-  validate-plugin:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,22 +33,29 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - run: pnpm install
 
-      - name: Parse plugin manifest JSON
+      - name: Parse plugin manifests
         run: |
-          node -e "JSON.parse(require('fs').readFileSync('.cursor-plugin/plugin.json','utf8'))"
-          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json','utf8'))"
-          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('.cursor-plugin/plugin.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json'))"
 
-      - name: Verify skills directory from plugin.json
+      - name: Verify skills directories exist
         run: |
-          SKILLS=$(node -p "JSON.parse(require('fs').readFileSync('.cursor-plugin/plugin.json','utf8')).skills")
-          test -d "$SKILLS"
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            for (const manifest of ['.cursor-plugin/plugin.json', '.claude-plugin/plugin.json']) {
+              const j = JSON.parse(fs.readFileSync(manifest, 'utf8'));
+              if (!j.skills) throw new Error(manifest + ' missing skills');
+              const dir = path.resolve(path.dirname(manifest), j.skills);
+              if (!fs.existsSync(dir)) throw new Error('skills dir not found: ' + dir);
+            }
+          "
 
-      - name: Validate install script syntax
-        run: bash -n scripts/install.sh
-
-      - name: Run plugin path resolver tests
+      - name: Resolve-root unit tests
         run: pnpm vitest run packages/plugin/scripts/resolve-root.test.ts
+
+      - name: Validate install.sh syntax
+        run: bash -n scripts/install.sh

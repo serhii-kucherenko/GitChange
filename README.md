@@ -1,62 +1,69 @@
 # GitChange
 
-Local-first git history analysis — evidence-backed answers about who changed what, how the project evolved, what decisions were made, and what's still in flight.
+GitChange analyzes git history from a local clone and helps new teammates and maintainers understand how a project evolved — with evidence you can drill into from a local dashboard.
 
 ## Prerequisites
 
-- **Node.js** 22+ (see `.nvmrc`)
-- **pnpm** 10+
-- **git** 2.x on PATH
+- **Node.js** 22.x LTS
+- **pnpm** 11.x (or compatible 10.x)
+- **git** 2.x on your PATH
 
 ## Install
 
-### One-line installer
+One-line install (macOS/Linux):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.sh | bash
 ```
 
-This clones or updates GitChange to `~/.gitchange-plugin`, runs `pnpm install && pnpm build`, and installs a `gitchange` CLI wrapper in `~/.local/bin`.
-
-Override the install location:
-
-```bash
-GITCHANGE_INSTALL_DIR=~/tools/gitchange curl -fsSL https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.sh | bash
-```
-
-**Windows (PowerShell):**
+Windows (PowerShell):
 
 ```powershell
 irm https://raw.githubusercontent.com/Egonex-AI/GitChange/main/scripts/install.ps1 | iex
 ```
 
-> **Repository URL:** The installer pulls from [github.com/Egonex-AI/GitChange](https://github.com/Egonex-AI/GitChange). Verify the URL before piping any remote script to your shell.
+The installer clones or updates GitChange under `~/.gitchange-plugin` by default, runs `pnpm install && pnpm build`, links the `gitchange` CLI into `~/.local/bin`, and prints symlink steps for Cursor and Claude Code plugin manifests.
 
-### IDE plugin (Cursor / Claude Code)
+Override install location:
 
-After installing:
+```bash
+GITCHANGE_INSTALL_DIR=~/tools/gitchange curl -fsSL .../install.sh | bash
+```
 
-- **Cursor:** symlink `.cursor-plugin` from the install directory into your Cursor plugins folder, or install via marketplace when listed.
-- **Claude Code:** use `.claude-plugin/marketplace.json` for marketplace discovery, or symlink `.claude-plugin`.
-
-Slash commands: `/gitchange` (first analysis) and `/gitchange-dashboard` (localhost UI).
+> **Repository URL:** The official source is [github.com/Egonex-AI/GitChange](https://github.com/Egonex-AI/GitChange). The install scripts pin to that URL; overriding `GITCHANGE_REPO_URL` prints a warning.
 
 ## Verify
 
+Add `~/.local/bin` and `GITCHANGE_ROOT` to your shell profile, then inside any git repository:
+
 ```bash
 gitchange --version
-gitchange status    # run from inside any git repository
+gitchange status
 ```
 
-## Development
+## IDE plugin
 
-From a cloned repository:
+After install, symlink the plugin into your project or IDE plugins folder (the installer prints exact commands):
+
+- **Cursor:** `.cursor-plugin/plugin.json` points at skills under `packages/plugin/skills/`
+- **Claude Code:** `.claude-plugin/marketplace.json` for marketplace discovery
+
+Slash commands:
+
+- `/gitchange` — index the workspace repo and summarize manifest + intelligence artifacts
+- `/gitchange-dashboard` — open the localhost dashboard at `http://127.0.0.1:9876`
+
+## Monorepo development
+
+From a cloned GitChange repo:
 
 ```bash
 pnpm install
 pnpm build
 pnpm test
 ```
+
+Plugin root resolution order (P3-D-04) is implemented in `packages/plugin/scripts/resolve-root.ts`.
 
 ## License
 

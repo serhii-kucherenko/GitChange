@@ -32,7 +32,16 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
   3. User sees freshness warnings when force-push or shallow-clone conditions are detected
   4. Secrets from fixture repos do not appear in generated artifacts; `.gitchangeignore` excludes configured paths
   5. Golden fixture tests pass for ingestion output and evidence-link integrity on the index schema
-**Plans**: TBD
+**Plans**: 8 plans
+Plans:
+- [ ] 01-01-PLAN.md — Monorepo scaffold, @gitchange/core shell, Vitest, synthetic-repo fixture builder
+- [ ] 01-02-PLAN.md — Zod schemas + evidence contract + Drizzle tables + [BLOCKING] schema push
+- [ ] 01-03-PLAN.md — es-git ingestion: revwalk, commit parse, tree diff + rename detection
+- [ ] 01-04-PLAN.md — Privacy gate: .gitchangeignore matcher + secret redaction
+- [ ] 01-05-PLAN.md — Walking Skeleton: end-to-end index orchestrator (full + incremental) → .gitchange/
+- [ ] 01-06-PLAN.md — Freshness: shallow-clone (partial) + force-push halt + out-of-order warnings
+- [ ] 01-07-PLAN.md — Doc snapshot ingestion (README/CHANGELOG/docs/ADR) content-addressed with evidence
+- [ ] 01-08-PLAN.md — Golden fixtures: evidence-integrity, secret-leakage grep, ingestion snapshot, dogfood
 
 ### Phase 2: Repository Intelligence & Ownership
 **Goal**: User can see who changed what through ownership timelines and contributor expertise derived from git history
@@ -135,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Index Foundation | 0/TBD | Not started | - |
+| 1. Index Foundation | 0/8 | Not started | - |
 | 2. Repository Intelligence & Ownership | 0/TBD | Not started | - |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-03-PLAN.md — status inferencer, open-work assembly, runDecisionsPipeline
-last_updated: "2026-07-01T11:43:54.129Z"
+stopped_at: Completed 06-04-PLAN.md — decisions browse, open threads, migration drill-down
+last_updated: "2026-07-01T11:44:20.407Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
   completed_plans: 34
-  percent: 63
+  percent: 94
 ---
 
 # Project State
@@ -26,10 +26,10 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 6 of 8 in progress (Decisions, Status & Open Work)
-Plan: 4 of 6 complete in Phase 6 (06-01, 06-03)
-Status: Ready to execute
+Plan: 4 of 6 complete in Phase 6 (06-01, 06-02, 06-03, 06-04)
+Status: Ready to execute 06-05
 Last activity: 2026-07-01
-Stopped at: Completed 06-03-PLAN.md — status inferencer, open-work assembly, runDecisionsPipeline
+Stopped at: Completed 06-04-PLAN.md — decisions browse, open threads, migration drill-down
 
 Progress: [█████████░] 94%
 
@@ -115,7 +115,9 @@ Recent decisions affecting current work:
 
 - Docs-vs-code divergence checks any indexed doc snapshot for completion keywords against recent code path touches
 - Stale threshold 90 days; docs-vs-code recent window 30 days
-- assembleOpenWork falls back to top deterministic candidate when no in_flight decisions
+- Intelligence tab switcher: Timeline | Decisions | Open work in dashboard main column
+- getDecisionById returns gap-only response when below evidence threshold — no summary leak
+- Thread event paths sanitized via validateFilePath at read boundary
 
 ### Pending Todos
 
@@ -135,6 +137,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:43:54.118Z
-Stopped at: Completed 06-03-PLAN.md — status inferencer, open-work assembly, runDecisionsPipeline
+Last session: 2026-07-01T11:44:20.396Z
+Stopped at: Completed 06-04-PLAN.md — decisions browse, open threads, migration drill-down
 Resume file: None

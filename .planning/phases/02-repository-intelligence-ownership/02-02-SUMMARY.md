@@ -69,7 +69,7 @@ completed: 2026-07-01
 ## Task Commits
 
 1. **Task 1: OWNSHIP_SCENARIO fixture + failing blame tests** - `91ecdce` (test)
-2. **Task 2: Blame module — es-git + simple-git ignore-revs** - `0776f71` (feat)
+2. **Task 2: Blame module — es-git + simple-git ignore-revs** - `0776f71`, `2d57003` (feat)
 3. **Task 3: Wire ownership into computeIntelligence + export** - `15117ff` (feat)
 
 **Plan metadata:** `82a17bb` (docs: complete plan)
@@ -91,7 +91,20 @@ completed: 2026-07-01
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+### Auto-fixed Issues
+
+**1. [Rule 2 - Missing critical functionality] Filter ignored-rev SHAs from ownership credit**
+- **Found during:** Task 2 verification (ignore-revs fixture)
+- **Issue:** Git porcelain blame can still attribute lines introduced solely in an ignored formatting commit
+- **Fix:** Drop lines whose `origCommitId` is in `.git-blame-ignore-revs` before aggregation; hardened porcelain parser with SHA-keyed author cache
+- **Files modified:** `aggregate.ts`, `blame.ts`
+- **Commit:** `2d57003`
+
+**2. [Rule 3 - Blocking] Export `EraBoundarySignal` TypeScript type**
+- **Found during:** typecheck after ownership wiring
+- **Issue:** `getEraBoundarySignals` return type referenced Zod schema value, not a type
+- **Fix:** Added `export type EraBoundarySignal = z.infer<typeof EraBoundarySignal>`
+- **Files modified:** `schema/zod/intelligence.ts`
 
 ## Issues Encountered
 

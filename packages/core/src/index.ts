@@ -296,6 +296,10 @@ export {
   type ToursIntegrityReport,
 } from "./verify/tours-integrity.js";
 export {
+  checkWorkspaceIntegrity,
+  type WorkspaceIntegrityReport,
+} from "./verify/workspace-integrity.js";
+export {
   BASIC_SCENARIO_TOURS_SNAPSHOT,
   collectToursEvidenceSnapshot,
   verifyToursEvidenceIntegrity,

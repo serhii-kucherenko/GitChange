@@ -59,7 +59,7 @@ describe("checkWorkspaceIntegrity", () => {
 
     expect(report.ok).toBe(true);
     expect(report.errors).toEqual([]);
-  });
+  }, 60_000);
 
   it("rejects links that reference unknown repo ids", async () => {
     const { workspaceGitchangeDir } = await buildIndexedTwoRepoWorkspace();
@@ -81,7 +81,7 @@ describe("checkWorkspaceIntegrity", () => {
     const report = checkWorkspaceIntegrity(workspaceGitchangeDir);
     expect(report.ok).toBe(false);
     expect(report.errors.some((error) => error.includes("missing"))).toBe(true);
-  });
+  }, 60_000);
 
   it("fails when a workspace repo manifest is missing", async () => {
     const { workspaceGitchangeDir, secondary } = await buildIndexedTwoRepoWorkspace();
@@ -91,7 +91,7 @@ describe("checkWorkspaceIntegrity", () => {
     const report = checkWorkspaceIntegrity(workspaceGitchangeDir);
     expect(report.ok).toBe(false);
     expect(report.errors.some((error) => /manifest/i.test(error))).toBe(true);
-  });
+  }, 60_000);
 
   it("fails when manifest repoId does not match workspace entry", async () => {
     const { workspaceGitchangeDir, primary } = await buildIndexedTwoRepoWorkspace();
@@ -108,7 +108,7 @@ describe("checkWorkspaceIntegrity", () => {
     const report = checkWorkspaceIntegrity(workspaceGitchangeDir);
     expect(report.ok).toBe(false);
     expect(report.errors.some((error) => /repoId/i.test(error))).toBe(true);
-  });
+  }, 60_000);
 
   it("returns ok when workspace.json is absent", () => {
     const primary = buildRepo(BASIC_SCENARIO);

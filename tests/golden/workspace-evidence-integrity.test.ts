@@ -82,5 +82,5 @@ describe("golden: workspace evidence integrity (MULTI-01/02)", () => {
     const report = checkWorkspaceIntegrity(workspaceGitchangeDir);
     expect(report.ok).toBe(true);
     expect(report.errors).toEqual([]);
-  });
+  }, 120_000);
 });

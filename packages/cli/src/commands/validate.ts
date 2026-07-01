@@ -4,10 +4,12 @@ import {
   checkIntelligenceIntegrity,
   checkSemanticIntegrity,
   checkToursIntegrity,
+  checkWorkspaceIntegrity,
   readDecisionsArtifact,
   readErasArtifact,
   readManifest,
   readToursArtifact,
+  readWorkspace,
 } from "@gitchange/core";
 import { resolveRepoPath } from "../repo-path.js";
 
@@ -67,6 +69,14 @@ export function runValidateCommand(options: ValidateCommandOptions): void {
     }
   } else if (manifest?.toursComputedAt || manifest?.toursSchemaVersion) {
     errors.push("tours artifacts missing: tours.json not found");
+  }
+
+  const workspace = readWorkspace(gitchangeDir);
+  if (workspace) {
+    const workspaceReport = checkWorkspaceIntegrity(gitchangeDir);
+    if (!workspaceReport.ok) {
+      errors.push(...workspaceReport.errors);
+    }
   }
 
   if (errors.length > 0) {

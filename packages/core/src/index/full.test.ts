@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { count } from "drizzle-orm";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { buildRepo } from "../../../../tests/fixtures/builder.js";
+import { buildRepo, shallowCloneOf } from "../../../../tests/fixtures/builder.js";
 import { BASIC_SCENARIO } from "../../../../tests/fixtures/scenarios.js";
 import { openDb } from "../artifacts/db.js";
 import { indexFull } from "./full.js";
@@ -104,5 +104,81 @@ describe("indexFull", () => {
 
     expect(second.manifest.lastIndexedCommit).toBe(first.manifest.lastIndexedCommit);
     expect(second.manifest.repo.head).toBe(repo.headSha);
+  });
+
+  it("indexes a shallow clone as partial with a shallow_clone warning", async () => {
+    const repo = buildRepo(BASIC_SCENARIO);
+    repos.push(repo);
+
+    const shallow = shallowCloneOf(repo, 3);
+    repos.push(shallow);
+
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => undefined);
+    const gitchangeDir = join(shallow.dir, ".gitchange");
+
+    try {
+      const result = await indexFull({ repoPath: shallow.dir, gitchangeDir });
+
+      expect(result.manifest.indexCompleteness).toBe("partial");
+      expect(result.manifest.warnings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "shallow_clone" }),
+        ]),
+      );
+      expect(result.commitsIndexed).toBe(shallow.commitShas.length);
+
+      const db = openDb(gitchangeDir);
+      const commitCount = db.select({ value: count() }).from(schema.commits).get()?.value ?? 0;
+      expect(commitCount).toBe(shallow.commitShas.length);
+
+      expect(
+        logSpy.mock.calls.some((call) =>
+          String(call[0]).includes("GitChange warning [shallow_clone]"),
+        ),
+      ).toBe(true);
+    } finally {
+      logSpy.mockRestore();
+    }
+  });
+
+  it("records out-of-order committer timestamps as a warning without failing", async () => {
+    const repo = buildRepo(BASIC_SCENARIO);
+    repos.push(repo);
+
+    const { execFileSync } = await import("node:child_process");
+    execFileSync("git", ["checkout", "main"], { cwd: repo.dir, encoding: "utf8" });
+    execFileSync(
+      "git",
+      ["commit", "--allow-empty", "-m", "chore: backdated commit"],
+      {
+        cwd: repo.dir,
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          GIT_COMMITTER_DATE: "2000-01-01T00:00:00",
+        },
+      },
+    );
+
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => undefined);
+    const gitchangeDir = join(repo.dir, ".gitchange");
+
+    try {
+      const result = await indexFull({ repoPath: repo.dir, gitchangeDir });
+
+      expect(result.manifest.warnings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: "out_of_order_commits" }),
+        ]),
+      );
+      expect(result.commitsIndexed).toBeGreaterThan(0);
+      expect(
+        logSpy.mock.calls.some((call) =>
+          String(call[0]).includes("GitChange warning [out_of_order_commits]"),
+        ),
+      ).toBe(true);
+    } finally {
+      logSpy.mockRestore();
+    }
   });
 });

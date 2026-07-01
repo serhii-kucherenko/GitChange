@@ -6,6 +6,7 @@ import { openRepo, walkRange } from "../ingestion/git-walk.js";
 import { loadIgnore } from "../privacy/gitchangeignore.js";
 import * as schema from "../schema/drizzle/schema.js";
 import { readManifest, writeManifest, type Manifest } from "../schema/manifest.js";
+import { checkCursorReachable, ForcePushHaltError } from "./freshness.js";
 import { ensureGitignored } from "./gitignore-guard.js";
 import { CORE_SCHEMA_VERSION, indexFull } from "./full.js";
 import { processCommit } from "./process-commit.js";
@@ -60,6 +61,13 @@ export async function indexIncremental(options: IndexOptions): Promise<IndexResu
       fileChanges: 0,
       manifest,
     };
+  }
+
+  const cursorCheck = checkCursorReachable(repo, existingManifest.lastIndexedCommit);
+  if (cursorCheck.rewritten) {
+    throw new ForcePushHaltError(
+      `History was rewritten (${cursorCheck.reason ?? "cursor unreachable"}). Run a full index rebuild with indexFull / --full before incremental updates.`,
+    );
   }
 
   const db = openDb(gitchangeDir);

@@ -6,7 +6,18 @@ import { createWriter } from "../artifacts/writer.js";
 import { openRepo, walkFromHead } from "../ingestion/git-walk.js";
 import { loadIgnore } from "../privacy/gitchangeignore.js";
 import * as schema from "../schema/drizzle/schema.js";
-import { writeManifest, type Manifest } from "../schema/manifest.js";
+import {
+  writeManifest,
+  type IndexCompleteness,
+  type Manifest,
+  type ManifestWarningCode,
+} from "../schema/manifest.js";
+import {
+  countOutOfOrder,
+  echoWarnings,
+  formatWarningMessage,
+  isShallow,
+} from "./freshness.js";
 import { ensureGitignored } from "./gitignore-guard.js";
 import { processCommit } from "./process-commit.js";
 import { resolveBranchName, resolveHeadSha } from "./repo-head.js";
@@ -37,7 +48,17 @@ function countFileChanges(db: ReturnType<typeof openDb>): number {
   return row?.value ?? 0;
 }
 
-function buildManifest(repo: Awaited<ReturnType<typeof openRepo>>): Manifest {
+function signatureToEpochMs(signature: { timestamp: number }): number {
+  return signature.timestamp * 1000;
+}
+
+function buildManifest(
+  repo: Awaited<ReturnType<typeof openRepo>>,
+  options: {
+    indexCompleteness: IndexCompleteness;
+    warnings: Manifest["warnings"];
+  },
+): Manifest {
   const headSha = resolveHeadSha(repo);
   return {
     schemaVersion: CORE_SCHEMA_VERSION,
@@ -47,9 +68,25 @@ function buildManifest(repo: Awaited<ReturnType<typeof openRepo>>): Manifest {
       head: headSha,
       branch: resolveBranchName(repo),
     },
-    indexCompleteness: "complete",
-    warnings: [],
+    indexCompleteness: options.indexCompleteness,
+    warnings: options.warnings,
   };
+}
+
+function createWarning(
+  code: ManifestWarningCode,
+  message: string,
+): Manifest["warnings"][number] {
+  switch (code) {
+    case "shallow_clone":
+    case "force_push_detected":
+    case "out_of_order_commits":
+      return { code, message };
+    default: {
+      const exhaustive: never = code;
+      throw new Error(`Unexpected warning code: ${JSON.stringify(exhaustive)}`);
+    }
+  }
 }
 
 export async function indexFull(options: IndexOptions): Promise<IndexResult> {
@@ -62,17 +99,48 @@ export async function indexFull(options: IndexOptions): Promise<IndexResult> {
   const writer = createWriter(db, options.batchSize);
   const matcher = loadIgnore(options.repoPath);
 
+  const warnings: Manifest["warnings"] = [];
+  let indexCompleteness: IndexCompleteness = "complete";
+
+  if (isShallow(options.repoPath, repo)) {
+    indexCompleteness = "partial";
+    warnings.push(
+      createWarning(
+        "shallow_clone",
+        formatWarningMessage("shallow_clone"),
+      ),
+    );
+  }
+
   let commitsIndexed = 0;
+  const committerTimestamps: number[] = [];
 
   for (const sha of walkFromHead(repo)) {
+    const commit = repo.getCommit(sha);
+    committerTimestamps.push(signatureToEpochMs(commit.committer()));
     processCommit({ repo, sha, writer, matcher });
     commitsIndexed += 1;
   }
 
   writer.flush();
 
-  const manifest = buildManifest(repo);
+  const outOfOrderCount = countOutOfOrder(committerTimestamps);
+  if (outOfOrderCount > 0) {
+    warnings.push(
+      createWarning(
+        "out_of_order_commits",
+        formatWarningMessage(
+          "out_of_order_commits",
+          `${outOfOrderCount} commits out of chronological order`,
+        ),
+      ),
+    );
+  }
+
+  const manifest = buildManifest(repo, { indexCompleteness, warnings });
   writeManifest(gitchangeDir, manifest);
+
+  echoWarnings(manifest.warnings);
 
   console.log(
     `GitChange index complete: ${commitsIndexed} commits indexed (HEAD ${manifest.repo.head.slice(0, 7)})`,

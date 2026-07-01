@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { buildRepo } from "../../../../tests/fixtures/builder.js";
 import { BASIC_SCENARIO } from "../../../../tests/fixtures/scenarios.js";
 import { openDb } from "../artifacts/db.js";
+import { ForcePushHaltError } from "./freshness.js";
 import { indexFull } from "./full.js";
 import { commitExists, indexIncremental } from "./incremental.js";
 import * as schema from "../schema/drizzle/schema.js";
@@ -96,5 +97,39 @@ describe("indexIncremental", () => {
     expect(result.commitsIndexed).toBe(0);
     expect(result.manifest.lastIndexedCommit).toBe(before?.lastIndexedCommit);
     expect(result.manifest.indexedAt).not.toBe(before?.indexedAt);
+  });
+
+  it("throws ForcePushHaltError when history is rewritten and does not advance manifest", async () => {
+    const repo = buildRepo(BASIC_SCENARIO);
+    repos.push(repo);
+
+    const gitchangeDir = join(repo.dir, ".gitchange");
+    await indexFull({ repoPath: repo.dir, gitchangeDir });
+
+    const manifestBefore = readManifest(gitchangeDir);
+    expect(manifestBefore).not.toBeNull();
+
+    const dbBefore = openDb(gitchangeDir);
+    const commitsBefore = dbBefore.select({ value: count() }).from(schema.commits).get()?.value ?? 0;
+
+    execFileSync("git", ["checkout", "--orphan", "rewritten-root"], {
+      cwd: repo.dir,
+      encoding: "utf8",
+    });
+    execFileSync("git", ["commit", "--allow-empty", "-m", "chore: rewritten history root"], {
+      cwd: repo.dir,
+      encoding: "utf8",
+    });
+
+    await expect(indexIncremental({ repoPath: repo.dir, gitchangeDir })).rejects.toBeInstanceOf(
+      ForcePushHaltError,
+    );
+
+    const manifestAfter = readManifest(gitchangeDir);
+    expect(manifestAfter?.lastIndexedCommit).toBe(manifestBefore?.lastIndexedCommit);
+
+    const dbAfter = openDb(gitchangeDir);
+    const commitsAfter = dbAfter.select({ value: count() }).from(schema.commits).get()?.value ?? 0;
+    expect(commitsAfter).toBe(commitsBefore);
   });
 });

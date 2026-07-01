@@ -74,12 +74,12 @@
 - [x] **PLUG-01**: User can run `/gitchange` slash command to trigger analysis pipeline from Cursor/Claude Code
 - [x] **PLUG-02**: User can run `/gitchange-dashboard` to open the local web UI
 - [x] **PLUG-03**: CLI supports `gitchange index`, `gitchange serve`, and `gitchange status` commands
-- [ ] **PLUG-04**: Plugin follows Understand-Anything packaging pattern (skills, agents, multi-platform install)
+- [x] **PLUG-04**: Plugin follows Understand-Anything packaging pattern (skills, agents, multi-platform install)
 - [x] **PLUG-05**: Host AI is the LLM — GitChange supplies tools, schemas, and artifacts only
 
 ### Install & First Run (INST)
 
-- [ ] **INST-01**: User can install via plugin marketplace or one-line installer following the Understand-Anything pattern
+- [x] **INST-01**: User can install via plugin marketplace or one-line installer following the Understand-Anything pattern
 - [x] **INST-02**: User completes first analysis with a single `/gitchange` slash command after install — no manual config required
 - [x] **INST-03**: User opens dashboard with `/gitchange-dashboard` and sees initial value (index status, basic repo snapshot) without manual configuration
 - [ ] **INST-04**: Quickstart docs cover install → `/gitchange` → `/gitchange-dashboard` in under 5 steps
@@ -200,9 +200,9 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | PLUG-01 | Phase 3 | Complete |
 | PLUG-02 | Phase 3 | Complete |
 | PLUG-03 | Phase 3 | Complete |
-| PLUG-04 | Phase 3 | Pending |
+| PLUG-04 | Phase 3 | Complete |
 | PLUG-05 | Phase 3 | Complete |
-| INST-01 | Phase 3 | Pending |
+| INST-01 | Phase 3 | Complete |
 | INST-02 | Phase 3 | Complete |
 | INST-03 | Phase 3 | Complete |
 | INST-04 | Phase 3 | Pending |

@@ -313,7 +313,7 @@ Plans:
 
 **Wave 3** *(blocked on Waves 1–2)*
 
-- [ ] 08-04-PLAN.md — DASH-02: @xyflow/react temporal graph tab + drill-down wiring
+- [x] 08-04-PLAN.md — DASH-02: @xyflow/react temporal graph tab + drill-down wiring
 
 **Wave 4** *(blocked on Waves 1–3)*
 
@@ -334,7 +334,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
-| 8. Hardening, Scale & Multi-Repo | 3/5 | In Progress|  |
+| 8. Hardening, Scale & Multi-Repo | 4/5 | In Progress|  |
 
 ---
 *Roadmap created: 2026-06-30*

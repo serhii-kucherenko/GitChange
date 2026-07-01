@@ -72,7 +72,7 @@ completed: 2026-07-01
 1. **Task 1: Graph read API + unified federation** - `0b7d263` (feat)
 2. **Task 2: TemporalGraphView + Graph intelligence tab** - `3a376c8` (feat)
 
-**Plan metadata:** pending (docs commit)
+**Plan metadata:** `60fade3` (docs: complete plan)
 
 ## Files Created/Modified
 

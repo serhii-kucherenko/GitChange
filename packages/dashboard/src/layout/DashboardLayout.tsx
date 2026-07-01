@@ -80,7 +80,7 @@ export function DashboardLayout({
           <div
             role="tablist"
             aria-label="Primary views"
-            className="mx-auto flex max-w-[96rem] gap-1 px-6"
+            className="mx-auto flex max-w-[96rem] gap-1 overflow-x-auto px-6"
           >
             {(Object.keys(TAB_LABELS) as IntelligenceTab[]).map((tab) => {
               const isActive = intelligenceTab === tab;

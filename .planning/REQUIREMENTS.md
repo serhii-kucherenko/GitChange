@@ -1,0 +1,165 @@
+# Requirements: GitChange
+
+**Defined:** 2026-06-30
+**Core Value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
+
+## v1 Requirements
+
+### Ingestion & Index (INGX)
+
+- [ ] **INGX-01**: User can index a local git clone and produce a `.gitchange/` derived index without network access
+- [ ] **INGX-02**: System parses commits, authors, timestamps, messages, merges, renames, and file-level diffs from local git
+- [ ] **INGX-03**: System analyzes docs tracked in git (README, CHANGELOG, docs/, ADRs) as they changed over time
+- [ ] **INGX-04**: System incrementally re-indexes only commits after `lastIndexedCommit` on subsequent runs
+- [ ] **INGX-05**: System detects force-push or shallow-clone conditions and surfaces index freshness warnings
+- [ ] **INGX-06**: User can search and filter commits by author, path, message keyword, and date range
+
+### Evidence & Trust (EVD)
+
+- [ ] **EVD-01**: Every narrative claim (era label, decision summary, status) links to evidence (commit SHA, file path, or doc excerpt)
+- [ ] **EVD-02**: System assigns confidence scores to inferred claims and shows them in UI and agent responses
+- [ ] **EVD-03**: System shows "no recorded decision found" when evidence is below threshold instead of fabricating rationale
+- [ ] **EVD-04**: Golden fixture tests validate evidence link integrity for generated artifacts
+
+### Timeline & Drill-Down (TIME)
+
+- [ ] **TIME-01**: User can view an interactive timeline of project history with era markers
+- [ ] **TIME-02**: User can drill down era → commit → file → diff hunk from the dashboard
+- [ ] **TIME-03**: User can view file-centric history scrubber for any indexed file
+- [ ] **TIME-04**: User can navigate migration-centric threads showing progress across commits and files
+
+### Evolution & Eras (ERA)
+
+- [ ] **ERA-01**: System detects named engineering eras/chapters with evidence bundles (commits, file arrivals, pivot signals)
+- [ ] **ERA-02**: User can see how the project evolved through era summaries tied to proof
+- [ ] **ERA-03**: System detects inflection types: tech pivots, scope steering, process shifts, and team/ownership changes
+
+### Guided Tours (TOUR)
+
+- [ ] **TOUR-01**: System generates a default guided onboarding tour (4–6 chapters) ordered by dependency and chronology
+- [ ] **TOUR-02**: User can take role-based tour variants (e.g., backend vs frontend emphasis)
+- [ ] **TOUR-03**: User can follow topic-thread tours (e.g., auth, database, named migration) across eras
+- [ ] **TOUR-04**: Tour player shows evidence on every stop with drill-down to commits and files
+
+### Contributors & Ownership (CONT)
+
+- [ ] **CONT-01**: User can see who changed what with per-file and per-era ownership timelines
+- [ ] **CONT-02**: User can see decision attribution — who drove pivots with linked commits
+- [ ] **CONT-03**: User can view contributor expertise profiles inferred from history ("ask Alice about auth")
+- [ ] **CONT-04**: System computes ownership from line survival at HEAD with rename tracking and ignore-revs support
+
+### Decisions & Migrations (DEC)
+
+- [ ] **DEC-01**: System auto-mines decisions and migrations from commits, messages, trailers, and doc deltas
+- [ ] **DEC-02**: User can browse decisions with status, evidence, and supersession relationships
+- [ ] **DEC-03**: Maintainer can confirm or reject auto-mined decisions via in-chat interview loop
+- [ ] **DEC-04**: Interview answers flow back into project docs or `.gitchange/` index as durable lore
+
+### Status & Open Work (STAT)
+
+- [ ] **STAT-01**: System infers migration/task status using pattern-based, keyword/trailer, and docs-vs-code cross-reference methods
+- [ ] **STAT-02**: User can see open threads panel listing in-flight migrations, WIP refactors, and stale work
+- [ ] **STAT-03**: Tour stops and timeline show inline badges when related work appears incomplete
+- [ ] **STAT-04**: Agent can answer status queries (e.g., migration progress) with evidence and confidence
+
+### Dashboard & Visualization (DASH)
+
+- [ ] **DASH-01**: User can open a local web dashboard served on localhost from indexed artifacts
+- [ ] **DASH-02**: Dashboard includes timeline, temporal knowledge graph, and tour player views
+- [ ] **DASH-03**: Dashboard shows index freshness and schema version
+- [ ] **DASH-04**: Dashboard virtualizes large commit lists for responsive navigation
+
+### Plugin & CLI (PLUG)
+
+- [ ] **PLUG-01**: User can run `/gitchange` slash command to trigger analysis pipeline from Cursor/Claude Code
+- [ ] **PLUG-02**: User can run `/gitchange-dashboard` to open the local web UI
+- [ ] **PLUG-03**: CLI supports `gitchange index`, `gitchange serve`, and `gitchange status` commands
+- [ ] **PLUG-04**: Plugin follows Understand-Anything packaging pattern (skills, agents, multi-platform install)
+- [ ] **PLUG-05**: Host AI is the LLM — GitChange supplies tools, schemas, and artifacts only
+
+### Privacy (PRIV)
+
+- [ ] **PRIV-01**: System runs local-only with no telemetry
+- [ ] **PRIV-02**: System redacts secrets from generated artifacts at ingest
+- [ ] **PRIV-03**: User can configure `.gitchangeignore` for sensitive paths, authors, or commits
+- [ ] **PRIV-04**: Local server binds to localhost by default
+
+### Scale & Performance (SCALE)
+
+- [ ] **SCALE-01**: System indexes repositories with 100k+ commits using incremental two-phase architecture
+- [ ] **SCALE-02**: Dashboard and agent queries read pre-built index — no live full-repo git walks in UI hot path
+- [ ] **SCALE-03**: Core ingestion and parsing covered by TDD with golden fixtures
+
+### Multi-Repo (MULTI)
+
+- [ ] **MULTI-01**: User can manually select one or multiple related repos for unified analysis
+- [ ] **MULTI-02**: Unified timeline and tours present cross-repo story with explicit repo attribution
+
+## v2 Requirements
+
+Deferred until v1 validated on GitChange dogfood + external OSS adopter.
+
+### Integrations (INTG)
+
+- **INTG-01**: GitHub/GitLab PR and issue comment mining via API
+- **INTG-02**: Auto-update index via post-commit hook
+- **INTG-03**: MCP tools in addition to slash commands
+
+### Platform (PLAT)
+
+- **PLAT-01**: Hosted/synced team lore SaaS
+- **PLAT-02**: Mobile-optimized dashboard
+- **PLAT-03**: IDE inline annotations (Vestige-style)
+
+## Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| Cloud SaaS as core path | v1 is local-first; conflicts with privacy persona |
+| GitHub/GitLab API as primary source | v1 uses local git clone only |
+| Mobile UI | Poor fit for code evidence drill-down |
+| Forking Understand-Anything codebase | Separate temporal-focused codebase; copy plugin patterns only |
+| Static dependency/call graphs | Repowise/UA territory; not temporal onboarding core |
+| Own LLM orchestration | Host chat (Cursor/Claude) is the model |
+| Ungrounded AI narratives | Trust failure mode; evidence contract required |
+| Real-time collaborative lore editing | Scope explosion; maintainer interview → docs PR instead |
+| Animated Gource-style viz as primary UX | Eye candy without learning path |
+
+## User Stories
+
+- As a **new hire**, I want a guided tour through project eras so I can understand how the codebase evolved without asking seniors.
+- As a **new hire**, I want to drill from any tour claim to the exact commit and file diff that proves it.
+- As a **maintainer**, I want weak-evidence gaps surfaced in chat so I can capture tribal knowledge before it is lost.
+- As a **maintainer**, I want to see open migrations and their progress so I know what work is still in flight.
+- As a **contributor using Cursor**, I want slash commands that index history and open a dashboard without leaving my IDE.
+
+## Acceptance Criteria
+
+- A new hire completes the default tour and can explain three key project pivots with linked evidence.
+- Agent correctly answers "why did we switch X?" with commit/doc citations and confidence score.
+- Another OSS project successfully adopts GitChange for onboarding.
+- Index incrementally updates on new commits without full rescan.
+- No secrets appear in `.gitchange/` artifacts for fixture repos containing simulated credentials.
+
+## Definition of Done
+
+- All v1 requirements mapped to roadmap phases with verification criteria
+- Core ingestion tests pass (golden fixtures)
+- End-to-end flow works: `/gitchange` → index → `/gitchange-dashboard` → tour with drill-down
+- MIT licensed; documented install path for Cursor and Claude Code
+- Dogfooded on GitChange's own repository
+
+## Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| (Populated during roadmap creation) | | |
+
+**Coverage:**
+- v1 requirements: 52 total
+- Mapped to phases: 0
+- Unmapped: 52 ⚠️
+
+---
+*Requirements defined: 2026-06-30*
+*Last updated: 2026-06-30 after initial definition*

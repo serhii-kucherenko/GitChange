@@ -226,7 +226,29 @@ Plans:
   4. User views open threads panel listing in-flight migrations, WIP refactors, and stale work with confidence scores
   5. Agent answers status queries (e.g., migration progress) with evidence citations and confidence; timeline and tour surfaces show inline badges for incomplete related work
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 06-01-PLAN.md — Schemas + deterministic mining + EVD-03 threshold + artifact I/O
+
+**Wave 2** *(blocked on Wave 1; parallel)*
+
+- [ ] 06-02-PLAN.md — decision-miner agent + merge + attribution (DEC-01/02, CONT-02)
+- [ ] 06-03-PLAN.md — STAT-01 status inferencer + open-work assembly + pipeline
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 06-04-PLAN.md — Dashboard decisions browse + open threads + migration threads (TIME-04)
+
+**Wave 4** *(blocked on 06-02)*
+
+- [ ] 06-05-PLAN.md — /gitchange-interview loop + durable writeback (DEC-03/04)
+
+**Wave 5** *(blocked on Waves 3–4)*
+
+- [ ] 06-06-PLAN.md — Timeline badges + agent status schema + golden/E2E gate (STAT-03/04)
 **UI hint**: yes
 
 ### Phase 7: Guided Tours & Onboarding UX
@@ -274,7 +296,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. CLI & Plugin Scaffold | 6/6 | Complete   | 2026-07-01 |
 | 4. Era Detection & Semantic Pipeline | 5/5 | Complete   | 2026-07-01 |
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
-| 6. Decisions, Status & Open Work | 0/TBD | Not started | - |
+| 6. Decisions, Status & Open Work | 0/6 | Not started | - |
 | 7. Guided Tours & Onboarding UX | 0/TBD | Not started | - |
 | 8. Hardening, Scale & Multi-Repo | 0/TBD | Not started | - |
 

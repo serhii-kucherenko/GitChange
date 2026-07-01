@@ -76,7 +76,7 @@ completed: 2026-07-01
 1. **Task 1: Plugin manifests + slash command skills** - `ebec5c1` (feat)
 2. **Task 2: Host-AI schemas + PLUG-05 grep gate** - `f41d257` (feat)
 
-**Plan metadata:** pending (docs commit)
+**Plan metadata:** `7383be1` (docs: complete plan)
 
 ## Files Created/Modified
 

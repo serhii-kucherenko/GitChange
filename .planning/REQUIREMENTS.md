@@ -99,7 +99,7 @@
 
 ### Multi-Repo (MULTI)
 
-- [ ] **MULTI-01**: User can manually select one or multiple related repos for unified analysis
+- [x] **MULTI-01**: User can manually select one or multiple related repos for unified analysis
 - [ ] **MULTI-02**: Unified timeline and tours present cross-repo story with explicit repo attribution
 
 ## v2 Requirements
@@ -213,7 +213,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | SCALE-01 | Phase 8 | Pending |
 | SCALE-02 | Phase 5 | Complete |
 | SCALE-03 | Phase 1 | Complete |
-| MULTI-01 | Phase 8 | Pending |
+| MULTI-01 | Phase 8 | Complete |
 | MULTI-02 | Phase 8 | Pending |
 
 **Coverage:**

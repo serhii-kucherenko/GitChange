@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 07-05-PLAN.md — tours golden gate + E2E
-last_updated: "2026-07-01T12:35:00.000Z"
+status: executing
+stopped_at: Completed 08-02-PLAN.md — workspace layer + CLI
+last_updated: "2026-07-01T12:47:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 46
-  completed_plans: 41
-  percent: 88
+  completed_plans: 42
+  percent: 91
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 
 ## Current Position
 
-Phase: 7 of 8 complete (Guided Tours & Onboarding UX)
-Plan: 5 of 5 complete in Phase 7 (07-05)
-Status: Phase 7 complete — ready for Phase 8
+Phase: 8 of 8 in progress (Hardening, Scale & Multi-Repo)
+Plan: 2 of 5 complete in Phase 8 (08-02)
+Status: Executing Phase 8
 Last activity: 2026-07-01
-Stopped at: Completed 07-05-PLAN.md — tours golden gate + E2E
+Stopped at: Completed 08-02-PLAN.md — workspace layer + CLI
 
-Progress: [█████████░] 89%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -138,6 +138,9 @@ Recent decisions affecting current work:
 - BASIC_SCENARIO_TOURS_SNAPSHOT locks 3 tours, 4 default chapters, 6 total stops
 - validate runs checkToursIntegrity when tours.json present; errors if manifest checkpoint without file
 
+- Workspace file stored in primary repo gitchangeDir; discovered by walking up for workspace.json
+- indexWorkspace stamps manifest.repoId after each successful index
+
 ### Pending Todos
 
 None yet.
@@ -156,6 +159,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T12:35:00.000Z
+Last session: 2026-07-01T12:43:02.419Z
 Stopped at: Completed 07-05-PLAN.md — tours golden gate + E2E
 Resume file: None

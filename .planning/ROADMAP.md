@@ -305,7 +305,7 @@ Plans:
 **Wave 1** *(parallel)*
 
 - [ ] 08-01-PLAN.md — SCALE-01: piscina workers, SQLite tuning, progress CLI, 10k benchmark gate
-- [ ] 08-02-PLAN.md — MULTI-01: workspace.json + CLI add/list/index + per-repo sequential index
+- [x] 08-02-PLAN.md — MULTI-01: workspace.json + CLI add/list/index + per-repo sequential index
 
 **Wave 2** *(blocked on Wave 1 — 08-02)*
 
@@ -334,7 +334,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Dashboard & Evidence Drill-Down | 6/6 | Complete   | 2026-07-01 |
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
-| 8. Hardening, Scale & Multi-Repo | 0/5 | Not started | - |
+| 8. Hardening, Scale & Multi-Repo | 1/5 | In Progress|  |
 
 ---
 *Roadmap created: 2026-06-30*

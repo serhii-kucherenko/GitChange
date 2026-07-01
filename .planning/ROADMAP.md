@@ -40,11 +40,11 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Monorepo scaffold, @gitchange/core shell, Vitest, synthetic-repo fixture builder
+- [x] 01-01-PLAN.md — Monorepo scaffold, @gitchange/core shell, Vitest, synthetic-repo fixture builder
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02-PLAN.md — Zod schemas + evidence contract + Drizzle tables + [BLOCKING] schema push
+- [x] 01-02-PLAN.md — Zod schemas + evidence contract + Drizzle tables + [BLOCKING] schema push
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -189,7 +189,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Index Foundation | 0/8 | Not started | - |
+| 1. Index Foundation | 2/8 | In Progress|  |
 | 2. Repository Intelligence & Ownership | 0/TBD | Not started | - |
 | 3. CLI & Plugin Scaffold | 0/TBD | Not started | - |
 | 4. Era Detection & Semantic Pipeline | 0/TBD | Not started | - |

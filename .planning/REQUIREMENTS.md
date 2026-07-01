@@ -16,10 +16,10 @@
 
 ### Evidence & Trust (EVD)
 
-- [ ] **EVD-01**: Every narrative claim (era label, decision summary, status) links to evidence (commit SHA, file path, or doc excerpt)
+- [x] **EVD-01**: Every narrative claim (era label, decision summary, status) links to evidence (commit SHA, file path, or doc excerpt)
 - [ ] **EVD-02**: System assigns confidence scores to inferred claims and shows them in UI and agent responses
 - [ ] **EVD-03**: System shows "no recorded decision found" when evidence is below threshold instead of fabricating rationale
-- [ ] **EVD-04**: Golden fixture tests validate evidence link integrity for generated artifacts
+- [x] **EVD-04**: Golden fixture tests validate evidence link integrity for generated artifacts
 
 ### Timeline & Drill-Down (TIME)
 
@@ -166,10 +166,10 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | INGX-04 | Phase 1 | Pending |
 | INGX-05 | Phase 1 | Pending |
 | INGX-06 | Phase 5 | Pending |
-| EVD-01 | Phase 1 | Pending |
+| EVD-01 | Phase 1 | Complete |
 | EVD-02 | Phase 5 | Pending |
 | EVD-03 | Phase 6 | Pending |
-| EVD-04 | Phase 1 | Pending |
+| EVD-04 | Phase 1 | Complete |
 | TIME-01 | Phase 5 | Pending |
 | TIME-02 | Phase 5 | Pending |
 | TIME-03 | Phase 5 | Pending |

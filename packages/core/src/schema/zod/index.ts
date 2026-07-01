@@ -30,6 +30,13 @@ export { CommitRecord, type CommitRecord as CommitRecordType } from "./commit.js
 export { DocSnapshot, type DocSnapshot as DocSnapshotType } from "./doc-snapshot.js";
 export { Evidence, type Evidence as EvidenceType } from "./evidence.js";
 export {
+  INTERVIEW_RECORD_SCHEMA_VERSION,
+  InterviewRecord,
+  InterviewVerdict,
+  type InterviewRecord as InterviewRecordType,
+  type InterviewVerdict as InterviewVerdictType,
+} from "./interview.js";
+export {
   ChangeType,
   FileChangeRecord,
   type ChangeType as ChangeTypeValue,

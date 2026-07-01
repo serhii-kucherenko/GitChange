@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitchange.dev/schemas/interview-record.schema.json",
+  "title": "GitChangeInterviewRecord",
+  "description": "Maintainer interview answer persisted under .gitchange/interviews/ for DEC-03/DEC-04.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decisionId": {
+      "type": "string",
+      "pattern": "^decision:.*"
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "answer": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "confirm",
+        "reject"
+      ]
+    },
+    "recordedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maintainer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "writeToDocs": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "decisionId",
+    "question",
+    "answer",
+    "verdict",
+    "recordedAt"
+  ],
+  "additionalProperties": false
+}

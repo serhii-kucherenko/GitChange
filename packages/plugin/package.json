@@ -14,7 +14,8 @@
     "schemas/era-synthesis-context.schema.json",
     "schemas/eras.schema.json",
     "schemas/decision-mining-context.schema.json",
-    "schemas/decisions.schema.json"
+    "schemas/decisions.schema.json",
+    "schemas/interview-record.schema.json"
   ],
   "scripts": {
     "build": "tsx scripts/generate-schemas.ts",

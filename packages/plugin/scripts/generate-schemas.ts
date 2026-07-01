@@ -7,6 +7,7 @@ import {
   ErasArtifact,
   Evidence,
   IntelligenceArtifact,
+  InterviewRecord,
   ManifestSchema,
 } from "@gitchange/core";
 
@@ -272,6 +273,12 @@ writeSchema("decisions.schema.json", DecisionsArtifact, {
   title: "GitChangeDecisionsArtifact",
   description:
     "Past decisions and migrations with status, evidence, supersession, and attribution.",
+});
+
+writeSchema("interview-record.schema.json", InterviewRecord, {
+  title: "GitChangeInterviewRecord",
+  description:
+    "Maintainer interview answer persisted under .gitchange/interviews/ for DEC-03/DEC-04.",
 });
 
 // Sanity: generated schemas round-trip through fromJSONSchema for manifest.

@@ -82,7 +82,7 @@
 - [x] **INST-01**: User can install via plugin marketplace or one-line installer following the Understand-Anything pattern
 - [x] **INST-02**: User completes first analysis with a single `/gitchange` slash command after install — no manual config required
 - [x] **INST-03**: User opens dashboard with `/gitchange-dashboard` and sees initial value (index status, basic repo snapshot) without manual configuration
-- [ ] **INST-04**: Quickstart docs cover install → `/gitchange` → `/gitchange-dashboard` in under 5 steps
+- [x] **INST-04**: Quickstart docs cover install → `/gitchange` → `/gitchange-dashboard` in under 5 steps
 
 ### Privacy (PRIV)
 
@@ -205,7 +205,7 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | INST-01 | Phase 3 | Complete |
 | INST-02 | Phase 3 | Complete |
 | INST-03 | Phase 3 | Complete |
-| INST-04 | Phase 3 | Pending |
+| INST-04 | Phase 3 | Complete |
 | PRIV-01 | Phase 1 | Complete |
 | PRIV-02 | Phase 1 | Complete |
 | PRIV-03 | Phase 1 | Complete |

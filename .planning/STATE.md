@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 03-04-PLAN.md — plugin slash commands and host-AI schemas
-last_updated: "2026-07-01T09:52:33.008Z"
+status: ready_for_verification
+stopped_at: Completed 03-06-PLAN.md — quickstart + first-run E2E
+last_updated: "2026-07-01T09:57:52.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 19
-  completed_plans: 18
-  percent: 25
+  completed_plans: 19
+  percent: 38
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-30)
 
 **Core value:** Anyone onboarding or maintaining a codebase can answer five evidence-backed questions — who changed what, how the project evolved, what decisions/migrations were made, what's still in flight, and current progress.
-**Current focus:** Phase 3 — CLI & Plugin Scaffold
+**Current focus:** Phase 4 — Era Detection & Semantic Pipeline
 
 ## Current Position
 
-Phase: 3 of 8 in progress (CLI & Plugin Scaffold)
+Phase: 3 of 8 complete (CLI & Plugin Scaffold)
 Plan: 6 of 6 complete in Phase 3
-Status: Phase complete — ready for verification
+Status: Phase 3 complete — ready for Phase 4
 Last activity: 2026-07-01
-Stopped at: Completed 03-04-PLAN.md — plugin slash commands and host-AI schemas
+Stopped at: Completed 03-06-PLAN.md — quickstart + first-run E2E
 
-Progress: [██████████] 95%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -79,6 +79,7 @@ Progress: [██████████] 95%
 - CLI always calls computeIntelligence after index (P3-D-02)
 - resolveGitChangeRoot walks up from module path when cwd discovery fails (P3-D-04 step 4)
 - Installer pins official GitHub URL with warning on custom GITCHANGE_REPO_URL
+- First-run integration test uses GITCHANGE_PORT for ephemeral serve binding; Node 22.x required for native sqlite in CI
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
@@ -105,6 +106,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T09:52:32.998Z
-Stopped at: Completed 03-04-PLAN.md — plugin slash commands and host-AI schemas
+Last session: 2026-07-01T09:57:52.000Z
+Stopped at: Completed 03-06-PLAN.md — quickstart + first-run E2E
 Resume file: None

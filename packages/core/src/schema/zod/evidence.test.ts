@@ -51,4 +51,49 @@ describe("Evidence", () => {
     const roundTripped = Evidence.parse(JSON.parse(JSON.stringify(input)));
     expect(roundTripped).toEqual(input);
   });
+
+  it("accepts interview evidence with path under interviews/", () => {
+    const input = {
+      type: "interview" as const,
+      path: "interviews/01HINT.json",
+      recordedAt: "2026-07-01T12:00:00.000Z",
+      excerpt: "Maintainer confirmed the SQLite pivot.",
+    };
+    const parsed = Evidence.parse(input);
+    expect(parsed.type).toBe("interview");
+    expect(parsed.path).toBe("interviews/01HINT.json");
+  });
+
+  it("round-trips interview evidence through JSON", () => {
+    const input = {
+      type: "interview" as const,
+      path: "interviews/abc123.json",
+      recordedAt: "2026-07-01T00:00:00.000Z",
+      excerpt: "We deferred multi-repo support.",
+    };
+    const roundTripped = Evidence.parse(JSON.parse(JSON.stringify(input)));
+    expect(roundTripped).toEqual(input);
+  });
+
+  it("rejects interview path outside interviews/", () => {
+    expect(() =>
+      Evidence.parse({
+        type: "interview",
+        path: "../secrets.json",
+        recordedAt: "2026-07-01T00:00:00.000Z",
+        excerpt: "leak",
+      }),
+    ).toThrow();
+  });
+
+  it("rejects interview excerpt over 500 chars", () => {
+    expect(() =>
+      Evidence.parse({
+        type: "interview",
+        path: "interviews/x.json",
+        recordedAt: "2026-07-01T00:00:00.000Z",
+        excerpt: "x".repeat(501),
+      }),
+    ).toThrow();
+  });
 });

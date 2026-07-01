@@ -20,6 +20,21 @@ export const Evidence = z.discriminatedUnion("type", [
     startLine: z.number().int().positive(),
     endLine: z.number().int().positive(),
   }),
+  z.object({
+    type: z.literal("interview"),
+    path: z
+      .string()
+      .min(1)
+      .refine(
+        (value) =>
+          value.startsWith("interviews/") &&
+          !value.includes("..") &&
+          !value.startsWith("/"),
+        { message: "interview path must resolve under interviews/" },
+      ),
+    recordedAt: z.string().min(1),
+    excerpt: z.string().max(500),
+  }),
 ]);
 
 export type Evidence = z.infer<typeof Evidence>;

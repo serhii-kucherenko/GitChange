@@ -1,3 +1,31 @@
+export {
+  DECISIONS_SCHEMA_VERSION,
+  DecisionAttribution,
+  DecisionMiningSource,
+  DecisionRecord,
+  DecisionReviewStatus,
+  DecisionStatus,
+  DecisionsArtifact,
+  type DecisionAttribution as DecisionAttributionType,
+  type DecisionMiningSource as DecisionMiningSourceType,
+  type DecisionRecord as DecisionRecordType,
+  type DecisionReviewStatus as DecisionReviewStatusType,
+  type DecisionStatus as DecisionStatusType,
+  type DecisionsArtifact as DecisionsArtifactType,
+} from "./decisions.js";
+export {
+  OPEN_WORK_SCHEMA_VERSION,
+  OpenWorkArtifact,
+  OpenWorkKind,
+  OpenWorkStatus,
+  OpenWorkThread,
+  OpenWorkThreadEvent,
+  type OpenWorkArtifact as OpenWorkArtifactType,
+  type OpenWorkKind as OpenWorkKindType,
+  type OpenWorkStatus as OpenWorkStatusType,
+  type OpenWorkThread as OpenWorkThreadType,
+  type OpenWorkThreadEvent as OpenWorkThreadEventType,
+} from "./open-work.js";
 export { CommitRecord, type CommitRecord as CommitRecordType } from "./commit.js";
 export { DocSnapshot, type DocSnapshot as DocSnapshotType } from "./doc-snapshot.js";
 export { Evidence, type Evidence as EvidenceType } from "./evidence.js";

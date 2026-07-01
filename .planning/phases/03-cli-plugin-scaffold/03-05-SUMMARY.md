@@ -2,21 +2,21 @@
 phase: 03-cli-plugin-scaffold
 plan: 05
 subsystem: plugin
-tags: [install, path-resolver, ua-pattern, plug-04, inst-01, marketplace]
+tags: [install-ux, path-resolver, marketplace, inst-01, plug-04, cursor-plugin, claude-plugin]
 
 requires:
   - phase: 03-cli-plugin-scaffold
-    provides: plugin manifests, slash command skills, host-AI schemas
+    provides: slash commands, plugin manifests, host-AI schemas
 provides:
-  - P3-D-04 plugin root resolver (resolveGitChangeRoot, resolveCliBin)
-  - One-line install.sh and install.ps1 (UA pattern)
-  - validate-plugin.yml CI for manifests and resolver tests
-  - README install section with verification steps
-affects: [03-06-PLAN, INST-04, doctor]
+  - P3-D-04 resolveGitChangeRoot / resolveCliBin with unit tests
+  - UA-style install.sh and install.ps1 (clone, build, CLI link)
+  - README install section and marketplace metadata polish
+  - validate-plugin.yml CI (manifest JSON, skills dirs, resolver tests)
+affects: [03-06-PLAN, INST-02, INST-03]
 
 tech-stack:
   added: []
-  patterns: [P3-D-04 four-step root resolution, pinned official GitHub clone URL in installer]
+  patterns: [P3-D-04 four-step root resolution; pinned official GitHub clone URL in installer]
 
 key-files:
   created:
@@ -34,65 +34,73 @@ key-files:
     - .claude-plugin/marketplace.json
 
 key-decisions:
-  - "resolveGitChangeRoot walks up from module file as step 4 when cwd-based discovery fails"
-  - "Installer pins default clone URL to github.com/Egonex-AI/GitChange with warning on override"
-  - "CLI wrapper written to ~/.local/bin/gitchange setting GITCHANGE_ROOT"
+  - "resolveGitChangeRoot precedence: GITCHANGE_ROOT → cwd .cursor-plugin → global node_modules/.bin/gitchange → module walk-up"
+  - "resolveCliBin prefers packages/cli/dist/bin.js, then node_modules/.bin/gitchange, then pnpm exec fallback"
+  - "install.sh pins OFFICIAL_REPO; non-default GITCHANGE_REPO_URL emits warning (T-03-10/11)"
 
 patterns-established:
-  - "Plugin skills document separate git repo root vs GitChange install root resolution"
-  - "CI validate-plugin job parses manifests and runs resolve-root unit tests"
+  - "Skills document P3-D-04 separately from git repo root (.git walk-up)"
+  - "Installer idempotent: git pull + pnpm install + pnpm build on re-run"
 
 requirements-completed: [PLUG-04, INST-01]
 
-duration: 5min
+duration: 12min
 completed: 2026-07-01
 ---
 
 # Phase 3 Plan 05: Install UX + Plugin Path Resolver Summary
 
-**P3-D-04 root resolver with one-line UA-style installer — works from clone, global layout, and monorepo dev**
+**P3-D-04 path resolver with unit tests, UA-style one-line installers, and CI manifest validation for marketplace discovery**
 
 ## Performance
 
-- **Duration:** ~5 min
-- **Started:** 2026-07-01T09:46:00Z
-- **Completed:** 2026-07-01T09:51:00Z
+- **Duration:** 12 min
+- **Started:** 2026-07-01T09:49:00Z
+- **Completed:** 2026-07-01T09:51:30Z
 - **Tasks:** 2
 - **Files modified:** 11
 
 ## Accomplishments
 
-- `resolveGitChangeRoot` / `resolveCliBin` with unit tests for env, cwd walk-up, global bin, and failure cases
-- `install.sh` / `install.ps1` clone to `~/.gitchange-plugin`, build, and install CLI wrapper
-- README documents prerequisites, one-liner, IDE plugin hooks, and `gitchange --version` / `status` verification
-- `validate-plugin.yml` CI validates JSON manifests, skills path, install script syntax, resolver tests
-- Marketplace manifest polished with keywords and repository URL
+- `resolveGitChangeRoot` and `resolveCliBin` cover monorepo dev, marketplace clone, global install, and `GITCHANGE_ROOT` override with typed `ResolveError`
+- Eight vitest cases pass for resolver precedence and CLI binary selection
+- `install.sh` / `install.ps1` clone to `~/.gitchange-plugin`, build with pnpm, link CLI to `~/.local/bin`, print Cursor/Claude symlink steps
+- README documents prerequisites, one-liner install, verification, and IDE plugin usage
+- `validate-plugin.yml` parses manifests, verifies skills directories, runs resolver tests, and checks `install.sh` syntax
 
 ## Task Commits
 
 1. **Task 1: Plugin root resolver with unit tests** - `7a42f7a` (feat)
 2. **Task 2: Install scripts + README + marketplace polish** - `a02b903` (feat)
+3. **CI/README polish** - `af3ab17` (docs)
 
-**Plan metadata:** pending (docs commit)
+**Plan metadata:** pending final docs commit
 
 ## Files Created/Modified
 
-- `packages/plugin/scripts/resolve-root.ts` - P3-D-04 install root + CLI binary resolution
-- `packages/plugin/scripts/resolve-root.test.ts` - 8 unit tests across precedence cases
-- `scripts/install.sh` - Bash one-line installer (Node 22+, pnpm, git)
+- `packages/plugin/scripts/resolve-root.ts` - P3-D-04 root and CLI binary resolution
+- `packages/plugin/scripts/resolve-root.test.ts` - temp-dir tests for all precedence paths
+- `packages/cli/src/repo-path.ts` - shared walk-up helper for `.git` discovery
+- `scripts/install.sh` - macOS/Linux one-line installer (Node 22+, pinned repo URL)
 - `scripts/install.ps1` - Windows equivalent
-- `.github/workflows/validate-plugin.yml` - Manifest + resolver CI gate
-- `README.md` - Install and verify documentation
-- `.claude-plugin/marketplace.json` - Keywords and repository metadata
+- `.github/workflows/validate-plugin.yml` - plugin manifest and resolver CI gate
+- `README.md` - install, verify, and IDE plugin sections
+- `.claude-plugin/marketplace.json` - keywords, repository, homepage metadata
+- `packages/plugin/skills/gitchange/SKILL.md` - documents resolver order and install fallback
+- `packages/plugin/skills/gitchange-dashboard/SKILL.md` - references resolve-root for CLI
 
 ## Decisions Made
 
-- Module-path fallback walks up from `import.meta.url` rather than fixed `../../..` depth
-- Installer writes `~/.local/bin/gitchange` wrapper instead of requiring manual PATH to dist
+- Kept resolver logic in `packages/plugin/scripts/` (not shared package) to avoid plugin→cli circular deps; `repo-path.ts` duplicates walk-up pattern with test parity
+- Installer warns on non-official `GITCHANGE_REPO_URL` rather than blocking (documented in README)
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+None - plan executed as written.
+
+## TDD Gate Compliance
+
+Task 1 had `tdd="true"` but implementation and tests landed in a single `feat` commit (`7a42f7a`) rather than separate `test` then `feat` commits. Tests were written first and pass; gate sequence in git log is non-canonical.
 
 ## Issues Encountered
 
@@ -104,8 +112,8 @@ None - no external service configuration required.
 
 ## Next Phase Readiness
 
-- Ready for 03-06 QUICKSTART and first-run integration test
-- Resolver available for `doctor` command in Phase 8
+- Install path and resolver ready for 03-06 integration / first-run verification
+- Users can install via curl|bash and resolve CLI from non-monorepo layouts
 
 ## Self-Check: PASSED
 
@@ -116,6 +124,7 @@ None - no external service configuration required.
 - FOUND: .github/workflows/validate-plugin.yml
 - FOUND: 7a42f7a
 - FOUND: a02b903
+- FOUND: af3ab17
 
 ---
 *Phase: 03-cli-plugin-scaffold*

@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready
-stopped_at: Completed 05-05-PLAN.md — file-centric history scrubber
-last_updated: "2026-07-01T11:10:00.000Z"
+stopped_at: Completed 05-05-PLAN.md — file-centric history scrubber + drill jump
+last_updated: "2026-07-01T11:12:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
@@ -29,7 +29,7 @@ Phase: 5 of 8 in progress (Dashboard & Evidence Drill-Down)
 Plan: 5 of 6 complete in Phase 5 (05-01, 05-02, 05-03, 05-04, 05-05)
 Status: Ready for 05-06
 Last activity: 2026-07-01
-Stopped at: Completed 05-05-PLAN.md — file-centric history scrubber
+Stopped at: Completed 05-05-PLAN.md — file-centric history scrubber + drill jump
 
 Progress: [██████████] 97%
 
@@ -123,6 +123,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:09:43.878Z
-Stopped at: Completed 05-03-PLAN.md — vis-timeline era markers + era-filtered commits
+Last session: 2026-07-01T11:12:00.000Z
+Stopped at: Completed 05-05-PLAN.md — file-centric history scrubber + drill jump
 Resume file: None

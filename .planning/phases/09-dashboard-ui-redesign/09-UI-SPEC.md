@@ -1,10 +1,11 @@
 ---
 phase: 9
 slug: dashboard-ui-redesign
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-07-01
+reviewed_at: 2026-07-01
 ---
 
 # Phase 9 — UI Design Contract
@@ -46,6 +47,8 @@ The current layout is a fixed two-column grid `lg:grid-cols-[minmax(0,22rem)_min
 - **Header bar** — full-width, sticky (`sticky top-0 z-20`). Contains: product title `GitChange` (left), then attribution badge + `HEAD {sha7}` + repo/workspace badge (right). Height 56px (`h-14`), horizontal padding `px-6`, bottom border `border-slate-800`, background `bg-slate-900/80` with `backdrop-blur`.
 - **Primary tab nav** — moves OUT of the sidebar to a full-width horizontal bar directly under the header. Tabs: Timeline · Decisions · Open work · Tours · Graph. This is the top-level navigation for the whole app, not a sidebar widget.
 - **Content max width** — raise from `max-w-7xl` to `max-w-[96rem]` (`1536px`) so wide views (Timeline, Graph) actually use available width. Center with `mx-auto`, page padding `px-6`.
+
+**Focal point per view** (what the eye meets first): **Timeline** → the full-width era timeline strip at the top is the primary visual anchor (widest element, top position, its own card). **Decisions / Open work / Tours** → the selected-item detail pane on the right. **Graph** → the graph canvas. Everything else (rails, badges, metadata) is deliberately lower-contrast secondary.
 
 ### Per-view body layouts
 

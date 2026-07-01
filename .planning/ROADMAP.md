@@ -19,6 +19,7 @@ GitChange delivers evidence-backed answers to five core onboarding questions —
 - [x] **Phase 6: Decisions, Status & Open Work** - Decision mining, open threads, status inference, and interview loop (completed 2026-07-01)
 - [x] **Phase 7: Guided Tours & Onboarding UX** - Default, role-based, and topic-thread tours with evidence stops (completed 2026-07-01)
 - [x] **Phase 8: Hardening, Scale & Multi-Repo** - 100k+ commit indexing, temporal graph UI, and unified multi-repo story (completed 2026-07-01)
+- [ ] **Phase 9: Dashboard UI Redesign** - Full information-architecture and visual redesign of the local dashboard; cohesive dark design system, usable layout across all views
 
 ## Phase Details
 
@@ -320,10 +321,27 @@ Plans:
 - [x] 08-05-PLAN.md — Golden multi-repo integrity + dashboard E2E + scale regression gate
 **UI hint**: yes
 
+### Phase 9: Dashboard UI Redesign
+
+**Goal**: A new team member or maintainer can answer the five core questions comfortably in the local dashboard — the interface presents timeline, decisions, open work, tours, and graph with clear hierarchy, readable typography, and a usable layout, replacing the cramped first-version UI
+**Mode:** mvp
+**Depends on**: Phase 8
+**Requirements**: DASH-01, DASH-02, DASH-03, DASH-04
+**Success Criteria** (what must be TRUE):
+
+  1. Information architecture is rethought so primary views (Timeline, Decisions, Open work, Tours, Graph) have room to breathe — no content crammed into a narrow sidebar with dead space beside it
+  2. Era timeline renders era labels without overlap or truncation at realistic era counts
+  3. Commit/list panels show full headers and rows without clipping; long lists stay virtualized
+  4. A cohesive dark design system (typography scale, spacing, color/contrast, states) is applied consistently across all views and meets basic contrast/accessibility
+  5. All existing component logic and API/store wiring is preserved — redesign is presentational, not a behavior change
+
+**Plans**: TBD (run /gsd:plan-phase 9)
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -335,6 +353,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 6. Decisions, Status & Open Work | 6/6 | Complete   | 2026-07-01 |
 | 7. Guided Tours & Onboarding UX | 5/5 | Complete   | 2026-07-01 |
 | 8. Hardening, Scale & Multi-Repo | 5/5 | Complete   | 2026-07-01 |
+| 9. Dashboard UI Redesign | 0/0 | Planning   | — |
 
 ---
 *Roadmap created: 2026-06-30*

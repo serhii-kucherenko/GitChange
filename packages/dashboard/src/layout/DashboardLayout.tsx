@@ -14,12 +14,18 @@ interface DashboardLayoutProps {
   loadState: SnapshotLoadState;
   intelligenceTab: IntelligenceTab;
   onIntelligenceTabChange: (tab: IntelligenceTab) => void;
-  sidebar: ReactNode;
-  fileHistory?: ReactNode;
-  timeline?: ReactNode;
-  commitFilterBar?: ReactNode;
-  main: ReactNode;
-  intelligencePanel?: ReactNode;
+  /** Timeline view — full-width era strip on top. */
+  eraTimeline?: ReactNode;
+  /** Timeline view — full-width filter bar under the era strip. */
+  filterBar?: ReactNode;
+  /** Timeline view — left context rail (Index status + Era detail + File history). */
+  timelineRail?: ReactNode;
+  /** Timeline view — right pane (virtualized commit list). */
+  commitList?: ReactNode;
+  /** Decisions / Open work / Tours — left pane (list / picker). */
+  intelligenceRail?: ReactNode;
+  /** Decisions / Open work / Tours / Graph — right pane (detail / player / canvas). */
+  intelligenceMain?: ReactNode;
 }
 
 const TAB_LABELS: Record<IntelligenceTab, string> = {
@@ -34,12 +40,12 @@ export function DashboardLayout({
   loadState,
   intelligenceTab,
   onIntelligenceTabChange,
-  sidebar,
-  fileHistory,
-  timeline,
-  commitFilterBar,
-  main,
-  intelligencePanel,
+  eraTimeline,
+  filterBar,
+  timelineRail,
+  commitList,
+  intelligenceRail,
+  intelligenceMain,
 }: DashboardLayoutProps) {
   const headSha =
     loadState.status === "ready" ? loadState.data.manifest.repo.head : null;
@@ -100,53 +106,67 @@ export function DashboardLayout({
         </div>
       ) : null}
 
-      <div className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
-        <aside className="space-y-6">
-          {loadState.status === "loading" ? (
-            <p className="text-slate-400">Loading index status…</p>
-          ) : null}
+      {loadState.status === "loading" ? (
+        <div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center px-6 text-center">
+          <p className="text-slate-400">Loading index status…</p>
+        </div>
+      ) : null}
 
-          {loadState.status === "error" ? (
-            <div
-              className="rounded-lg border border-red-800 bg-red-950/40 px-4 py-3 text-red-200"
-              role="alert"
-            >
-              {loadState.message}
-            </div>
-          ) : null}
+      {loadState.status === "error" ? (
+        <div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center px-6 text-center">
+          <div
+            className="rounded-lg border border-red-800 bg-red-950/40 px-4 py-3 text-red-200"
+            role="alert"
+          >
+            Couldn't load the index. Confirm{" "}
+            <code className="text-red-100">.gitchange/</code> exists and re-run{" "}
+            <code className="text-red-100">gitchange index</code>, then reload.
+          </div>
+        </div>
+      ) : null}
 
-          {loadState.status === "empty" ? (
-            <div className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-slate-300">
-              Run <code className="text-slate-100">/gitchange</code> or{" "}
-              <code className="text-slate-100">gitchange index</code> to analyze
-              this repo.
-            </div>
-          ) : null}
+      {loadState.status === "empty" ? (
+        <div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center px-6 text-center">
+          <h2 className="text-lg font-semibold tracking-tight text-slate-100">
+            No analysis yet
+          </h2>
+          <p className="mt-2 text-sm text-slate-300">
+            Run <code className="text-slate-100">/gitchange</code> in your IDE,
+            or <code className="text-slate-100">gitchange index</code> in this
+            repo, then reload to explore its history.
+          </p>
+        </div>
+      ) : null}
 
-          {loadState.status === "ready" ? (
-            <>
-              {intelligenceTab === "timeline" ? (
-                <>
-                  {sidebar}
-                  {fileHistory}
-                </>
-              ) : (
-                intelligencePanel
-              )}
-            </>
-          ) : null}
-        </aside>
-
-        <main className="min-h-[24rem] space-y-4">
+      {loadState.status === "ready" ? (
+        <div className="mx-auto max-w-[96rem] px-6 py-8">
           {intelligenceTab === "timeline" ? (
-            <>
-              {timeline}
-              {commitFilterBar}
-            </>
-          ) : null}
-          {main}
-        </main>
-      </div>
+            <div className="space-y-8">
+              {eraTimeline}
+              {filterBar}
+              <div className="grid gap-8 lg:grid-cols-[minmax(20rem,24rem)_minmax(0,1fr)]">
+                <div className="space-y-6">{timelineRail}</div>
+                <div className="min-h-[24rem]">{commitList}</div>
+              </div>
+            </div>
+          ) : intelligenceTab === "graph" ? (
+            <div className="flex min-h-[32rem] flex-col gap-4">
+              {intelligenceRail}
+              <div className="min-h-[32rem] flex-1">{intelligenceMain}</div>
+            </div>
+          ) : intelligenceTab === "tours" ? (
+            <div className="grid gap-8 lg:grid-cols-[minmax(20rem,24rem)_minmax(0,1fr)]">
+              <div className="space-y-6">{intelligenceRail}</div>
+              <div className="min-h-[24rem]">{intelligenceMain}</div>
+            </div>
+          ) : (
+            <div className="grid gap-8 lg:grid-cols-[minmax(22rem,28rem)_minmax(0,1fr)]">
+              <div className="space-y-6">{intelligenceRail}</div>
+              <div className="min-h-[24rem]">{intelligenceMain}</div>
+            </div>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

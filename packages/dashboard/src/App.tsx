@@ -154,7 +154,25 @@ export function App() {
     });
   }, [headSha, persistToStorage]);
 
-  const intelligencePanel =
+  const isReady = loadState.status === "ready";
+
+  const timelineRail = isReady ? (
+    <>
+      <IndexStatusCard manifest={loadState.data.manifest} />
+      <EraDetailPanel />
+      <FileHistoryScrubber pathSuggestions={pathSuggestions} />
+    </>
+  ) : null;
+
+  const commitListPane = isReady ? (
+    selectedCommitSha ? (
+      <CommitDetailPanel />
+    ) : (
+      <CommitList filters={mergedFilters} />
+    )
+  ) : null;
+
+  const intelligenceRail =
     intelligenceTab === "decisions" ? (
       <DecisionsPanel />
     ) : intelligenceTab === "open-work" ? (
@@ -167,82 +185,61 @@ export function App() {
         ) : null}
       </div>
     ) : intelligenceTab === "graph" ? (
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-slate-400">
         Click nodes in the graph to drill into eras and commits. Use the repo
         filter above the commit list when you return to the timeline.
       </p>
     ) : null;
 
-  const mainContent =
-    loadState.status === "ready" ? (
-      <div className="space-y-4">
-        {selectedCommitSha ? (
-          <CommitDetailPanel />
-        ) : selectedThreadId && intelligenceTab === "open-work" ? (
-          <MigrationThreadPanel />
-        ) : intelligenceTab === "timeline" ? (
-          <CommitList filters={mergedFilters} />
-        ) : intelligenceTab === "open-work" ? (
-          <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
-            Select a thread to view its migration timeline and drill into
-            commits.
-          </p>
-        ) : intelligenceTab === "tours" ? (
-          <TourPlayer
-            onDrillToTimeline={() => setIntelligenceTab("timeline")}
-            onDrillToDecisions={() => setIntelligenceTab("decisions")}
-          />
-        ) : intelligenceTab === "graph" ? (
-          graphQuery.isLoading ? (
-            <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
-              Loading temporal graph…
-            </p>
-          ) : graphQuery.isError ? (
-            <p
-              className="rounded-lg border border-red-800 bg-red-950/40 px-4 py-6 text-sm text-red-200"
-              role="alert"
-            >
-              Temporal graph is not available yet. Run semantic synthesis to
-              build temporal-graph.json.
-            </p>
-          ) : graphQuery.data ? (
-            <TemporalGraphView
-              graph={graphQuery.data}
-              eras={erasQuery.data ?? []}
-              onDrillToTimeline={() => setIntelligenceTab("timeline")}
-            />
-          ) : null
-        ) : (
-          <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
-            Select a decision to view evidence and drill into commits.
-          </p>
-        )}
-      </div>
-    ) : loadState.status === "loading" ? (
-      <p className="text-slate-400">Loading commit history…</p>
-    ) : null;
+  const intelligenceMain = isReady ? (
+    selectedCommitSha ? (
+      <CommitDetailPanel />
+    ) : selectedThreadId && intelligenceTab === "open-work" ? (
+      <MigrationThreadPanel />
+    ) : intelligenceTab === "open-work" ? (
+      <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
+        Select a thread to view its migration timeline and drill into commits.
+      </p>
+    ) : intelligenceTab === "tours" ? (
+      <TourPlayer
+        onDrillToTimeline={() => setIntelligenceTab("timeline")}
+        onDrillToDecisions={() => setIntelligenceTab("decisions")}
+      />
+    ) : intelligenceTab === "graph" ? (
+      graphQuery.isLoading ? (
+        <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
+          Loading temporal graph…
+        </p>
+      ) : graphQuery.isError ? (
+        <p
+          className="rounded-lg border border-red-800 bg-red-950/40 px-4 py-6 text-sm text-red-200"
+          role="alert"
+        >
+          Temporal graph not available yet. Run semantic synthesis to build{" "}
+          <code>temporal-graph.json</code>.
+        </p>
+      ) : graphQuery.data ? (
+        <TemporalGraphView
+          graph={graphQuery.data}
+          eras={erasQuery.data ?? []}
+          onDrillToTimeline={() => setIntelligenceTab("timeline")}
+        />
+      ) : null
+    ) : (
+      <p className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-6 text-sm text-slate-400">
+        Select a decision to view its evidence and drill into commits.
+      </p>
+    )
+  ) : null;
 
   return (
     <DashboardLayout
       loadState={loadState}
       intelligenceTab={intelligenceTab}
       onIntelligenceTabChange={setIntelligenceTab}
-      sidebar={
-        loadState.status === "ready" ? (
-          <>
-            <IndexStatusCard manifest={loadState.data.manifest} />
-            <EraDetailPanel />
-          </>
-        ) : null
-      }
-      fileHistory={
-        loadState.status === "ready" ? (
-          <FileHistoryScrubber pathSuggestions={pathSuggestions} />
-        ) : null
-      }
-      timeline={loadState.status === "ready" ? <EraTimeline /> : null}
-      commitFilterBar={
-        loadState.status === "ready" ? (
+      eraTimeline={isReady ? <EraTimeline /> : null}
+      filterBar={
+        isReady ? (
           <div className="space-y-3">
             <RepoFilterBar />
             <CommitFilterBar
@@ -252,8 +249,10 @@ export function App() {
           </div>
         ) : null
       }
-      intelligencePanel={intelligencePanel}
-      main={mainContent}
+      timelineRail={timelineRail}
+      commitList={commitListPane}
+      intelligenceRail={intelligenceRail}
+      intelligenceMain={intelligenceMain}
     />
   );
 }

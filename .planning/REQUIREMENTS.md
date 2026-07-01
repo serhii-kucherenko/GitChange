@@ -52,8 +52,8 @@
 
 - [x] **DEC-01**: System auto-mines decisions and migrations from commits, messages, trailers, and doc deltas
 - [x] **DEC-02**: User can browse decisions with status, evidence, and supersession relationships
-- [ ] **DEC-03**: Maintainer can confirm or reject auto-mined decisions via in-chat interview loop
-- [ ] **DEC-04**: Interview answers flow back into project docs or `.gitchange/` index as durable lore
+- [x] **DEC-03**: Maintainer can confirm or reject auto-mined decisions via in-chat interview loop
+- [x] **DEC-04**: Interview answers flow back into project docs or `.gitchange/` index as durable lore
 
 ### Status & Open Work (STAT)
 
@@ -187,8 +187,8 @@ Deferred until v1 validated on GitChange dogfood + external OSS adopter.
 | CONT-04 | Phase 2 | Complete |
 | DEC-01 | Phase 6 | Complete |
 | DEC-02 | Phase 6 | Complete |
-| DEC-03 | Phase 6 | Pending |
-| DEC-04 | Phase 6 | Pending |
+| DEC-03 | Phase 6 | Complete |
+| DEC-04 | Phase 6 | Complete |
 | STAT-01 | Phase 6 | Complete |
 | STAT-02 | Phase 6 | Complete |
 | STAT-03 | Phase 6 | Pending |

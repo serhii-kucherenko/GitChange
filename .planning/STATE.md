@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-04-PLAN.md — decisions browse, open threads, migration drill-down
-last_updated: "2026-07-01T11:44:20.407Z"
+stopped_at: Completed 06-05-PLAN.md — interview loop + durable writeback
+last_updated: "2026-07-01T11:50:00.000Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 36
-  completed_plans: 34
-  percent: 94
+  completed_plans: 35
+  percent: 97
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-06-30)
 ## Current Position
 
 Phase: 6 of 8 in progress (Decisions, Status & Open Work)
-Plan: 4 of 6 complete in Phase 6 (06-01, 06-02, 06-03, 06-04)
-Status: Ready to execute 06-05
+Plan: 5 of 6 complete in Phase 6 (06-01 through 06-05)
+Status: Ready to execute 06-06
 Last activity: 2026-07-01
-Stopped at: Completed 06-04-PLAN.md — decisions browse, open threads, migration drill-down
+Stopped at: Completed 06-05-PLAN.md — interview loop + durable writeback
 
-Progress: [█████████░] 94%
+Progress: [██████████] 97%
 
 ## Performance Metrics
 
@@ -119,6 +119,10 @@ Recent decisions affecting current work:
 - getDecisionById returns gap-only response when below evidence threshold — no summary leak
 - Thread event paths sanitized via validateFilePath at read boundary
 
+- Interview answers capped at 2000 chars; evidence excerpt truncated to 500 at merge
+- Confirmed interview sets reviewStatus confirmed, miningSource interview, confidence min 0.7
+- docs/interviews writeback requires writeToDocs opt-in; GitChange never auto-commits
+
 ### Pending Todos
 
 None yet.
@@ -137,6 +141,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-01T11:44:20.396Z
-Stopped at: Completed 06-04-PLAN.md — decisions browse, open threads, migration drill-down
+Last session: 2026-07-01T11:50:00.000Z
+Stopped at: Completed 06-05-PLAN.md — interview loop + durable writeback
 Resume file: None

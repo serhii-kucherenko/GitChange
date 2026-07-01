@@ -50,3 +50,91 @@ export const BASIC_SCENARIO: CommitSpec[] = [
 ];
 
 export { MESSAGE_SECRET, DOC_SECRET, IGNORED_SECRET };
+
+export const OWNERSHIP_ALICE = {
+  authorName: "Alice Original",
+  authorEmail: "alice@gitchange.test",
+} as const;
+
+export const OWNERSHIP_BOB = {
+  authorName: "Bob Editor",
+  authorEmail: "bob@gitchange.test",
+} as const;
+
+const APP_SOURCE = [
+  "export function greet(name: string): string {",
+  "  return `Hello, ${name}!`;",
+  "}",
+  "",
+  "export const version = 1;",
+  "",
+].join("\n");
+
+/** Line-survival ownership fixture: rename, single-line edit, merge (CONT-04). */
+export const OWNSHIP_SCENARIO: CommitSpec[] = [
+  {
+    message: "feat: add app module",
+    ...OWNERSHIP_ALICE,
+    files: {
+      "src/app.ts": APP_SOURCE,
+    },
+  },
+  {
+    message: "refactor: move app into lib",
+    ...OWNERSHIP_ALICE,
+    renames: [{ from: "src/app.ts", to: "src/lib/app.ts" }],
+  },
+  {
+    message: "feat: tweak greeting",
+    ...OWNERSHIP_BOB,
+    branch: "feature/greeting",
+    files: {
+      "src/lib/app.ts": APP_SOURCE.replace(
+        "Hello, ${name}!",
+        "Hi, ${name}!",
+      ),
+    },
+  },
+  {
+    message: "Merge branch 'feature/greeting' into main",
+    merge: { intoBranch: "main", fromBranch: "feature/greeting" },
+  },
+];
+
+/** Adds a formatting-only commit for ignore-revs coverage (P2-D-02). */
+export const OWNSHIP_SCENARIO_WITH_FORMAT: CommitSpec[] = [
+  {
+    message: "feat: add app module",
+    ...OWNERSHIP_ALICE,
+    files: {
+      "src/app.ts": APP_SOURCE,
+    },
+  },
+  {
+    message: "refactor: move app into lib",
+    ...OWNERSHIP_ALICE,
+    renames: [{ from: "src/app.ts", to: "src/lib/app.ts" }],
+  },
+  {
+    message: "chore: apply trailing-space format",
+    ...OWNERSHIP_BOB,
+    files: {
+      "src/lib/app.ts": `${APP_SOURCE.replace(/\n/g, " \n")}`,
+    },
+  },
+  {
+    message: "feat: tweak greeting",
+    ...OWNERSHIP_BOB,
+    branch: "feature/greeting",
+    files: {
+      "src/lib/app.ts": APP_SOURCE.replace(
+        "Hello, ${name}!",
+        "Hi, ${name}!",
+      ).replace(/\n/g, " \n"),
+    },
+  },
+  {
+    message: "Merge branch 'feature/greeting' into main",
+    merge: { intoBranch: "main", fromBranch: "feature/greeting" },
+  },
+];

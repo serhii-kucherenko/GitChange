@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "tsx scripts/generate-schemas.ts",
-    "test": "pnpm --dir ../.. exec vitest run packages/plugin/scripts/resolve-root.test.ts tests/integration/plugin-schemas.test.ts",
+    "test": "pnpm --dir ../.. exec vitest run packages/plugin/scripts/resolve-root.test.ts packages/plugin/scripts/ensure-up-to-date.test.ts tests/integration/plugin-schemas.test.ts",
     "lint": "node -e \"console.log('no lint targets in plugin package')\"",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },

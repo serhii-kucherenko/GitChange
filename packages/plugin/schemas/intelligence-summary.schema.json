@@ -70,6 +70,10 @@
                           "type": "string",
                           "minLength": 40,
                           "maxLength": 40
+                        },
+                        "repoId": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [
@@ -92,6 +96,10 @@
                           "type": "string",
                           "minLength": 40,
                           "maxLength": 40
+                        },
+                        "repoId": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [
@@ -119,6 +127,10 @@
                         "excerpt": {
                           "type": "string",
                           "maxLength": 500
+                        },
+                        "repoId": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [
@@ -153,6 +165,10 @@
                           "type": "integer",
                           "exclusiveMinimum": 0,
                           "maximum": 9007199254740991
+                        },
+                        "repoId": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [
@@ -182,6 +198,10 @@
                         "excerpt": {
                           "type": "string",
                           "maxLength": 500
+                        },
+                        "repoId": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [
@@ -263,6 +283,10 @@
                                 "type": "string",
                                 "minLength": 40,
                                 "maxLength": 40
+                              },
+                              "repoId": {
+                                "type": "string",
+                                "minLength": 1
                               }
                             },
                             "required": [
@@ -285,6 +309,10 @@
                                 "type": "string",
                                 "minLength": 40,
                                 "maxLength": 40
+                              },
+                              "repoId": {
+                                "type": "string",
+                                "minLength": 1
                               }
                             },
                             "required": [
@@ -312,6 +340,10 @@
                               "excerpt": {
                                 "type": "string",
                                 "maxLength": 500
+                              },
+                              "repoId": {
+                                "type": "string",
+                                "minLength": 1
                               }
                             },
                             "required": [
@@ -346,6 +378,10 @@
                                 "type": "integer",
                                 "exclusiveMinimum": 0,
                                 "maximum": 9007199254740991
+                              },
+                              "repoId": {
+                                "type": "string",
+                                "minLength": 1
                               }
                             },
                             "required": [
@@ -375,6 +411,10 @@
                               "excerpt": {
                                 "type": "string",
                                 "maxLength": 500
+                              },
+                              "repoId": {
+                                "type": "string",
+                                "minLength": 1
                               }
                             },
                             "required": [

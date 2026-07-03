@@ -370,3 +370,6 @@ const manifestJson = JSON.parse(readFileSync(manifestPath, "utf8")) as JsonRecor
 z.fromJSONSchema(manifestJson);
 
 console.log("Wrote plugin JSON schemas to packages/plugin/schemas/");
+
+mkdirSync(join(PLUGIN_ROOT, "dist"), { recursive: true });
+writeFileSync(join(PLUGIN_ROOT, "dist", ".schema-build"), `${Date.now()}\n`);

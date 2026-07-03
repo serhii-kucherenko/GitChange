@@ -120,6 +120,10 @@
         "schemaVersion": {
           "type": "string"
         },
+        "repoId": {
+          "type": "string",
+          "minLength": 1
+        },
         "lastIndexedCommit": {
           "type": "string"
         },
@@ -218,6 +222,11 @@
         },
         "toursSchemaVersion": {
           "type": "string"
+        },
+        "lastIndexDurationMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
         }
       },
       "required": [
@@ -298,6 +307,10 @@
                               "type": "string",
                               "minLength": 40,
                               "maxLength": 40
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -320,6 +333,10 @@
                               "type": "string",
                               "minLength": 40,
                               "maxLength": 40
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -347,6 +364,10 @@
                             "excerpt": {
                               "type": "string",
                               "maxLength": 500
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -381,6 +402,10 @@
                               "type": "integer",
                               "exclusiveMinimum": 0,
                               "maximum": 9007199254740991
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -410,6 +435,10 @@
                             "excerpt": {
                               "type": "string",
                               "maxLength": 500
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -559,6 +588,10 @@
                               "type": "string",
                               "minLength": 40,
                               "maxLength": 40
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -581,6 +614,10 @@
                               "type": "string",
                               "minLength": 40,
                               "maxLength": 40
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -608,6 +645,10 @@
                             "excerpt": {
                               "type": "string",
                               "maxLength": 500
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -642,6 +683,10 @@
                               "type": "integer",
                               "exclusiveMinimum": 0,
                               "maximum": 9007199254740991
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -671,6 +716,10 @@
                             "excerpt": {
                               "type": "string",
                               "maxLength": 500
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -750,6 +799,10 @@
                               "type": "string",
                               "minLength": 40,
                               "maxLength": 40
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -772,6 +825,10 @@
                               "type": "string",
                               "minLength": 40,
                               "maxLength": 40
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -799,6 +856,10 @@
                             "excerpt": {
                               "type": "string",
                               "maxLength": 500
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -833,6 +894,10 @@
                               "type": "integer",
                               "exclusiveMinimum": 0,
                               "maximum": 9007199254740991
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -862,6 +927,10 @@
                             "excerpt": {
                               "type": "string",
                               "maxLength": 500
+                            },
+                            "repoId": {
+                              "type": "string",
+                              "minLength": 1
                             }
                           },
                           "required": [
@@ -1028,6 +1097,10 @@
                                     "type": "string",
                                     "minLength": 40,
                                     "maxLength": 40
+                                  },
+                                  "repoId": {
+                                    "type": "string",
+                                    "minLength": 1
                                   }
                                 },
                                 "required": [
@@ -1050,6 +1123,10 @@
                                     "type": "string",
                                     "minLength": 40,
                                     "maxLength": 40
+                                  },
+                                  "repoId": {
+                                    "type": "string",
+                                    "minLength": 1
                                   }
                                 },
                                 "required": [
@@ -1077,6 +1154,10 @@
                                   "excerpt": {
                                     "type": "string",
                                     "maxLength": 500
+                                  },
+                                  "repoId": {
+                                    "type": "string",
+                                    "minLength": 1
                                   }
                                 },
                                 "required": [
@@ -1111,6 +1192,10 @@
                                     "type": "integer",
                                     "exclusiveMinimum": 0,
                                     "maximum": 9007199254740991
+                                  },
+                                  "repoId": {
+                                    "type": "string",
+                                    "minLength": 1
                                   }
                                 },
                                 "required": [
@@ -1140,6 +1225,10 @@
                                   "excerpt": {
                                     "type": "string",
                                     "maxLength": 500
+                                  },
+                                  "repoId": {
+                                    "type": "string",
+                                    "minLength": 1
                                   }
                                 },
                                 "required": [

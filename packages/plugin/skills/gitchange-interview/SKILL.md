@@ -23,6 +23,8 @@ Use this skill when:
 
 Resolve repo root by walking up for `.git`. The `.gitchange` directory lives at `<repo>/.gitchange`.
 
+Resolve `GC_ROOT` via `resolveGitChangeRoot()` (see `/gitchange`). Prefix plugin scripts with `pnpm --dir "<GC_ROOT>" exec tsx`.
+
 ## Interview flow
 
 ### 1. Load the decision
@@ -56,7 +58,7 @@ Validate against `packages/plugin/schemas/interview-record.schema.json`.
 ### 4. Persist interview JSON (DEC-04)
 
 ```bash
-pnpm exec tsx packages/plugin/scripts/write-interview.ts "<absolute-path-to-.gitchange>" /path/to/interview-record.json
+pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/write-interview.ts "<absolute-path-to-.gitchange>" /path/to/interview-record.json
 ```
 
 Interview files are stored at `.gitchange/interviews/<id>.json` — durable lore independent of re-index.
@@ -64,7 +66,7 @@ Interview files are stored at `.gitchange/interviews/<id>.json` — durable lore
 ### 5. Merge into decisions.json
 
 ```bash
-pnpm exec tsx packages/plugin/scripts/merge-interview.ts "<absolute-path-to-.gitchange>" <interview-id> "<absolute-repo-root>"
+pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/merge-interview.ts "<absolute-path-to-.gitchange>" <interview-id> "<absolute-repo-root>"
 ```
 
 Effects:

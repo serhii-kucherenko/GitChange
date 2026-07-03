@@ -20,7 +20,7 @@
   "plugins": [
     {
       "name": "gitchange",
-      "source": "./packages/plugin",
+      "source": ".",
       "description": "GitChange slash commands and host-AI schemas for evidence-backed repo analysis",
       "version": "0.1.0",
       "license": "MIT",

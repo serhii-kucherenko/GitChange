@@ -11,6 +11,10 @@
     "lint": {},
     "typecheck": {
       "dependsOn": ["^build"]
+    },
+    "@gitchange/plugin#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["schemas/**", "dist/**"]
     }
   }
 }

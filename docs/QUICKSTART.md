@@ -1,41 +1,54 @@
 # GitChange Quickstart
 
-Get from install to a working dashboard in five steps. No config files required.
-
-**Requirements covered:** [INST-04](../.planning/REQUIREMENTS.md) (install → first analysis → dashboard in under five steps). See the [requirements traceability table](../.planning/REQUIREMENTS.md#traceability) for how this maps to Phase 3.
-
 ## Prerequisites
 
-- Node.js 22.x, git 2.x, and pnpm 11.x (the installer runs `pnpm install` and `pnpm build` for you)
+- Node.js 22.x, git 2.x, pnpm 11.x
 - A local git repository you want to understand
 
-## Steps
+## Cursor
 
-1. **Install GitChange.** Run the one-line installer (macOS/Linux):
+1. **Install** (once per machine):
 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.sh | bash
    ```
 
-   Or install the plugin from the Cursor or Claude Code marketplace using the manifests in this repo. Add `~/.local/bin` to your PATH if the installer prints that step.
+   Developing GitChange itself? From the repo root:
 
-2. **Open your repository** in your IDE, or `cd` into it in a terminal. GitChange works on any folder that contains a `.git` directory.
+   ```bash
+   bash scripts/install.sh --local
+   ```
 
-3. **Run your first analysis.** In the chat panel, run `/gitchange`. From the terminal you can run `gitchange index` instead. GitChange walks commit history, builds a local index under `.gitchange/`, and computes ownership and churn highlights — no manual setup.
+2. **Open your repo** in Cursor.
 
-4. **Open the dashboard.** Run `/gitchange-dashboard` in chat, or run `gitchange serve` and open `http://127.0.0.1:9876` in your browser (override the port with `GITCHANGE_PORT` if needed). You will see index freshness, commit counts, and top churn and expertise highlights.
+3. **`/gitchange`** — indexes history, summarizes results, and **opens the dashboard** at `http://127.0.0.1:9876` automatically.
 
-5. **Explore what you have.** Read the expertise topics and churn file list on the dashboard. They are backed by evidence in your local index. Full era → commit → file drill-down arrives in a later release; this first-run view is enough to orient a new teammate.
+   GitChange checks for updates at `~/.gitchange-plugin` on each run and pulls when behind `origin`.
 
-## Verify from the terminal
+   Use **`/gitchange-dashboard`** only to re-open the dashboard without re-indexing.
 
-```bash
-gitchange status
-```
+4. **`/gitchange-update`** — pull the latest GitChange version (optional; `/gitchange` also auto-updates when behind).
 
-You should see repository head, last indexed commit, and commit/file/author counts.
+## Claude Code
+
+1. **Register the marketplace** (once per machine), inside a Claude Code session:
+
+   ```text
+   /plugin marketplace add serhii-kucherenko/GitChange
+   ```
+
+2. **Install the plugin:**
+
+   ```text
+   /plugin install gitchange@gitchange
+   ```
+
+3. **Verify:** `/plugin list` — look for `gitchange@gitchange`.
+
+4. **Open your repo**, then run **`/gitchange`** (index + dashboard automatically). Use **`/gitchange-dashboard`** to re-open only.
+
+Full steps, shell commands, and troubleshooting: [README — Claude Code install](../README.md#claude-code-marketplace-plugin).
 
 ## Next steps
 
-- [README](../README.md) — install options, IDE plugin symlinks, and monorepo development
-- [REQUIREMENTS](../.planning/REQUIREMENTS.md) — full product requirements and traceability
+- [README](../README.md) — optional terminal CLI and monorepo development

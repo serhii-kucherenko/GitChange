@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, realpathSync, symlinkSync, writeFileSync } from
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { ResolveError, resolveCliBin, resolveGitChangeRoot } from "./resolve-root.js";
+import { ResolveError, formatRunCliCommand, resolveCliBin, resolveGitChangeRoot } from "./resolve-root.js";
 
 function normPath(path: string): string {
   return realpathSync.native(path);
@@ -103,11 +103,40 @@ describe("resolveGitChangeRoot", () => {
     writeFileSync(isolatedModule, "");
 
     expect(() =>
-      resolveGitChangeRoot(orphan, { moduleFile: isolatedModule }),
+      resolveGitChangeRoot(orphan, {
+        moduleFile: isolatedModule,
+        defaultInstallDir: false,
+      }),
     ).toThrow(ResolveError);
     expect(() =>
-      resolveGitChangeRoot(orphan, { moduleFile: isolatedModule }),
+      resolveGitChangeRoot(orphan, {
+        moduleFile: isolatedModule,
+        defaultInstallDir: false,
+      }),
     ).toThrow(/Could not resolve GitChange root/);
+  });
+
+  it("uses defaultInstallDir when cwd and module walk fail", () => {
+    const root = mkdtempSync(join(tmpdir(), "gc-default-"));
+    cleanups.push(() => {
+      execFileSync("rm", ["-rf", root]);
+    });
+    makeGitChangeRoot(root);
+    const orphan = mkdtempSync(join(tmpdir(), "gc-orphan2-"));
+    cleanups.push(() => {
+      execFileSync("rm", ["-rf", orphan]);
+    });
+    const isolatedModule = join(orphan, "resolve-root.ts");
+    writeFileSync(isolatedModule, "");
+
+    expect(
+      normPath(
+        resolveGitChangeRoot(orphan, {
+          moduleFile: isolatedModule,
+          defaultInstallDir: root,
+        }),
+      ),
+    ).toBe(normPath(root));
   });
 });
 
@@ -156,5 +185,18 @@ describe("resolveCliBin", () => {
     makeGitChangeRoot(root);
 
     expect(resolveCliBin(root)).toBe("pnpm exec gitchange");
+  });
+});
+
+describe("formatRunCliCommand", () => {
+  it("formats plugin runner with quoted root and args", () => {
+    const cmd = formatRunCliCommand("/tmp/gitchange", [
+      "index",
+      "--repo",
+      "/my/repo",
+    ]);
+    expect(cmd).toBe(
+      'pnpm --dir "/tmp/gitchange" exec tsx packages/plugin/scripts/run-cli.ts "index" "--repo" "/my/repo"',
+    );
   });
 });

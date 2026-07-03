@@ -1,6 +1,6 @@
 ---
 name: gitchange
-description: Run the GitChange index pipeline on the workspace repo and present an evidence-backed summary.
+description: Run the GitChange index pipeline on the workspace repo, present a summary, and open the localhost dashboard automatically.
 schemas:
   - packages/plugin/schemas/manifest.schema.json
   - packages/plugin/schemas/snapshot.schema.json
@@ -21,10 +21,25 @@ GitChange supplies **artifacts and schemas only**. The host AI reads results and
 ## Prerequisites
 
 - A git repository in the workspace (a `.git` directory reachable by walking up from the workspace root).
-- The `gitchange` CLI on PATH, or resolvable via `resolveCliBin()` from `packages/plugin/scripts/resolve-root.ts` (P3-D-04). If missing, tell the user:
-  1. Run the one-line installer: `curl -fsSL https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.sh | bash`
-  2. Or clone the GitChange repo and run `pnpm install && pnpm build` from the monorepo root.
-  3. Verify with `gitchange --version` or `gitchange status`.
+- **Cursor:** GitChange commands installed (`scripts/install.sh` → `~/.cursor/commands/`). **Claude Code:** GitChange marketplace plugin enabled. No `GITCHANGE_ROOT` required when using the default install path (`~/.gitchange-plugin`) or Claude plugin clone.
+
+## Plugin CLI runner
+
+Resolve the GitChange install root as `GC_ROOT` via `resolveGitChangeRoot()` from `packages/plugin/scripts/resolve-root.ts` (walks up from the loaded skill path to the plugin clone).
+
+Run CLI commands through the plugin runner — it checks for updates, installs dependencies, and builds on first use (and after each upstream update):
+
+```bash
+pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/run-cli.ts <subcommand> [options...]
+```
+
+**End-user installs** (`~/.gitchange-plugin`): every CLI invocation fetches and fast-forward pulls from `origin` when behind, then rebuilds if needed. Run **`/gitchange-update`** or `gitchange update` for an explicit pull. Skills and slash commands read from the same install directory, so they stay in sync after a pull. Set `GITCHANGE_SKIP_UPDATE=1` to pin a version (disables auto-update only; explicit update still works).
+
+For helper scripts under `packages/plugin/scripts/`, prefix with `pnpm --dir "<GC_ROOT>" exec tsx`.
+
+If `GC_ROOT` cannot be resolved, tell the user:
+- **Cursor:** run `curl -fsSL https://raw.githubusercontent.com/serhii-kucherenko/GitChange/main/scripts/install.sh | bash`
+- **Claude Code:** install the GitChange marketplace plugin from the same repo
 
 ## Steps
 
@@ -34,25 +49,18 @@ Walk up from the workspace root until a `.git` directory is found. Use that dire
 
 ### 1b. Resolve GitChange install root (CLI + schemas)
 
-When the host needs the GitChange plugin tree (schemas, build hints), resolve the **install root** separately from the git repo root using P3-D-04 precedence:
-
-1. `GITCHANGE_ROOT` environment variable when set and contains `.cursor-plugin/plugin.json`
-2. Walk up from cwd for `.cursor-plugin/plugin.json` (cloned / marketplace install)
-3. Walk up for `node_modules/.bin/gitchange` at the same root
-4. Walk up from the loaded skill/module path (monorepo dev)
-
-Implementation: `packages/plugin/scripts/resolve-root.ts` exports `resolveGitChangeRoot()` and `resolveCliBin()`. Use `resolveCliBin()` before invoking the CLI when PATH may not include `gitchange`.
+When the host needs the GitChange plugin tree (schemas, build hints), resolve the **install root** separately from the git repo root as `GC_ROOT` using `resolveGitChangeRoot()` (P3-D-04). Use the **plugin CLI runner** from the section above — not a global `gitchange` binary on PATH.
 
 ### 2. Decide full vs incremental index
 
-Read `.gitchange/manifest.json` if it exists (or run `gitchange status --repo <root>`).
+Read `.gitchange/manifest.json` if it exists (or run the status subcommand via the plugin runner).
 
 - If **no manifest**: run a full index.
-- If `manifest.repo.head` equals current `git rev-parse HEAD` at the repo root: index is fresh — run **incremental** by default (still invokes `gitchange index`, which chooses incremental when a manifest exists).
-- If HEAD moved since last index: run `gitchange index` (incremental when manifest exists).
+- If `manifest.repo.head` equals current `git rev-parse HEAD` at the repo root: index is fresh — run **incremental** by default (still invokes `index`, which chooses incremental when a manifest exists).
+- If HEAD moved since last index: run `index` (incremental when manifest exists).
 
 ```bash
-gitchange index --repo "<absolute-repo-path>"
+pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/run-cli.ts index --repo "<absolute-repo-path>"
 ```
 
 Never substitute raw `git log` walks or inline git scripting for the CLI index command.
@@ -62,7 +70,7 @@ Never substitute raw `git log` walks or inline git scripting for the CLI index c
 On success, gather bounded context for the user:
 
 ```bash
-gitchange status --repo "<absolute-repo-path>"
+pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/run-cli.ts status --repo "<absolute-repo-path>"
 ```
 
 Optionally read JSON directly (validate against plugin schemas before injecting large payloads into chat):
@@ -80,7 +88,18 @@ Summarize in plain language:
 - Top expertise topics from `intelligence.json` (`expertise.topics`, first 3)
 - Top churn files if useful (`churn.files`, highest `changeCount`)
 
-### 5. Phase 2 — Semantic era synthesis
+### 5. Open dashboard automatically (default)
+
+After a **successful index** (steps 2–4), **continue immediately** — do **not** ask the user to run `/gitchange-dashboard` separately.
+
+1. Follow `packages/plugin/skills/gitchange-dashboard/SKILL.md` from **step 2** (health check → start `serve` in background if needed → open browser).
+2. Tell the user the dashboard URL and what they will see there (freshness, counts, churn, expertise).
+
+**Skip auto-open only when** the user explicitly asked for index only (`no dashboard`, `index only`, `without dashboard`).
+
+Use `/gitchange-dashboard` alone when the user only wants to re-open an existing index.
+
+### 6. Phase 2 — Semantic era synthesis
 
 Run **after** index when `intelligence.json` exists. Skip automatic re-synthesis when:
 
@@ -94,7 +113,7 @@ Otherwise (missing eras, stale `headSha`, or user asks to refresh), run semantic
 2. **Build bounded context** — load synthesis input (no live git):
 
    ```bash
-   pnpm exec tsx packages/plugin/scripts/build-era-context.ts "<absolute-path-to-.gitchange>"
+   pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/build-era-context.ts "<absolute-path-to-.gitchange>"
    ```
 
    Validate stdout JSON against `packages/plugin/schemas/era-synthesis-context.schema.json`.
@@ -106,14 +125,14 @@ Otherwise (missing eras, stale `headSha`, or user asks to refresh), run semantic
 5. **Persist** — write via core gate:
 
    ```bash
-   pnpm exec tsx packages/plugin/scripts/write-eras.ts "<absolute-path-to-.gitchange>" /path/to/eras-output.json
+   pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/write-eras.ts "<absolute-path-to-.gitchange>" /path/to/eras-output.json
    ```
 
 6. **Present to user (ERA-02)** — list era names, era count, and total inflection count from the saved artifact. Offer to drill into claims/evidence on request.
 
 When manifest HEAD is unchanged but intelligence was recomputed, offer re-synthesis if `eras.json` `headSha` differs from current `intelligence.json` `headSha`.
 
-### 5b. Phase 3 — Decision synthesis
+### 7. Phase 3 — Decision synthesis
 
 Run **after** Phase 2 when `eras.json` and `intelligence.json` exist. Skip automatic re-synthesis when:
 
@@ -127,7 +146,7 @@ Otherwise (missing decisions, stale `headSha`, or user asks to refresh), run dec
 2. **Build bounded context** — load mining input (no live git):
 
    ```bash
-   pnpm exec tsx packages/plugin/scripts/build-decision-context.ts "<absolute-path-to-.gitchange>"
+   pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/build-decision-context.ts "<absolute-path-to-.gitchange>"
    ```
 
    Validate stdout JSON against `packages/plugin/schemas/decision-mining-context.schema.json`.
@@ -139,14 +158,14 @@ Otherwise (missing decisions, stale `headSha`, or user asks to refresh), run dec
 5. **Persist** — write via merge gate (validates evidence refs, attaches attribution, sets `reviewStatus: pending`):
 
    ```bash
-   pnpm exec tsx packages/plugin/scripts/write-decisions.ts "<absolute-path-to-.gitchange>" /path/to/decisions-output.json
+   pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/write-decisions.ts "<absolute-path-to-.gitchange>" /path/to/decisions-output.json
    ```
 
 6. **Present to user (DEC-02)** — list decision titles, status, and confidence. Note `reviewStatus: pending` on agent-mined rows until maintainer confirms via interview loop (DEC-03). When any decision has `reviewStatus: pending`, offer `/gitchange-interview` to confirm or reject with durable writeback (DEC-04). Explain `supersededBy` / `supersedes` links when present.
 
 When `decisions.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
 
-### 5c. Phase 4 — Tour synthesis
+### 8. Phase 4 — Tour synthesis
 
 Run **after** decision synthesis when `eras.json`, `decisions.json`, and `open-work.json` exist. Skip automatic re-synthesis when:
 
@@ -160,7 +179,7 @@ Otherwise (missing tours, stale `headSha`, or user asks to refresh), run tour sy
 2. **Build bounded context** — load synthesis input (no live git):
 
    ```bash
-   pnpm exec tsx packages/plugin/scripts/build-tour-context.ts "<absolute-path-to-.gitchange>"
+   pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/build-tour-context.ts "<absolute-path-to-.gitchange>"
    ```
 
    Validate stdout JSON against `packages/plugin/schemas/tour-synthesis-context.schema.json`.
@@ -172,20 +191,20 @@ Otherwise (missing tours, stale `headSha`, or user asks to refresh), run tour sy
 5. **Persist** — write via merge gate (preserves default outline order, validates evidence refs, enforces caps):
 
    ```bash
-   pnpm exec tsx packages/plugin/scripts/write-tours.ts "<absolute-path-to-.gitchange>" /path/to/tours-output.json
+   pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/write-tours.ts "<absolute-path-to-.gitchange>" /path/to/tours-output.json
    ```
 
 6. **Checkpoint manifest** — after `tours.json` is written:
 
    ```bash
-   pnpm exec tsx -e "import { runToursPipeline } from '@gitchange/core'; runToursPipeline(process.argv[1]);" "<absolute-path-to-.gitchange>"
+   pnpm --dir "<GC_ROOT>" exec tsx -e "import { runToursPipeline } from '@gitchange/core'; runToursPipeline(process.argv[1]);" "<absolute-path-to-.gitchange>"
    ```
 
 7. **Present to user (TOUR-01)** — list tour titles, kinds (`default` / `role` / `topic`), and chapter counts. Highlight `defaultTourId` for the onboarding path.
 
 When `tours.json` `headSha` differs from current `intelligence.json` `headSha`, offer re-synthesis.
 
-### Phase 5 — Status queries (STAT-04)
+### 9. Status queries (STAT-04)
 
 When the user asks about **migration progress**, **what is in flight**, **open work**, or **current status** on ongoing refactors:
 
@@ -209,22 +228,22 @@ When the user asks about **migration progress**, **what is in flight**, **open w
 
 4. **Cite evidence** — every claim in `answer` must trace to an entry in `evidence[]` (commit SHA, file path + SHA, or doc excerpt).
 
-5. **Never fabricate** when below threshold or when artifacts are missing. Say what is unknown and point to `gitchange index` / decision synthesis if artifacts are stale.
+5. **Never fabricate** when below threshold or when artifacts are missing. Say what is unknown and point to `/gitchange` (re-index) or decision synthesis if artifacts are stale.
 
-### 6. Follow-up questions
+### 10. Follow-up questions
 
 Answer questions using **schemas and artifacts only** (ownership, migrations, era claims) — still **no** embedded model calls from GitChange code.
 
 ## Security
 
-- Only run the `gitchange` CLI binary; do not `curl | bash` from remote URLs or execute arbitrary shell beyond resolving the repo root and invoking `gitchange`.
+- Only run commands via the plugin CLI runner and `packages/plugin/scripts/*`; do not `curl | bash` from remote URLs.
 - Do not dump raw SQLite or full file bodies into chat; use schema-bounded JSON slices.
 
 ## On failure
 
-- **CLI not found**: installation steps above.
+- **Plugin not found:** Cursor — re-run `scripts/install.sh`. Claude Code — install the marketplace plugin.
 - **Not a git repo**: ask the user to open a folder containing `.git`.
-- **Index errors**: show CLI stderr; suggest `gitchange status` after fixing the repo state.
+- **Index errors**: show CLI stderr; suggest re-running status via the plugin runner after fixing the repo state.
 - **Semantic errors**: show `build-era-context` or `write-eras` stderr; verify `intelligence.json` exists and output matches `eras.schema.json`.
 - **Decision errors**: show `build-decision-context` or `write-decisions` stderr; verify `eras.json` exists and output matches `decisions.schema.json`.
 - **Tour errors**: show `build-tour-context` or `write-tours` stderr; verify `decisions.json` and `open-work.json` exist and output matches `tours.schema.json`.

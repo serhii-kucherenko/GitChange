@@ -1,9 +1,15 @@
-# GitChange installer for Windows (PowerShell)
-# Official repository: https://github.com/serhii-kucherenko/GitChange
+# GitChange Cursor installer (PowerShell) — links /gitchange commands
+# Claude Code: use the marketplace plugin (see README).
+param(
+  [switch]$Local,
+  [switch]$WithCli
+)
+
 $ErrorActionPreference = "Stop"
 
 $OfficialRepo = "https://github.com/serhii-kucherenko/GitChange.git"
 $RepoUrl = if ($env:GITCHANGE_REPO_URL) { $env:GITCHANGE_REPO_URL } else { $OfficialRepo }
+$ScriptRepo = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $InstallDir = if ($env:GITCHANGE_INSTALL_DIR) { $env:GITCHANGE_INSTALL_DIR } else { Join-Path $env:USERPROFILE ".gitchange-plugin" }
 
 function Write-InstallError([string]$Message) {
@@ -34,7 +40,20 @@ Test-Command pnpm
 Test-Command node
 Test-NodeVersion
 
-if (Test-Path (Join-Path $InstallDir ".git")) {
+if ($Local) {
+  if (-not (Test-Path (Join-Path $ScriptRepo ".cursor-plugin\plugin.json"))) {
+    Write-InstallError "--Local must be run from the GitChange repository"
+  }
+  $InstallDir = $ScriptRepo
+  Write-Host "Using local GitChange checkout: $InstallDir"
+} elseif (Test-Path (Join-Path $ScriptRepo ".cursor-plugin\plugin.json")) {
+  Write-Host "Linking $InstallDir -> $ScriptRepo"
+  if (Test-Path $InstallDir) {
+    Remove-Item -Force -Recurse $InstallDir -ErrorAction SilentlyContinue
+  }
+  New-Item -ItemType Junction -Path $InstallDir -Target $ScriptRepo | Out-Null
+  $InstallDir = $ScriptRepo
+} elseif (Test-Path (Join-Path $InstallDir ".git")) {
   Write-Host "Updating GitChange in $InstallDir ..."
   Push-Location $InstallDir
   git pull --ff-only
@@ -46,42 +65,49 @@ if (Test-Path (Join-Path $InstallDir ".git")) {
   git clone --depth 1 $RepoUrl $InstallDir
 }
 
-Write-Host "Installing dependencies ..."
+Write-Host "Installing dependencies (first /gitchange run builds the CLI if needed) ..."
 Push-Location $InstallDir
 pnpm install
-Write-Host "Building ..."
-pnpm build
 Pop-Location
 
-$localBin = Join-Path $env:USERPROFILE ".local\bin"
-New-Item -ItemType Directory -Force -Path $localBin | Out-Null
-$cliBin = Join-Path $InstallDir "packages\cli\dist\bin.js"
-$linkPath = Join-Path $localBin "gitchange.cmd"
-@"
+$commandsSrc = $null
+if (Test-Path (Join-Path $ScriptRepo ".cursor\commands")) {
+  $commandsSrc = Join-Path $ScriptRepo ".cursor\commands"
+} elseif (Test-Path (Join-Path $InstallDir ".cursor\commands")) {
+  $commandsSrc = Join-Path $InstallDir ".cursor\commands"
+} else {
+  Write-InstallError "no .cursor\commands found"
+}
+
+$commandsDst = Join-Path $env:USERPROFILE ".cursor\commands"
+New-Item -ItemType Directory -Force -Path $commandsDst | Out-Null
+Get-ChildItem -Path $commandsSrc -Filter "*.md" | ForEach-Object {
+  Copy-Item -Path $_.FullName -Destination (Join-Path $commandsDst $_.Name) -Force
+}
+Write-Host "Copied Cursor commands to $commandsDst"
+
+if ($WithCli) {
+  $localBin = Join-Path $env:USERPROFILE ".local\bin"
+  New-Item -ItemType Directory -Force -Path $localBin | Out-Null
+  $cliBin = Join-Path $InstallDir "packages\cli\dist\bin.js"
+  $linkPath = Join-Path $localBin "gitchange.cmd"
+  @"
 @echo off
 node "$cliBin" %*
 "@ | Set-Content -Path $linkPath -Encoding ASCII
+  Write-Host "Linked optional terminal CLI -> $linkPath"
+}
 
 Write-Host @"
 
-GitChange is ready at: $InstallDir
+GitChange is ready for Cursor.
 
-Set for the current session:
+  Open any git repository -> type /gitchange in chat
+  (indexes, summarizes, opens the dashboard automatically)
 
-  `$env:GITCHANGE_ROOT = "$InstallDir"
-  `$env:PATH = "$localBin;" + `$env:PATH
+Install root: $InstallDir
+Commands:     $commandsDst
 
-Cursor — symlink the plugin into a project:
-
-  cmd /c mklink /J .cursor-plugin "$InstallDir\.cursor-plugin"
-
-Claude Code — copy or symlink .claude-plugin into your Claude plugins folder.
-
-Verify (inside any git repository):
-
-  gitchange --version
-  gitchange status
-
-Re-run this script anytime to update and rebuild (idempotent).
+Re-run this script anytime to refresh command links (idempotent).
 
 "@

@@ -9,6 +9,11 @@
       "types": "./src/index.ts",
       "import": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./self-update": {
+      "types": "./src/self-update.ts",
+      "import": "./src/self-update.ts",
+      "default": "./src/self-update.ts"
     }
   },
   "scripts": {

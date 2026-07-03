@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - ".cursor-plugin/**"
+      - ".cursor/commands/**"
       - ".claude-plugin/**"
       - "packages/plugin/**"
       - "scripts/install.sh"
@@ -12,6 +13,7 @@ on:
   pull_request:
     paths:
       - ".cursor-plugin/**"
+      - ".cursor/commands/**"
       - ".claude-plugin/**"
       - "packages/plugin/**"
       - "scripts/install.sh"
@@ -55,8 +57,16 @@ jobs:
             }
           "
 
-      - name: Resolve-root unit tests
-        run: pnpm vitest run packages/plugin/scripts/resolve-root.test.ts
+      - name: Verify Cursor slash commands exist
+        run: |
+          test -f .cursor/commands/gitchange.md
+          test -f .cursor/commands/gitchange-dashboard.md
+          test -f .cursor/commands/gitchange-update.md
+
+      - name: Plugin script unit tests
+        run: |
+          pnpm vitest run packages/plugin/scripts/resolve-root.test.ts
+          pnpm vitest run packages/plugin/scripts/ensure-up-to-date.test.ts
 
       - name: Validate install.sh syntax
         run: bash -n scripts/install.sh

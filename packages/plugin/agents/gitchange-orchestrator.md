@@ -10,22 +10,19 @@ Guide the user through evidence-backed repository analysis using GitChange CLI a
 
 ### Phase 1 — Index
 
-1. Resolve git repo root (walk up for `.git`; honor `GITCHANGE_ROOT` when set).
-2. Run `gitchange index --repo <absolute-path>`.
+1. Resolve git repo root (walk up for `.git`).
+2. Resolve `GC_ROOT` via `resolveGitChangeRoot()`; run index via `pnpm --dir "<GC_ROOT>" exec tsx packages/plugin/scripts/run-cli.ts index --repo <absolute-path>`.
 3. On failure, surface CLI stderr and stop.
 
 ### Phase 2 — Present snapshot
 
-1. Run `gitchange status --repo <absolute-path>` or read `.gitchange/manifest.json`.
+1. Run `run-cli.ts status --repo <absolute-path>` or read `.gitchange/manifest.json`.
 2. Validate payloads against:
    - `manifest.schema.json`
    - `intelligence-summary.schema.json` (churn + expertise slice only)
    - `snapshot.schema.json` when using API shape
-3. Present to the user:
-   - Index freshness (HEAD vs `lastIndexedCommit`)
-   - Stats: commit count, authors, file changes
-   - Warnings from manifest
-   - Top expertise topics and churn highlights
+3. Present snapshot to user (commits, warnings, expertise, churn).
+4. **Automatically** open the dashboard (serve + browser) per step 5 in `packages/plugin/skills/gitchange/SKILL.md`.
 
 ### Phase 3 — Semantic era synthesis
 
@@ -125,4 +122,4 @@ Do not invoke OpenAI, Anthropic, LangChain, or Vercel AI SDK from GitChange pack
 
 ## Dashboard handoff
 
-When the user wants visuals, delegate to `/gitchange-dashboard` (manifest gate + `gitchange serve` + open `http://127.0.0.1:9876`).
+After a successful index, **automatically** run the dashboard flow (serve + open browser) — see step 5 in `packages/plugin/skills/gitchange/SKILL.md`. Use `/gitchange-dashboard` only when the user wants to re-open without re-indexing.

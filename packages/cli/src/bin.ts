@@ -4,6 +4,7 @@ import { join, resolve } from "node:path";
 import { runIndexCommand } from "./commands/index.js";
 import { runServeCommand } from "./commands/serve.js";
 import { runStatusCommand } from "./commands/status.js";
+import { runUpdateCommand } from "./commands/update.js";
 import { runValidateCommand } from "./commands/validate.js";
 import {
   runWorkspaceAddCommand,
@@ -35,6 +36,18 @@ program
       gitchangeDir,
       useWorkers: options.workers !== false,
     });
+  });
+
+program
+  .command("update")
+  .description("Update GitChange from origin (pull, install deps, rebuild CLI)")
+  .option(
+    "--root <path>",
+    "GitChange install root (default: GITCHANGE_ROOT or ~/.gitchange-plugin)",
+  )
+  .option("--rebuild", "Rebuild CLI even when already on latest upstream")
+  .action((options: { root?: string; rebuild?: boolean }) => {
+    runUpdateCommand(options);
   });
 
 program

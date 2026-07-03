@@ -45,7 +45,7 @@ Session-driven delivery log for marketing-focused feature iterations.
 
 ### Delivered (iteration 1)
 
-- Committed and pushed self-update feature end-to-end
+- Committed (`a222ddc`) and pushed to `origin/main` (6 commits total including 5 dashboard fixes)
 - Added `/gitchange-update` slash command to Cursor install bundle
 - CI validates update command + ensure-up-to-date unit tests
 - This changelog file created
